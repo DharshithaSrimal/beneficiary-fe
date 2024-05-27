@@ -1,0 +1,12 @@
+.oops-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.oops-img {
+    width: 20%;
+    height: auto;
+}

@@ -1,0 +1,103 @@
+.profile-container {
+    height: 100%;
+}
+
+.profile-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail {
+    display: flex;
+    width: -webkit-fill-available;
+    align-items: center;
+}
+
+.detail h4 {
+    padding-right: 10px;
+}
+
+.content-section {
+    flex-grow: 100;
+    overflow: auto;
+}
+
+.avatar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 5%;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.box-wrapper {
+    padding: 1%;
+    border: 1px solid #abb2b7;
+    margin-top: 2%;
+}
+
+.box-centered {
+    display: flex;
+    align-items: center;
+}
+
+.profile-content {
+    overflow: auto;
+    margin-bottom: 2%;
+}
+
+.profile-body {
+    display: flex;
+    flex-grow: 100;
+    overflow: auto;
+    margin: 3%;
+}
+
+.profile-side {
+    flex: 1;
+}
+
+.detail-row {
+    margin-bottom: 10px;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+.table-header {
+    background: #7A918D;
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+.table-row {
+    background: #F2F2F2;
+}
+
+.css-1jbbcbn-MuiDataGrid-columnHeaderTitle {
+    font-weight: bold !important;
+}
+
+.css-1epajyj-MuiDataGrid-root .MuiDataGrid-cellContent {
+    font-size: 0.8em !important;
+    font-weight: bold !important;
+}
+
+@media only screen and (max-width: 1000px) {
+    .profile-body {
+        flex-direction: column;
+    }
+}

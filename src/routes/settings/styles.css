@@ -1,0 +1,7 @@
+.setting-title {
+    text-align: center;
+}
+
+.setting-column {
+    flex-direction: column;
+}
