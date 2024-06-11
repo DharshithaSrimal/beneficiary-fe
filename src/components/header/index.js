@@ -5,6 +5,9 @@ import { useState } from 'react';
 import profile from '../../assets/profile.png'
 import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone';
 import BookOnlineTwoToneIcon from '@mui/icons-material/BookOnlineTwoTone';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import VaccinesIcon from '@mui/icons-material/Vaccines';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import BeenhereTwoToneIcon from '@mui/icons-material/BeenhereTwoTone';
 import DoorBackTwoToneIcon from '@mui/icons-material/DoorBackTwoTone';
@@ -26,8 +29,8 @@ const Header = () => {
 
     const SideBar = () => (<Box sx={{ width: 300, height: '100%', display: 'flex', flexDirection: 'column', background: '#344966', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', margin: 5, justifyContent: 'center' }}>
-            <img src='/logo512_white.png' alt='logo white' style={{ height: '3em' }} />
-            <h4 style={{ color: 'white', paddingLeft: '1em' }}>Electronic Immunization Registry Beneficiary Portal</h4>
+            {/* <img src='/logo512_white.png' alt='logo white' style={{ height: '3em' }} /> */}
+            {/* <h4 style={{ color: 'white', paddingLeft: '1em' }}>Electronic Immunization Registry Beneficiary Portal</h4> */}
         </div>
         <div className='list-container'>
             <List className='list'>
@@ -39,8 +42,20 @@ const Header = () => {
                 </ListItem>
                 <ListItem className={window.location.pathname === '/appointments' ? 'list-item-selected' : 'list-item'}>
                     <ListItemButton onClick={() => window.location.href = '/appointments'} style={{ borderRadius: '2em' }}>
-                        <BookOnlineTwoToneIcon />
-                        <ListItemText primary='Appointments' style={{ textAlign: 'left', paddingLeft: '1em' }} />
+                        <VaccinesIcon />
+                        <ListItemText primary='Immunization Registry' style={{ textAlign: 'left', paddingLeft: '1em' }} />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem className={window.location.pathname === '/appointments' ? 'list-item-selected' : 'list-item'}>
+                    <ListItemButton onClick={() => window.location.href = '/appointments'} style={{ borderRadius: '2em' }}>
+                        <QueryStatsIcon  />
+                        <ListItemText primary='Growth and Development' style={{ textAlign: 'left', paddingLeft: '1em' }} />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem className={window.location.pathname === '/appointments' ? 'list-item-selected' : 'list-item'}>
+                    <ListItemButton onClick={() => window.location.href = '/appointments'} style={{ borderRadius: '2em' }}>
+                        <AppRegistrationIcon />
+                        <ListItemText primary='Public Health Registry' style={{ textAlign: 'left', paddingLeft: '1em' }} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem className={window.location.pathname === '/profile' ? 'list-item-selected' : 'list-item'}>
@@ -83,7 +98,7 @@ const Header = () => {
 
     return <>
         <div className='header desktop'>
-            {/* <Button onClick={() => toggleDrawer(true)}><HiMenuAlt1 size={30} color='#B4CDED' /></Button> */}
+            <Button onClick={() => toggleDrawer(true)}><HiMenuAlt1 size={30} color='#B4CDED' /></Button>
             <img src='/logo512_white.png' alt='logo white' style={{ height: '3em', background: 'white' }} />
             <h3 style={{ padding: 0 }}>Electronic Immunization Registry Beneficiary Portal</h3>
             <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => setExpandedProfile(true)}>
