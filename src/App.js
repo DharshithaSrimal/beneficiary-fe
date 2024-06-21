@@ -4,6 +4,9 @@ import AdminAppointments from './routes/adminAppointments';
 import Appointments from './routes/appointments';
 import Dashboard from './routes/dashboard';
 import Help from './routes/help';
+import PublicHealthCareRegistry from './routes/publicHealthCareRegistry';
+import GrowthAndDevelopment from './routes/growthAndDevelopment';
+import ImmunizationRegistry from './routes/immunizationRegistry';
 import Login from './routes/login';
 import LoginAdmin from './routes/loginAdmin';
 import Oops from './routes/oops';
@@ -32,7 +35,10 @@ function App() {
         <Route path='publicProfile/:id' element={<PublicProfile />} />
         <Route path='public/:id' element={<Public />} />
         <Route path='traveller/:id' element={<Traveller />} />
-        {/* <Route path='help' element={<Help />} /> */}
+        <Route path='help' element={<Help />} />
+        <Route path='publicHealthCareRegistry' element={<PublicHealthCareRegistry />} />
+        <Route path='growthAndDevelopment' element={<GrowthAndDevelopment />} />
+        <Route path='immunizationRegistry' element={<ImmunizationRegistry />} />       
         {/* <Route path='settings' element={<Settings />} /> */}
         <Route path='*' element={<Oops />} />
       </Routes>
