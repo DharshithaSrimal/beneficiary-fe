@@ -6,6 +6,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Header from '../../components/header';
 import './styles.css';
+import Enrollments from './enrollments';
 
 const ImmunizationRegistry = () => {
     const [value, setValue] = React.useState('1');
@@ -29,7 +30,7 @@ const ImmunizationRegistry = () => {
                                 <Tab label="Appoinments" value="2" />
                             </TabList>
                         </Box>
-                        <TabPanel value="1" className='overflow full-height'>Enrollments</TabPanel>
+                        <TabPanel value="1" className='overflow full-height'>{<Enrollments />}</TabPanel>
                         <TabPanel value="2" className='overflow full-height'>Appoinments</TabPanel>
                     </TabContext>
                 </Box>

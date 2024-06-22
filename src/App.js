@@ -7,6 +7,7 @@ import Help from './routes/help';
 import PublicHealthCareRegistry from './routes/publicHealthCareRegistry';
 import GrowthAndDevelopment from './routes/growthAndDevelopment';
 import ImmunizationRegistry from './routes/immunizationRegistry';
+import Enrollments from './routes/immunizationRegistry/enrollments';
 import Login from './routes/login';
 import LoginAdmin from './routes/loginAdmin';
 import Oops from './routes/oops';
@@ -38,7 +39,8 @@ function App() {
         <Route path='help' element={<Help />} />
         <Route path='publicHealthCareRegistry' element={<PublicHealthCareRegistry />} />
         <Route path='growthAndDevelopment' element={<GrowthAndDevelopment />} />
-        <Route path='immunizationRegistry' element={<ImmunizationRegistry />} />       
+        <Route path='immunizationRegistry' element={<ImmunizationRegistry />} />     
+        <Route path='immunizationRegistry/enrollments' element={<Enrollments />} />   
         {/* <Route path='settings' element={<Settings />} /> */}
         <Route path='*' element={<Oops />} />
       </Routes>
