@@ -5,6 +5,7 @@ import Appointments from './routes/appointments';
 import Dashboard from './routes/dashboard';
 import Help from './routes/help';
 import PublicHealthCareRegistry from './routes/publicHealthCareRegistry';
+import Diagnosis from './routes/publicHealthCareRegistry/diagnosis';
 import GrowthAndDevelopment from './routes/growthAndDevelopment';
 import ImmunizationRegistry from './routes/immunizationRegistry';
 import Enrollments from './routes/immunizationRegistry/enrollments';
@@ -38,6 +39,7 @@ function App() {
         <Route path='traveller/:id' element={<Traveller />} />
         <Route path='help' element={<Help />} />
         <Route path='publicHealthCareRegistry' element={<PublicHealthCareRegistry />} />
+        <Route path='publicHealthCareRegistry/Diagnosis' element={<Diagnosis />} />
         <Route path='growthAndDevelopment' element={<GrowthAndDevelopment />} />
         <Route path='immunizationRegistry' element={<ImmunizationRegistry />} />     
         <Route path='immunizationRegistry/enrollments' element={<Enrollments />} />   

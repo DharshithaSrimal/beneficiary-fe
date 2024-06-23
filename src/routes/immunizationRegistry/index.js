@@ -27,11 +27,11 @@ const ImmunizationRegistry = () => {
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <TabList onChange={handleChange} aria-label="lab API tabs example">
                                 <Tab label="Enrollments" value="1" />
-                                <Tab label="Appoinments" value="2" />
+                                {/* <Tab label="Appoinments" value="2" /> */}
                             </TabList>
                         </Box>
                         <TabPanel value="1" className='overflow full-height'>{<Enrollments />}</TabPanel>
-                        <TabPanel value="2" className='overflow full-height'>Appoinments</TabPanel>
+                        {/* <TabPanel value="2" className='overflow full-height'>Appoinments</TabPanel> */}
                     </TabContext>
                 </Box>
             </div>

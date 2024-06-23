@@ -1,12 +1,7 @@
-import { Button, Grid, IconButton } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import Banner from '../../../components/banner';
-import Header from '../../../components/header';
+import { IconButton } from '@mui/material';
 import Marquee from "react-fast-marquee";
 import './styles.css';
 import MarqueeText from '../../../components/marquee';
-import Chart from '../../../components/chart';
-import Carousel from 'react-material-ui-carousel'
 import { useEffect, useState } from 'react';
 import { API_URL, getCookie, parsePatient } from '../../../constants';
 import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
