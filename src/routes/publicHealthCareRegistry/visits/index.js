@@ -33,7 +33,7 @@ var items = [
     "/banner2.png"
 ]
 
-const Diagnosis = () => {
+const Visits = () => {
     const [children, setChildren] = useState([]);
     const [childPos, setChildPos] = useState(null);
     const [child, setChild] = useState(null);
@@ -148,13 +148,46 @@ const Diagnosis = () => {
     useEffect(() => { fetchUser(); }, [childPos]);
     useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
 
+    function createData(name, calories, fat, carbs, protein) {
+        return { name, calories, fat, carbs, protein };
+      }
+      
+      const rows = [
+        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+        createData('Eclair', 262, 16.0, 24, 6.0),
+        createData('Cupcake', 305, 3.7, 67, 4.3),
+        createData('Gingerbread', 356, 16.0, 49, 3.9),
+      ];
+
     return <div className='dashboard-container'>
         <div className='dashboard-wrapper'>
             <div className='content-wrapper'>
-                
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>Last Visit</TableCell>
+                                <TableCell align="center">2023-10-09</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Number of visits</TableCell>
+                                <TableCell align="center">2</TableCell>
+                            </TableRow>
+                            <TableRow>   
+                                <TableCell>Months since last visits</TableCell>
+                                <TableCell align="center">10</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Next visit</TableCell>
+                                <TableCell align="center">2024-08-09</TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
         </div>
     </div>
 }
 
-export default Diagnosis;
+export default Visits;

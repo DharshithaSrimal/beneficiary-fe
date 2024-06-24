@@ -20,6 +20,9 @@ import Settings from './routes/settings';
 import Signup from './routes/signup';
 import Traveller from './routes/traveller';
 import Vaccination from './routes/vaccination';
+import Visits from './routes/publicHealthCareRegistry/visits';
+import Examinations from './routes/publicHealthCareRegistry/examinations';
+import Investigations from './routes/publicHealthCareRegistry/investigations';
 
 function App() {
   return (
@@ -40,6 +43,9 @@ function App() {
         <Route path='help' element={<Help />} />
         <Route path='publicHealthCareRegistry' element={<PublicHealthCareRegistry />} />
         <Route path='publicHealthCareRegistry/Diagnosis' element={<Diagnosis />} />
+        <Route path='publicHealthCareRegistry/Visits' element={<Visits />} />
+        <Route path='publicHealthCareRegistry/Examinations' element={<Examinations />} />
+        <Route path='publicHealthCareRegistry/Investigations' element={<Investigations />} />
         <Route path='growthAndDevelopment' element={<GrowthAndDevelopment />} />
         <Route path='immunizationRegistry' element={<ImmunizationRegistry />} />     
         <Route path='immunizationRegistry/enrollments' element={<Enrollments />} />   
