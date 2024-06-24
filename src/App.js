@@ -5,8 +5,10 @@ import Appointments from './routes/appointments';
 import Dashboard from './routes/dashboard';
 import Help from './routes/help';
 import PublicHealthCareRegistry from './routes/publicHealthCareRegistry';
+import Diagnosis from './routes/publicHealthCareRegistry/diagnosis';
 import GrowthAndDevelopment from './routes/growthAndDevelopment';
 import ImmunizationRegistry from './routes/immunizationRegistry';
+import Enrollments from './routes/immunizationRegistry/enrollments';
 import Login from './routes/login';
 import LoginAdmin from './routes/loginAdmin';
 import Oops from './routes/oops';
@@ -18,6 +20,9 @@ import Settings from './routes/settings';
 import Signup from './routes/signup';
 import Traveller from './routes/traveller';
 import Vaccination from './routes/vaccination';
+import Visits from './routes/publicHealthCareRegistry/visits';
+import Examinations from './routes/publicHealthCareRegistry/examinations';
+import Investigations from './routes/publicHealthCareRegistry/investigations';
 
 function App() {
   return (
@@ -37,8 +42,13 @@ function App() {
         <Route path='traveller/:id' element={<Traveller />} />
         <Route path='help' element={<Help />} />
         <Route path='publicHealthCareRegistry' element={<PublicHealthCareRegistry />} />
+        <Route path='publicHealthCareRegistry/Diagnosis' element={<Diagnosis />} />
+        <Route path='publicHealthCareRegistry/Visits' element={<Visits />} />
+        <Route path='publicHealthCareRegistry/Examinations' element={<Examinations />} />
+        <Route path='publicHealthCareRegistry/Investigations' element={<Investigations />} />
         <Route path='growthAndDevelopment' element={<GrowthAndDevelopment />} />
-        <Route path='immunizationRegistry' element={<ImmunizationRegistry />} />       
+        <Route path='immunizationRegistry' element={<ImmunizationRegistry />} />     
+        <Route path='immunizationRegistry/enrollments' element={<Enrollments />} />   
         {/* <Route path='settings' element={<Settings />} /> */}
         <Route path='*' element={<Oops />} />
       </Routes>
