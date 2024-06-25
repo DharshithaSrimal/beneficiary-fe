@@ -43,7 +43,7 @@ const Header = () => {
                 <ListItem className={window.location.pathname === '/immunizationRegistry' ? 'list-item-selected' : 'list-item'}>
                     <ListItemButton onClick={() => window.location.href = '/immunizationRegistry'} style={{ borderRadius: '2em' }}>
                         <VaccinesIcon />
-                        <ListItemText primary='Immunization Registry' style={{ textAlign: 'left', paddingLeft: '1em' }} />
+                        <ListItemText primary='My Health Portal' style={{ textAlign: 'left', paddingLeft: '1em' }} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem className={window.location.pathname === '/growthAndDevelopment' ? 'list-item-selected' : 'list-item'}>

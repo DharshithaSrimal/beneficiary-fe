@@ -49,3 +49,6 @@
     font-size: 0.8em !important;
     font-weight: bold !important;
 }
+.diagnosis-item {
+    padding: 10px;
+}

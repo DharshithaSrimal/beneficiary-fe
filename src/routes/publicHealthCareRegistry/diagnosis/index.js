@@ -1,13 +1,11 @@
 import './styles.css';
 import { useEffect, useState } from 'react';
 import { API_URL, getCookie } from '../../../constants';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import StarIcon from '@mui/icons-material/Star';
 
 import male0 from '../../../assets/avatar/male0.png'
 import male1 from '../../../assets/avatar/male1.png'
@@ -15,6 +13,7 @@ import male2 from '../../../assets/avatar/male2.png'
 import female0 from '../../../assets/avatar/female0.png'
 import female1 from '../../../assets/avatar/female1.png'
 import female2 from '../../../assets/avatar/female2.png'
+import { red } from '@mui/material/colors';
 
 const srcList = [male0, female0, male1, female1, male2, female2];
 
@@ -151,7 +150,32 @@ const Diagnosis = () => {
     return <div className='dashboard-container'>
         <div className='dashboard-wrapper'>
             <div className='content-wrapper'>
-                
+                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} aria-label="contacts">
+                    <ListItem disablePadding>
+                        <ListItemIcon>
+                            <StarIcon sx={{ color: 'red' }}/>
+                        </ListItemIcon>
+                        <ListItemText primary="Diabetes" />
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemIcon>
+                            <StarIcon sx={{ color: 'green' }}/>
+                        </ListItemIcon>
+                        <ListItemText primary="Hyperlipidemia" />
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemIcon>
+                            <StarIcon sx={{ color: 'green' }}/>
+                        </ListItemIcon>
+                        <ListItemText primary="COPD" />
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemIcon>
+                            <StarIcon sx={{ color: 'green' }}/>
+                        </ListItemIcon>
+                        <ListItemText primary="Asthma" />
+                    </ListItem>
+                </List>
             </div>
         </div>
     </div>
