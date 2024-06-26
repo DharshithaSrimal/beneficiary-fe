@@ -164,15 +164,15 @@ const Visits = () => {
         <div className='dashboard-wrapper'>
             <div className='content-wrapper'>
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <Table>
                         <TableBody>
                             <TableRow>
-                                <TableCell>Last Visit</TableCell>
-                                <TableCell align="center">2023-10-09</TableCell>
+                                <TableCell style={{ width: '50%' }}>Last Visit</TableCell>
+                                <TableCell align="center" style={{ width: '50%' }}>2023-10-09</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Number of visits</TableCell>
-                                <TableCell align="center">2</TableCell>
+                                <TableCell style={{ width: '50%' }}>Number of visits</TableCell>
+                                <TableCell align="center" style={{ width: '50%' }}>2</TableCell>
                             </TableRow>
                             <TableRow>   
                                 <TableCell>Months since last visits</TableCell>
