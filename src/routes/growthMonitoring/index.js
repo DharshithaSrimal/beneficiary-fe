@@ -151,7 +151,7 @@ function randomColor() {
     gridColor: "#aa00ff",
   };
   
-const GrowthAndDevelopment = () => {
+const GrowthMonitoring = () => {
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
@@ -166,48 +166,10 @@ const GrowthAndDevelopment = () => {
     // }, []);
 
     return <div className='dashboard-container'>
-        <Header />
         <div className='dashboard-wrapper'>
-            <div className='content-wrapper help-centered'>
-                <h4>Growth and Development</h4>
-            </div>
+            <div className='content-wrapper help-centered'></div>
             <div className='content-section content-wrapper'>
-                <Box sx={{ width: '100%', typography: 'body1' }} className='spread'>
-                    <TabContext value={value}>
-                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                            <TabList onChange={handleChange} aria-label="lab API tabs example">
-                                <Tab label="Growth and Monitoring" value="1" />
-                                <Tab label="Development Milestones" value="2" />
-                                <Tab label="Vitamin A & Deworming" value="3" />
-                            </TabList>
-                        </Box>
-                        <TabPanel value="1" className='overflow full-height'>
-                            <div className="help-centered">
-                                <TableContainer sx={{ width: 700}} component={Paper}>
-                                    <Table sx={{ minWidth: 650, }} aria-label="simple table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell align="center" colSpan={2}>Visits</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        
-                                        <TableBody>
-                                            <TableRow>
-                                                <TableCell>Last Visit</TableCell>
-                                                <TableCell align="center">2023-10-09</TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>Next visit</TableCell>
-                                                <TableCell align="center"> Scheduled Date </TableCell>
-                                            </TableRow>
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </div>
-
-                            <br/><br/>
-
-                            <div className="help-centered">
+            <div className="help-centered">
                                 <TableContainer component={Paper}>
                                     <Table sx={{ minWidth: 650, }} aria-label="simple table">
                                         <TableHead>
@@ -516,24 +478,9 @@ const GrowthAndDevelopment = () => {
                                     </Table>
                                 </TableContainer>
                             </div>
-
-                            {/* <PChart
-                                width={1200}
-                                height={800}
-                                dataset={dataset1}
-                                patients={testpatient1}
-                                showtitle
-                                showlines
-                                theme={theme1}
-                            /> */}
-                        </TabPanel>
-                        <TabPanel value="2" className='overflow full-height'>Development Milestones</TabPanel>
-                        <TabPanel value="3" className='overflow full-height'>Vitamin A & Deworming</TabPanel>
-                    </TabContext>
-                </Box>
             </div>
         </div>
     </div>
 }
 
-export default GrowthAndDevelopment;
+export default GrowthMonitoring;
