@@ -1,18 +1,22 @@
-import { Button, Grid, IconButton } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import Banner from '../../components/banner';
+import { IconButton } from '@mui/material';
+import * as React from 'react';
 import Header from '../../components/header';
 import Marquee from "react-fast-marquee";
 import './styles.css';
 import MarqueeText from '../../components/marquee';
-import Chart from '../../components/chart';
-import Carousel from 'react-material-ui-carousel'
 import { useEffect, useState } from 'react';
 import { API_URL, getCookie, parsePatient } from '../../constants';
 import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
 import PrintTwoTone from '@mui/icons-material/PrintTwoTone';
 import PersonRemoveTwoToneIcon from '@mui/icons-material/PersonRemoveTwoTone';
 import CardTravelTwoToneIcon from '@mui/icons-material/CardTravelTwoTone';
+
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+
 
 import male0 from '../../assets/avatar/male0.png'
 import male1 from '../../assets/avatar/male1.png'
@@ -24,6 +28,10 @@ import infant from '../../assets/avatar/infant.png'
 import { ProfileDetails } from './profileDetails';
 import Enrollment from './enrollment';
 import { VaccineCard } from './vaccineCard';
+import Milestones from '../developmentMilestones';
+import GrowthMonitoring from '../growthMonitoring';
+import ADeworming from '../vitaminADeworming';
+import PublicHealthRegistry from '../publicHealthRegistry';
 
 const srcList = [male0, female0, male1, female1, male2, female2];
 
@@ -159,6 +167,12 @@ const Dashboard = () => {
     useEffect(() => { fetchUser(); }, [childPos]);
     useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
 
+    const [value, setValue] = React.useState('1');
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     return <div className='dashboard-container'>
         <Header />
         <div className='dashboard-wrapper'>
@@ -211,6 +225,22 @@ const Dashboard = () => {
                     }
                 </div>
                 <Enrollment open={enrollOpen} setOpen={setEnrollOpen} refresh={fetchUsers} />
+                <Box sx={{ width: '100%', typography: 'body1' }} className='spread'>
+                    <TabContext value={value}>
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                <Tab label="Growth and Monitoring" value="1" />
+                                <Tab label="Development Milestones" value="2" />
+                                <Tab label="Vitamin A & Deworming" value="3" />
+                                <Tab label="Public Health Registry" value="4" />
+                            </TabList>
+                        </Box>
+                        <TabPanel value="1" className='overflow full-height'>{<GrowthMonitoring/>}</TabPanel>
+                        <TabPanel value="2" className='overflow full-height'>{<Milestones/>}</TabPanel>
+                        <TabPanel value="3" className='overflow full-height'>{<ADeworming/>}</TabPanel>
+                        <TabPanel value="4" className='overflow full-height'>{<PublicHealthRegistry/>}</TabPanel>
+                    </TabContext>
+                </Box>
                 {
                     childPos !== null ?
                         <>

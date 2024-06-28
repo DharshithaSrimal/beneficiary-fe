@@ -1,19 +1,20 @@
 import './styles.css';
 import { useEffect, useState } from 'react';
-import { API_URL, getCookie } from '../../../constants';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import StarIcon from '@mui/icons-material/Star';
+import { API_URL, getCookie } from '../../constants';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
-import male0 from '../../../assets/avatar/male0.png'
-import male1 from '../../../assets/avatar/male1.png'
-import male2 from '../../../assets/avatar/male2.png'
-import female0 from '../../../assets/avatar/female0.png'
-import female1 from '../../../assets/avatar/female1.png'
-import female2 from '../../../assets/avatar/female2.png'
-import { red } from '@mui/material/colors';
+import male0 from '../../assets/avatar/male0.png'
+import male1 from '../../assets/avatar/male1.png'
+import male2 from '../../assets/avatar/male2.png'
+import female0 from '../../assets/avatar/female0.png'
+import female1 from '../../assets/avatar/female1.png'
+import female2 from '../../assets/avatar/female2.png'
 
 const srcList = [male0, female0, male1, female1, male2, female2];
 
@@ -32,7 +33,7 @@ var items = [
     "/banner2.png"
 ]
 
-const Diagnosis = () => {
+const ADeworming = () => {
     const [children, setChildren] = useState([]);
     const [childPos, setChildPos] = useState(null);
     const [child, setChild] = useState(null);
@@ -147,38 +148,70 @@ const Diagnosis = () => {
     useEffect(() => { fetchUser(); }, [childPos]);
     useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
 
+    function createData(name, calories, fat, carbs, protein) {
+        return { name, calories, fat, carbs, protein };
+      }
+      
+      const rows = [
+        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+        createData('Eclair', 262, 16.0, 24, 6.0),
+        createData('Cupcake', 305, 3.7, 67, 4.3),
+        createData('Gingerbread', 356, 16.0, 49, 3.9),
+      ];
+
     return <div className='dashboard-container'>
         <div className='dashboard-wrapper'>
             <div className='content-wrapper'>
-                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} aria-label="contacts">
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'red' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="Diabetes" />
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'green' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="Hyperlipidemia" />
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'green' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="COPD" />
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'green' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="Asthma" />
-                    </ListItem>
-                </List>
+                <h4>Vitamin A</h4>
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell style={{ width: '50%' }}>Age due</TableCell>
+                                <TableCell align="center" style={{ width: '50%' }}>Date received</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell style={{ width: '50%' }}>9 months due</TableCell>
+                                <TableCell align="center" style={{ width: '50%' }}></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell style={{ width: '50%' }}>18 months due</TableCell>
+                                <TableCell align="center" style={{ width: '50%' }}></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell style={{ width: '50%' }}>2 years due</TableCell>
+                                <TableCell align="center" style={{ width: '50%' }}></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell style={{ width: '50%' }}>2 1/2 years due</TableCell>
+                                <TableCell align="center" style={{ width: '50%' }}></TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <h4>Deworming</h4>
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell style={{ width: '50%' }}>Age due</TableCell>
+                                <TableCell align="center" style={{ width: '50%' }}>Date received</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell style={{ width: '50%' }}>2 years due</TableCell>
+                                <TableCell align="center" style={{ width: '50%' }}></TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
         </div>
     </div>
 }
 
-export default Diagnosis;
+export default ADeworming;

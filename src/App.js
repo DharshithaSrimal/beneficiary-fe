@@ -4,9 +4,6 @@ import AdminAppointments from './routes/adminAppointments';
 import Appointments from './routes/appointments';
 import Dashboard from './routes/dashboard';
 import Help from './routes/help';
-import PublicHealthCareRegistry from './routes/publicHealthCareRegistry';
-import Diagnosis from './routes/publicHealthCareRegistry/diagnosis';
-import GrowthAndDevelopment from './routes/growthAndDevelopment';
 import ImmunizationRegistry from './routes/immunizationRegistry';
 import Enrollments from './routes/immunizationRegistry/enrollments';
 import Login from './routes/login';
@@ -20,9 +17,10 @@ import Settings from './routes/settings';
 import Signup from './routes/signup';
 import Traveller from './routes/traveller';
 import Vaccination from './routes/vaccination';
-import Visits from './routes/publicHealthCareRegistry/visits';
-import Examinations from './routes/publicHealthCareRegistry/examinations';
-import Investigations from './routes/publicHealthCareRegistry/investigations';
+import Milestones from './routes/developmentMilestones';
+import ADeworming from './routes/vitaminADeworming';
+import GrowthMonitoring from './routes/growthMonitoring';
+import PublicHealthRegistry from './routes/publicHealthRegistry';
 
 function App() {
   return (
@@ -41,12 +39,14 @@ function App() {
         <Route path='public/:id' element={<Public />} />
         <Route path='traveller/:id' element={<Traveller />} />
         <Route path='help' element={<Help />} />
-        <Route path='publicHealthCareRegistry' element={<PublicHealthCareRegistry />} />
-        <Route path='publicHealthCareRegistry/Diagnosis' element={<Diagnosis />} />
+        <Route path='publicHealthRegistry' element={<PublicHealthRegistry />} />
+        {/* <Route path='publicHealthCareRegistry/Diagnosis' element={<Diagnosis />} />
         <Route path='publicHealthCareRegistry/Visits' element={<Visits />} />
         <Route path='publicHealthCareRegistry/Examinations' element={<Examinations />} />
-        <Route path='publicHealthCareRegistry/Investigations' element={<Investigations />} />
-        <Route path='growthAndDevelopment' element={<GrowthAndDevelopment />} />
+        <Route path='publicHealthCareRegistry/Investigations' element={<Investigations />} /> */}
+        <Route path='growthMonitoring' element={<GrowthMonitoring />} />
+        <Route path='milestones' element={<Milestones />} />
+        <Route path='vitaminADeworming' element={<ADeworming />} />
         <Route path='immunizationRegistry' element={<ImmunizationRegistry />} />     
         <Route path='immunizationRegistry/enrollments' element={<Enrollments />} />   
         {/* <Route path='settings' element={<Settings />} /> */}
