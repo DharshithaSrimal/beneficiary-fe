@@ -225,25 +225,42 @@ const Dashboard = () => {
                     }
                 </div>
                 <Enrollment open={enrollOpen} setOpen={setEnrollOpen} refresh={fetchUsers} />
-                <Box sx={{ width: '100%', typography: 'body1' }} className='spread'>
-                    <TabContext value={value}>
-                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                            <TabList onChange={handleChange} aria-label="lab API tabs example">
-                                <Tab label="Growth and Monitoring" value="1" />
-                                <Tab label="Development Milestones" value="2" />
-                                <Tab label="Vitamin A & Deworming" value="3" />
-                                <Tab label="Public Health Registry" value="4" />
-                            </TabList>
-                        </Box>
-                        <TabPanel value="1" className='overflow full-height'>{<GrowthMonitoring/>}</TabPanel>
-                        <TabPanel value="2" className='overflow full-height'>{<Milestones/>}</TabPanel>
-                        <TabPanel value="3" className='overflow full-height'>{<ADeworming/>}</TabPanel>
-                        <TabPanel value="4" className='overflow full-height'>{<PublicHealthRegistry/>}</TabPanel>
-                    </TabContext>
-                </Box>
+                
                 {
                     childPos !== null ?
                         <>
+                            <Box sx={{ width: '100%', typography: 'body1' }} className='spread'>
+                                <TabContext value={value}>
+                                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                        <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                        {
+                                            fullEvents !== null ?
+                                                <>
+                                                <Tab label="Immunization Registry" value="1" />
+                                                </>
+                                            : null
+                                        }
+                                            
+                                            <Tab label="Growth and Monitoring" value="2" />
+                                            <Tab label="Development Milestones" value="3" />
+                                            <Tab label="Vitamin A & Deworming" value="4" />
+                                            <Tab label="Public Health Registry" value="5" />
+                                        </TabList>
+                                    </Box>
+                                    {
+                                        fullEvents !== null ?
+                                            <>
+                                            <TabPanel value="1" className='overflow full-height'><VaccineCard full={fullEvents} vacs={vacList} /></TabPanel>
+                                            </>
+                                        : null
+                                    }
+                                    
+                                    <TabPanel value="2" className='overflow full-height'>{<GrowthMonitoring/>}</TabPanel>
+                                    <TabPanel value="3" className='overflow full-height'>{<Milestones/>}</TabPanel>
+                                    <TabPanel value="4" className='overflow full-height'>{<ADeworming/>}</TabPanel>
+                                    <TabPanel value="5" className='overflow full-height'>{<PublicHealthRegistry/>}</TabPanel>
+                                </TabContext>
+                            </Box>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <h4>{children[childPos].name}</h4>
                             </div>
@@ -277,7 +294,7 @@ const Dashboard = () => {
                                     }
                                 }}><PersonRemoveTwoToneIcon color='error' /></IconButton>
                             </div>
-                            <VaccineCard full={fullEvents} vacs={vacList} />
+                            
                             <ProfileDetails profileOpen={profileOpen} setProfileOpen={setProfileOpen} user={child ?? children[childPos]} />
                         </>
                         : null
