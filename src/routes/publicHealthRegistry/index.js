@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import StarIcon from '@mui/icons-material/Star';
+import CircleIcon from '@mui/icons-material/Circle';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -157,38 +157,76 @@ const PublicHealthRegistry = () => {
     return <div className='dashboard-container'>
         <div className='dashboard-wrapper'>
             <div className='content-wrapper'>
-                <h4>Diagnosis</h4>
-                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} aria-label="contacts">
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'red' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="Diabetes" />
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'green' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="Hyperlipidemia" />
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'green' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="COPD" />
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'green' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="Asthma" />
-                    </ListItem>
-                </List>
-                <br></br>
-                <h4>Examinations</h4>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableBody>
+                            <TableRow className="phc-table-header">
+                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Visits</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Last visit</TableCell>
+                                <TableCell align="center"></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Number of visits </TableCell>
+                                <TableCell align="center"></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Months since last visits</TableCell>
+                                <TableCell align="center"></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Next visit</TableCell>
+                                <TableCell align="center"></TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <br></br>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableBody>
+                            <TableRow className="phc-table-header">
+                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Diagnosis</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <List className="diagnosis-row" sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} aria-label="contacts">
+                                    <ListItem disablePadding>
+                                        <ListItemIcon>
+                                            <CircleIcon sx={{ color: 'red' }}/>
+                                        </ListItemIcon>
+                                        <ListItemText primary="Diabetes" />
+                                    </ListItem>
+                                    <ListItem disablePadding>
+                                        <ListItemIcon>
+                                            <CircleIcon sx={{ color: 'green' }}/>
+                                        </ListItemIcon>
+                                        <ListItemText primary="Hyperlipidemia" />
+                                    </ListItem>
+                                    <ListItem disablePadding>
+                                        <ListItemIcon>
+                                            <CircleIcon sx={{ color: 'green' }}/>
+                                        </ListItemIcon>
+                                        <ListItemText primary="COPD" />
+                                    </ListItem>
+                                    <ListItem disablePadding>
+                                        <ListItemIcon>
+                                            <CircleIcon sx={{ color: 'green' }}/>
+                                        </ListItemIcon>
+                                        <ListItemText primary="Asthma" />
+                                    </ListItem>
+                                </List>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer> 
+                <br></br>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableBody>
+                            <TableRow className="phc-table-header">
+                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Examinations</TableCell>
+                            </TableRow>
                             <TableRow>
                                 <TableCell>Height</TableCell>
                                 <TableCell align="center">183cm</TableCell>
@@ -217,10 +255,12 @@ const PublicHealthRegistry = () => {
                     </Table>
                 </TableContainer>
                 <br></br>
-                <h4>Investigations</h4>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableBody>
+                            <TableRow className="phc-table-header">
+                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Investigations</TableCell>
+                            </TableRow>
                             <TableRow>
                                 <TableCell>Fasting Blood Sugar</TableCell>
                                 <TableCell align="center">183cm</TableCell>
@@ -252,23 +292,6 @@ const PublicHealthRegistry = () => {
                             <TableRow>
                                 <TableCell>VLDL - Very Low Density Lipoprotein</TableCell>
                                 <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <h4>Visits</h4>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                        <TableRow>
-                                <TableCell align="center">Date</TableCell>
-                                <TableCell align="center">Facility</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell></TableCell>
-                                <TableCell align="center"></TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

@@ -57,6 +57,7 @@ const Dashboard = () => {
     const [enrollOpen, setEnrollOpen] = useState(false);
     const [child, setChild] = useState(null);
     const [fullEvents, setFullEvents] = useState([]);
+    const [phcEvents, setPhcEvents] = useState([]);
     const [vacList, setVacList] = useState([]);
 
     const fetchUsers = async () => {
@@ -76,6 +77,7 @@ const Dashboard = () => {
 
     const fetchUser = async () => {
         setFullEvents([]);
+        setPhcEvents([]);
         if (children[childPos]) {
             fetch(await API_URL() + 'api/getEnrollmentDetails', {
                 method: 'POST',
@@ -123,6 +125,32 @@ const Dashboard = () => {
         }
     }
 
+    const fetchPhcData = async () => {
+        if (childPos !== null) {
+            fetch(await API_URL() + `api/getPhcData`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-token': getCookie()
+                }
+                // ,
+                // body: JSON.stringify({
+                //     epi: child.epi,
+                //     entity_id: child.entity_instance
+                // })
+            })
+                .then(res => res.json())
+                .then(out => {
+                    console.log("PHC", out.data);
+                    if (out.data.events) {
+                        setPhcEvents(out.data.events);
+                    }
+                })
+                .catch(err => console.log("Error Catch", err))
+        }
+    }
+
+
     const openPublic = async () => {
         fetch(await API_URL() + `api/generatePublicQR`, {
             method: 'POST',
@@ -165,7 +193,7 @@ const Dashboard = () => {
 
     useEffect(() => { fetchUsers(); }, []);
     useEffect(() => { fetchUser(); }, [childPos]);
-    useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
+    useEffect(() => { if (child) { fetchVaccineCard(); fetchPhcData();} }, [child]);
 
     const [value, setValue] = React.useState('1');
 
@@ -234,31 +262,35 @@ const Dashboard = () => {
                                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                         <TabList onChange={handleChange} aria-label="lab API tabs example">
                                         {
-                                            fullEvents !== null ?
-                                                <>
-                                                <Tab label="Immunization Registry" value="1" />
-                                                </>
+                                            fullEvents !== null ?   
+                                                <Tab label="Immunization Registry" value="1" />                                                
                                             : null
                                         }
                                             
                                             <Tab label="Growth and Monitoring" value="2" />
                                             <Tab label="Development Milestones" value="3" />
                                             <Tab label="Vitamin A & Deworming" value="4" />
+                                        {
+                                            phcEvents !== null ?   
                                             <Tab label="Public Health Registry" value="5" />
+                                            : null
+                                        }
                                         </TabList>
                                     </Box>
                                     {
-                                        fullEvents !== null ?
-                                            <>
-                                            <TabPanel value="1" className='overflow full-height'><VaccineCard full={fullEvents} vacs={vacList} /></TabPanel>
-                                            </>
+                                        fullEvents !== null ?                                            
+                                            <TabPanel value="1" className='overflow full-height'><VaccineCard full={fullEvents} vacs={vacList} /></TabPanel>                                            
                                         : null
                                     }
                                     
                                     <TabPanel value="2" className='overflow full-height'>{<GrowthMonitoring/>}</TabPanel>
                                     <TabPanel value="3" className='overflow full-height'>{<Milestones/>}</TabPanel>
                                     <TabPanel value="4" className='overflow full-height'>{<ADeworming/>}</TabPanel>
-                                    <TabPanel value="5" className='overflow full-height'>{<PublicHealthRegistry/>}</TabPanel>
+                                    {
+                                        phcEvents !== null ?   
+                                            <TabPanel value="5" className='overflow full-height'>{<PublicHealthRegistry/>}</TabPanel>
+                                        : null
+                                    }
                                 </TabContext>
                             </Box>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -299,20 +331,6 @@ const Dashboard = () => {
                         </>
                         : null
                 }
-                {/* <div className='common-head'>
-                    <Grid container spacing={2} className='centered'>
-                        <Grid item xs={12} md={6}>
-                            <Carousel>
-                                {
-                                    items.map((item, i) => <img key={i} src={item} alt='banner' />)
-                                }
-                            </Carousel>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Chart />
-                        </Grid>
-                    </Grid>
-                </div> */}
             </div>
         </div>
     </div>
