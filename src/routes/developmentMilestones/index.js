@@ -15,6 +15,8 @@ import male2 from '../../assets/avatar/male2.png'
 import female0 from '../../assets/avatar/female0.png'
 import female1 from '../../assets/avatar/female1.png'
 import female2 from '../../assets/avatar/female2.png'
+import m1 from '../../assets/avatar/m1.JPG'
+
 
 const srcList = [male0, female0, male1, female1, male2, female2];
 
@@ -166,91 +168,91 @@ const Milestones = () => {
                 <h4>From birth to 6 months</h4>
                 <TableContainer component={Paper}>
                     <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell style={{ width: '5%' }}>#</TableCell>
-                                <TableCell align="center" style={{ width: '50%' }}>Development Milestones</TableCell>
-                                <TableCell align="center" style={{ width: '15%' }}>Average age</TableCell>
-                                <TableCell align="center" style={{ width: '20%' }}>Picture</TableCell>
-                                <TableCell align="center" style={{ width: '10%' }}>Status</TableCell>
+                        <TableHead className='table-header'>
+                            <TableRow className='pink-row'>
+                                <TableCell className="milestone-table-header" style={{ width: '5%' }}>#</TableCell>
+                                <TableCell className="milestone-table-header" align="center" style={{ width: '55%' }}>Development Milestones</TableCell>
+                                <TableCell className="milestone-table-header" align="center" style={{ width: '20%' }}>Average age</TableCell>
+                                <TableCell className="milestone-table-header white" align="center" style={{ width: '10%' }}>Picture</TableCell>
+                                <TableCell className="milestone-table-header" align="center" style={{ width: '10%' }}>Status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
+                            <TableRow className='purple-row'>
                                 <TableCell>01</TableCell>
                                 <TableCell>Startled by loud noices</TableCell>
                                 <TableCell align="center">01 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">Yes</TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='pink-row'>
                                 <TableCell>02</TableCell>
                                 <TableCell>Smile responsively</TableCell>
                                 <TableCell align="center">02 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">Yes</TableCell>
                             </TableRow>
-                            <TableRow>   
+                            <TableRow className='purple-row'>   
                                 <TableCell>03</TableCell>
                                 <TableCell>Hold head up</TableCell>
                                 <TableCell align="center">03 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">No</TableCell>
                             </TableRow>
-                            <TableRow>
-                                <TableCell>04</TableCell>
+                            <TableRow className='pink-row'>
+                                <TableCell style={{ backgroundColor: '#FAE8ED'}}>04</TableCell>
                                 <TableCell>Make simple sounds</TableCell>
                                 <TableCell align="center">03 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">No</TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='purple-row'>
                                 <TableCell>05</TableCell>
                                 <TableCell>Wiggles and kicks with arms and legs</TableCell>
                                 <TableCell align="center">04 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">No</TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='pink-row'>
                                 <TableCell>06</TableCell>
                                 <TableCell>Communicate hunger, fear, discomfort</TableCell>
                                 <TableCell align="center">04 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">No</TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='purple-row'>
                                 <TableCell>07</TableCell>
                                 <TableCell>Sits with some support</TableCell>
                                 <TableCell align="center">04 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='pink-row'>
                                 <TableCell>08</TableCell>
                                 <TableCell>Eyes track moving object 180 degrees</TableCell>
                                 <TableCell align="center">05 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='purple-row'>
                                 <TableCell>09</TableCell>
                                 <TableCell>Roll over</TableCell>
                                 <TableCell align="center">05 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='pink-row'>
                                 <TableCell>10</TableCell>
                                 <TableCell>Turns head to sounds</TableCell>
                                 <TableCell align="center">06 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='purple-row'>
                                 <TableCell>11</TableCell>
                                 <TableCell>Reach and grasp objects</TableCell>
                                 <TableCell align="center">06 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
                         </TableBody>
@@ -260,90 +262,90 @@ const Milestones = () => {
                 <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
-                            <TableRow>
+                            <TableRow className='pink-row'>
                                 <TableCell style={{ width: '5%' }}>#</TableCell>
-                                <TableCell align="center" style={{ width: '50%' }}>Development Milestones</TableCell>
-                                <TableCell align="center" style={{ width: '15%' }}>Average age</TableCell>
-                                <TableCell align="center" style={{ width: '20%' }}>Picture</TableCell>
+                                <TableCell align="center" style={{ width: '55%' }}>Development Milestones</TableCell>
+                                <TableCell align="center" style={{ width: '20%' }}>Average age</TableCell>
+                                <TableCell align="center" className="white" style={{ width: '10%' }}>Picture</TableCell>
                                 <TableCell align="center" style={{ width: '10%' }}>Status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
+                            <TableRow className='purple-row'>
                                 <TableCell>01</TableCell>
                                 <TableCell>Startled by loud noices</TableCell>
                                 <TableCell align="center">01 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}}/></TableCell>
                                 <TableCell align="center">Yes</TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='pink-row'>
                                 <TableCell>02</TableCell>
                                 <TableCell>Smile responsively</TableCell>
                                 <TableCell align="center">02 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">Yes</TableCell>
                             </TableRow>
-                            <TableRow>   
+                            <TableRow className='purple-row'>   
                                 <TableCell>03</TableCell>
                                 <TableCell>Hold head up</TableCell>
                                 <TableCell align="center">03 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">No</TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='pink-row'>
                                 <TableCell>04</TableCell>
                                 <TableCell>Make simple sounds</TableCell>
                                 <TableCell align="center">03 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">No</TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='purple-row'>
                                 <TableCell>05</TableCell>
                                 <TableCell>Wiggles and kicks with arms and legs</TableCell>
                                 <TableCell align="center">04 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">No</TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='pink-row'>
                                 <TableCell>06</TableCell>
                                 <TableCell>Communicate hunger, fear, discomfort</TableCell>
                                 <TableCell align="center">04 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center">No</TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='purple-row'>
                                 <TableCell>07</TableCell>
                                 <TableCell>Sits with some support</TableCell>
                                 <TableCell align="center">04 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='pink-row'>
                                 <TableCell>08</TableCell>
                                 <TableCell>Eyes track moving object 180 degrees</TableCell>
                                 <TableCell align="center">05 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='purple-row'>
                                 <TableCell>09</TableCell>
                                 <TableCell>Roll over</TableCell>
                                 <TableCell align="center">05 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='pink-row'>
                                 <TableCell>10</TableCell>
                                 <TableCell>Turns head to sounds</TableCell>
                                 <TableCell align="center">06 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
-                            <TableRow>
+                            <TableRow className='purple-row'>
                                 <TableCell>11</TableCell>
                                 <TableCell>Reach and grasp objects</TableCell>
                                 <TableCell align="center">06 Months</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell className="white" align="center"><img src={m1} alt='Startled by loud noices' style={{ height: '3em'}} /></TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
                         </TableBody>

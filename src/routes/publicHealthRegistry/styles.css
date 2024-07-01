@@ -52,3 +52,17 @@
 .diagnosis-item {
     padding: 10px;
 }
+
+.phc-table-header {
+    background-color: #02c7d2;
+}
+
+.phc-table-header-cell {
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 120% !important;
+}
+
+.diagnosis-row {
+    padding-left: 1% !important;
+}

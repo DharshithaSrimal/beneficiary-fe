@@ -40,18 +40,6 @@ const Header = () => {
                         <ListItemText primary='Home' style={{ textAlign: 'left', paddingLeft: '1em' }} />
                     </ListItemButton>
                 </ListItem>
-                <ListItem className={window.location.pathname === '/immunizationRegistry' ? 'list-item-selected' : 'list-item'}>
-                    <ListItemButton onClick={() => window.location.href = '/immunizationRegistry'} style={{ borderRadius: '2em' }}>
-                        <VaccinesIcon />
-                        <ListItemText primary='My Health Portal' style={{ textAlign: 'left', paddingLeft: '1em' }} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem className={window.location.pathname === '/publicHealthCareRegistry' ? 'list-item-selected' : 'list-item'}>
-                    <ListItemButton onClick={() => window.location.href = '/publicHealthCareRegistry'} style={{ borderRadius: '2em' }}>
-                        <AppRegistrationIcon />
-                        <ListItemText primary='Public Health Registry' style={{ textAlign: 'left', paddingLeft: '1em' }} />
-                    </ListItemButton>
-                </ListItem>
                 <ListItem className={window.location.pathname === '/profile' ? 'list-item-selected' : 'list-item'}>
                     <ListItemButton onClick={() => window.location.href = '/profile'} style={{ borderRadius: '2em' }}>
                         <AccountCircleTwoToneIcon />
