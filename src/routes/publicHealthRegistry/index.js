@@ -19,8 +19,6 @@ import male2 from '../../assets/avatar/male2.png'
 import female0 from '../../assets/avatar/female0.png'
 import female1 from '../../assets/avatar/female1.png'
 import female2 from '../../assets/avatar/female2.png'
-import { red } from '@mui/material/colors';
-import { TableHead } from '@mui/material';
 
 const srcList = [male0, female0, male1, female1, male2, female2];
 
@@ -39,12 +37,14 @@ var items = [
     "/banner2.png"
 ]
 
-const PublicHealthRegistry = () => {
+const PublicHealthRegistry = ({ phcEvents }) => {
     const [children, setChildren] = useState([]);
     const [childPos, setChildPos] = useState(null);
     const [child, setChild] = useState(null);
     const [fullEvents, setFullEvents] = useState([]);
     const [vacList, setVacList] = useState([]);
+    const [latestVisit, setLatestVisit] = useState(null);
+    const [monthsSinceLastVisit, setMonthsSinceLastVisit] = useState(null);
 
     const fetchUsers = async () => {
         fetch(await API_URL() + 'api/getEnrollments', {
@@ -85,103 +85,54 @@ const PublicHealthRegistry = () => {
         }
     }
 
-    const fetchVaccineCard = async () => {
-        if (childPos !== null) {
-            fetch(await API_URL() + `api/getEventLog`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-token': getCookie()
-                },
-                body: JSON.stringify({
-                    epi: child.epi,
-                    entity_id: child.entity_instance
-                })
-            })
-                .then(res => res.json())
-                .then(out => {
-                    console.log("PVAC", out.data);
-                    if (out.data.events) {
-                        setVacList(out.data);
-                        setFullEvents(out.data.events);
-                    }
-                })
-                .catch(err => console.log("Error Catch", err))
+    useEffect(() => {
+        if (phcEvents && phcEvents.length > 0) {
+            // Sort events by eventDate
+            const sortedEvents = [...phcEvents].sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
+            const latestEvent = sortedEvents[0];
+            setLatestVisit(latestEvent);
+
+            // Calculate months since last visit
+            const lastVisitDate = new Date(latestEvent.eventDate);
+            const currentDate = new Date();
+            const monthsDifference = (currentDate.getFullYear() - lastVisitDate.getFullYear()) * 12 + (currentDate.getMonth() - lastVisitDate.getMonth());
+            setMonthsSinceLastVisit(monthsDifference);
         }
-    }
+    }, [phcEvents]);
 
-    const openPublic = async () => {
-        fetch(await API_URL() + `api/generatePublicQR`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-token': getCookie()
-            },
-            body: JSON.stringify({
-                epi: child.epi,
-                entity_instance: child.entity_instance
-            })
-        })
-            .then(res => res.json())
-            .then(out => {
-                console.log("Received QR", out);
-                window.open(`/public/${out.data.qr}`, '_blank');
-            })
-            .catch(err => console.log("Error Catch", err))
-    }
-
-    const openTraveller = async () => {
-        fetch(await API_URL() + `api/generatePublicQR`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-token': getCookie()
-            },
-            body: JSON.stringify({
-                epi: child.epi,
-                entity_instance: child.entity_instance
-            })
-        })
-            .then(res => res.json())
-            .then(out => {
-                console.log("Received QR", out);
-                window.open(`/traveller/${out.data.qr}`, '_blank');
-            })
-            .catch(err => console.log("Error Catch", err))
-    }
-
-    useEffect(() => { fetchUsers(); }, []);
+    useEffect(() => {  fetchUser(); }, []);
     useEffect(() => { fetchUser(); }, [childPos]);
-    useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
 
     return <div className='dashboard-container'>
         <div className='dashboard-wrapper'>
             <div className='content-wrapper'>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableBody>
-                            <TableRow className="phc-table-header">
-                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Visits</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Last visit</TableCell>
-                                <TableCell align="center"></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Number of visits </TableCell>
-                                <TableCell align="center"></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Months since last visits</TableCell>
-                                <TableCell align="center"></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Next visit</TableCell>
-                                <TableCell align="center"></TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                {phcEvents && (
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableBody>
+                                <TableRow className="phc-table-header">
+                                    <TableCell className="phc-table-header-cell" colSpan={2} align="center">Visits</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Last visit</TableCell>
+                                    <TableCell align="center">{latestVisit ? new Date(latestVisit.eventDate).toLocaleDateString() : 'N/A'}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Number of visits</TableCell>
+                                    <TableCell align="center">{phcEvents.length}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Months since last visits</TableCell>
+                                    <TableCell align="center">{monthsSinceLastVisit !== null ? monthsSinceLastVisit : 'N/A'}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Next visit</TableCell>
+                                    <TableCell align="center"></TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
                 <br></br>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -297,7 +248,8 @@ const PublicHealthRegistry = () => {
                     </Table>
                 </TableContainer>
                 <br></br>
-            </div>
+            
+                </div>
         </div>
     </div>
 }
