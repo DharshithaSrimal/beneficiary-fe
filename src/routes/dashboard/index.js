@@ -86,7 +86,9 @@ const Dashboard = () => {
                     'x-token': getCookie()
                 },
                 body: JSON.stringify({
-                    epi: children[childPos].epi
+                    epi: children[childPos].epi,
+                    phcId: children[childPos].phcId
+
                 })
             })
                 .then(res => res.json())
@@ -128,22 +130,20 @@ const Dashboard = () => {
     const fetchPhcData = async () => {
         if (childPos !== null) {
             fetch(await API_URL() + `api/getPhcData`, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'x-token': getCookie()
-                }
-                // ,
-                // body: JSON.stringify({
-                //     epi: child.epi,
-                //     entity_id: child.entity_instance
-                // })
+                },
+                body: JSON.stringify({
+                    phcId: child.phcId,
+                    entity_id: child.entity_instance
+                })
             })
                 .then(res => res.json())
                 .then(out => {
-                    console.log("PHC", out.data);
-                    if (out.data.events) {
-                        setPhcEvents(out.data.events);
+                    if (out.events) {
+                        setPhcEvents(out.events);
                     }
                 })
                 .catch(err => console.log("Error Catch", err))
@@ -193,7 +193,8 @@ const Dashboard = () => {
 
     useEffect(() => { fetchUsers(); }, []);
     useEffect(() => { fetchUser(); }, [childPos]);
-    useEffect(() => { if (child) { fetchVaccineCard(); fetchPhcData();} }, [child]);
+    useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
+    useEffect(() => { if (child) { fetchPhcData(); } }, [child]);
 
     const [value, setValue] = React.useState('1');
 
@@ -245,8 +246,8 @@ const Dashboard = () => {
                                 }
                             }
                             return <div style={{ padding: '1em', background: index !== childPos ? '' : 'rgb(248, 219, 163)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '8em' }} onClick={() => setChildPos(childPos === index ? null : index)}>
-                                <img src={src} alt='child' style={{ width: '5em' }} />
                                 <h6 style={{ margin: 0, textAlign: 'center', padding: '5px 0' }}>{child.name}</h6>
+                                <img src={src} alt='child' style={{ width: '5em' }} />
                                 <p style={{ fontSize: '0.6em', padding: 0 }}>({`${age} Y ${months} M`})</p>
                             </div>
                         })
@@ -257,42 +258,6 @@ const Dashboard = () => {
                 {
                     childPos !== null ?
                         <>
-                            <Box sx={{ width: '100%', typography: 'body1' }} className='spread'>
-                                <TabContext value={value}>
-                                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                        <TabList onChange={handleChange} aria-label="lab API tabs example">
-                                        {
-                                            fullEvents !== null ?   
-                                                <Tab label="Immunization Registry" value="1" />                                                
-                                            : null
-                                        }
-                                            
-                                            <Tab label="Growth and Monitoring" value="2" />
-                                            <Tab label="Development Milestones" value="3" />
-                                            <Tab label="Vitamin A & Deworming" value="4" />
-                                        {
-                                            phcEvents !== null ?   
-                                            <Tab label="Public Health Registry" value="5" />
-                                            : null
-                                        }
-                                        </TabList>
-                                    </Box>
-                                    {
-                                        fullEvents !== null ?                                            
-                                            <TabPanel value="1" className='overflow full-height'><VaccineCard full={fullEvents} vacs={vacList} /></TabPanel>                                            
-                                        : null
-                                    }
-                                    
-                                    <TabPanel value="2" className='overflow full-height'>{<GrowthMonitoring/>}</TabPanel>
-                                    <TabPanel value="3" className='overflow full-height'>{<Milestones/>}</TabPanel>
-                                    <TabPanel value="4" className='overflow full-height'>{<ADeworming/>}</TabPanel>
-                                    {
-                                        phcEvents !== null ?   
-                                            <TabPanel value="5" className='overflow full-height'>{<PublicHealthRegistry/>}</TabPanel>
-                                        : null
-                                    }
-                                </TabContext>
-                            </Box>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <h4>{children[childPos].name}</h4>
                             </div>
@@ -327,6 +292,65 @@ const Dashboard = () => {
                                 }}><PersonRemoveTwoToneIcon color='error' /></IconButton>
                             </div>
                             
+                            <Box sx={{ width: '100%', typography: 'body1' }} className='spread'>
+                                <TabContext value={value}>
+                                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                        <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                        {
+                                            fullEvents.length > 0 ?   
+                                                <Tab label="Immunization Registry" value="1" />                                                
+                                            : null
+                                        }
+                                        {
+                                            fullEvents.length > 0 ?     
+                                                <Tab label="Growth and Monitoring" value="2" />
+                                            : null
+                                        }
+                                        {
+                                            fullEvents.length > 0 ?
+                                                <Tab label="Development Milestones" value="3" />
+                                            : null
+                                        }
+                                        {
+                                            fullEvents.length > 0 ?
+                                                <Tab label="Vitamin A & Deworming" value="4" />
+                                            : null
+                                        }
+                                        {
+                                            phcEvents.length > 0 ?   
+                                                <Tab label="Public Health Registry" value="5" />
+                                            : null
+                                        }
+                                        </TabList>
+                                    </Box>
+                                    {
+                                        fullEvents.length > 0 ?                                          
+                                            <TabPanel value="1" className='overflow full-height'><VaccineCard full={fullEvents} vacs={vacList} /></TabPanel>                                            
+                                        : null
+                                    }
+                                    {
+                                        fullEvents.length > 0 ?
+                                            <TabPanel value="2" className='overflow full-height'>{<GrowthMonitoring/>}</TabPanel>
+                                        : null
+                                    }
+                                    {
+                                        fullEvents.length > 0 ?
+                                            <TabPanel value="3" className='overflow full-height'>{<Milestones/>}</TabPanel>
+                                        : null
+                                    }
+                                    {
+                                        fullEvents.length > 0 ?
+                                            <TabPanel value="4" className='overflow full-height'>{<ADeworming/>}</TabPanel>
+                                        : null
+                                    }
+                                    {
+                                        phcEvents.length > 0 ?     
+                                            <TabPanel value="5" className='overflow full-height'><PublicHealthRegistry phcEvents={phcEvents}/></TabPanel>
+                                        : null
+                                    }
+                                </TabContext>
+                            </Box>
+
                             <ProfileDetails profileOpen={profileOpen} setProfileOpen={setProfileOpen} user={child ?? children[childPos]} />
                         </>
                         : null
