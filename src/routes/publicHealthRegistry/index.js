@@ -84,6 +84,10 @@ const PublicHealthRegistry = ({ phcEvents }) => {
                 .catch(err => console.log("Error Catch", err))
         }
     }
+    const getDataElementValue = (dataValues, dataElementId) => {
+        const dataElement = dataValues.find(element => element.dataElement === dataElementId);
+        return dataElement ? dataElement.value : 'N/A';
+    };
 
     useEffect(() => {
         if (phcEvents && phcEvents.length > 0) {
@@ -115,7 +119,7 @@ const PublicHealthRegistry = ({ phcEvents }) => {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Last visit</TableCell>
-                                    <TableCell align="center">{latestVisit ? new Date(latestVisit.eventDate).toLocaleDateString() : 'N/A'}</TableCell>
+                                    <TableCell align="center">{latestVisit ? new Date(latestVisit.eventDate).toLocaleDateString('en-CA') : 'N/A'}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Number of visits</TableCell>
@@ -172,39 +176,47 @@ const PublicHealthRegistry = ({ phcEvents }) => {
                     </Table>
                 </TableContainer> 
                 <br></br>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableBody>
-                            <TableRow className="phc-table-header">
-                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Examinations</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Height</TableCell>
-                                <TableCell align="center">183cm</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Weight</TableCell>
-                                <TableCell align="center">61kg (Date: 2023-09-14)</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Blood Pressure</TableCell>
-                                <TableCell align="center">137/97 mmHg (Date: 2023-09-14)</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Waist circumference</TableCell>
-                                <TableCell align="center">cm</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Waist circumference</TableCell>
-                                <TableCell align="center">cm</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Body fat</TableCell>
-                                <TableCell align="center">%</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                {latestVisit && (
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableBody>
+                                <TableRow className="phc-table-header">
+                                    <TableCell className="phc-table-header-cell" colSpan={2} align="center">Examinations</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Height</TableCell>
+                                    <TableCell align="center">{latestVisit ? getDataElementValue(latestVisit.dataValues, 'u963AA3Rv0L'): 'N/A'}cm</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Weight</TableCell>
+                                    <TableCell align="center">
+        {latestVisit && getDataElementValue(latestVisit.dataValues, 'zLpxAcq9PqD') ? (
+            <>
+                {getDataElementValue(latestVisit.dataValues, 'zLpxAcq9PqD')}kg ({new Date(latestVisit.eventDate).toISOString().split('T')[0]})
+            </>
+        ) : 'N/A'}
+    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Blood Pressure</TableCell>
+                                    <TableCell align="center">137/97 mmHg (Date: 2023-09-14)</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Waist circumference</TableCell>
+                                    <TableCell align="center">cm</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Waist circumference</TableCell>
+                                    <TableCell align="center">cm</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Body fat</TableCell>
+                                    <TableCell align="center">%</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
                 <br></br>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
