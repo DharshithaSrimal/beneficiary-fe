@@ -138,6 +138,12 @@ const PublicHealthRegistry = ({ phcEvents }) => {
                     </TableContainer>
                 )}
                 <br></br>
+                {latestVisit && (
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_DIABETES}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_HYPERLIPIDAEMIA}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_COPD}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_ASTHMA}`) !== 'N/A'
+                ) && (
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableBody>
@@ -147,36 +153,47 @@ const PublicHealthRegistry = ({ phcEvents }) => {
                             <TableRow>
                                 <List className="diagnosis-row" sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} aria-label="contacts">
                                     <ListItem disablePadding>
-                                        <ListItemIcon>
-                                            <CircleIcon sx={{ color: 'red' }}/>
-                                        </ListItemIcon>
-                                        <ListItemText primary="Diabetes" />
+                                        {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_DIABETES}`) !== 'N/A' && (
+                                            <ListItem disablePadding>
+                                                Diabetes - {getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_DIABETES}`)}
+                                            </ListItem>
+                                        )}
                                     </ListItem>
                                     <ListItem disablePadding>
-                                        <ListItemIcon>
-                                            <CircleIcon sx={{ color: 'green' }}/>
-                                        </ListItemIcon>
-                                        <ListItemText primary="Hyperlipidemia" />
+                                        {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_HYPERLIPIDAEMIA}`) !== 'N/A' && (
+                                            <ListItem disablePadding>
+                                                Hyperlipidemia - {getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_HYPERLIPIDAEMIA}`)}
+                                            </ListItem>
+                                        )}
                                     </ListItem>
                                     <ListItem disablePadding>
-                                        <ListItemIcon>
-                                            <CircleIcon sx={{ color: 'green' }}/>
-                                        </ListItemIcon>
-                                        <ListItemText primary="COPD" />
+                                        {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_COPD}`) !== 'N/A' && (
+                                            <ListItem disablePadding>
+                                                COPD - {getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_COPD}`)}
+                                            </ListItem>
+                                        )}
                                     </ListItem>
                                     <ListItem disablePadding>
-                                        <ListItemIcon>
-                                            <CircleIcon sx={{ color: 'green' }}/>
-                                        </ListItemIcon>
-                                        <ListItemText primary="Asthma" />
+                                        {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_ASTHMA}`) !== 'N/A' && (
+                                            <ListItem disablePadding>
+                                                Asthma - {getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_ASTHMA}`)}
+                                            </ListItem>
+                                        )}
                                     </ListItem>
                                 </List>
                             </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer> 
+                )}
                 <br></br>
                 {latestVisit && (
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_HEIGHT}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WEIGHT}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_BLOOD_PRESSURE}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WAIST_CIRCUMFERENCE}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WAIST_BODY_FAT}`) !== 'N/A'
+                ) && (
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableBody>
@@ -185,80 +202,103 @@ const PublicHealthRegistry = ({ phcEvents }) => {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Height</TableCell>
-                                    <TableCell align="center">{latestVisit ? getDataElementValue(latestVisit.dataValues, 'u963AA3Rv0L'): 'N/A'}cm</TableCell>
+                                    <TableCell align="center">{latestVisit ? getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_HEIGHT}`): 'N/A'}cm</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Weight</TableCell>
                                     <TableCell align="center">
-        {latestVisit && getDataElementValue(latestVisit.dataValues, 'zLpxAcq9PqD') ? (
-            <>
-                {getDataElementValue(latestVisit.dataValues, 'zLpxAcq9PqD')}kg ({new Date(latestVisit.eventDate).toISOString().split('T')[0]})
-            </>
-        ) : 'N/A'}
-    </TableCell>
+                                    {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WEIGHT}`) ? (
+                                        <>
+                                            {getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WEIGHT}`)}kg ({new Date(latestVisit.eventDate).toISOString().split('T')[0]})
+                                        </>
+                                    ) : 'N/A'}
+                                </TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Blood Pressure</TableCell>
-                                    <TableCell align="center">137/97 mmHg (Date: 2023-09-14)</TableCell>
+                                    <TableCell align="center">{latestVisit ? getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_BLOOD_PRESSURE}`): 'N/A'} ({new Date(latestVisit.eventDate).toISOString().split('T')[0]}) </TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Waist circumference</TableCell>
-                                    <TableCell align="center">cm</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Waist circumference</TableCell>
-                                    <TableCell align="center">cm</TableCell>
+                                    <TableCell align="center">{latestVisit ? getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WAIST_CIRCUMFERENCE}`): 'N/A'} ({new Date(latestVisit.eventDate).toISOString().split('T')[0]}) </TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Body fat</TableCell>
-                                    <TableCell align="center">%</TableCell>
+                                    <TableCell align="center">{latestVisit ? getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WAIST_BODY_FAT}`): 'N/A'} ({new Date(latestVisit.eventDate).toISOString().split('T')[0]}) </TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
                     </TableContainer>
                 )}
                 <br></br>
+                {latestVisit && (
+                    getDataElementValue(latestVisit.dataValues, 'e86IssaHvSm') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'yptOqRaEaYg') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'ZI3RQBfK7p7') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'E9pZuvjqutZ') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'lqAyxwQyTB1') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'V9NHh4JU8Uf') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'Oa5cJZSmV7l') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'yXWnTMdz9rV') !== 'N/A'
+                ) && (
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableBody>
                             <TableRow className="phc-table-header">
                                 <TableCell className="phc-table-header-cell" colSpan={2} align="center">Investigations</TableCell>
                             </TableRow>
-                            <TableRow>
-                                <TableCell>Fasting Blood Sugar</TableCell>
-                                <TableCell align="center">183cm</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Random Blood Sugar</TableCell>
-                                <TableCell align="center">61kg (Date: 2023-09-14)</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>HBA1C</TableCell>
-                                <TableCell align="center">137/97 mmHg (Date: 2023-09-14)</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Total Cholesterol</TableCell>
-                                <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Triglycerides</TableCell>
-                                <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>HDL - High Density Lipoprotein</TableCell>
-                                <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>LDL - Low Density Lipoprotein</TableCell>
-                                <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>VLDL - Very Low Density Lipoprotein</TableCell>
-                                <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Fasting_Blood_Sugar}`) !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>Fasting Blood Sugar</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Fasting_Blood_Sugar}`)} mmHg</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Random_Blood_Sugar}`) !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>Random Blood Sugar</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Random_Blood_Sugar}`)} mmHg</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Random_HBA1C}`) !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>HBA1C</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Random_HBA1C}`)}</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, 'E9pZuvjqutZ') !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>Total Cholesterol</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, 'E9pZuvjqutZ')}</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, 'lqAyxwQyTB1') !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>Triglycerides</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, 'lqAyxwQyTB1')}</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, 'V9NHh4JU8Uf') !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>HDL - High Density Lipoprotein</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, 'V9NHh4JU8Uf')}</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, 'Oa5cJZSmV7l') !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>LDL - Low Density Lipoprotein</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, 'Oa5cJZSmV7l')}</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, 'yXWnTMdz9rV') !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>VLDL - Very Low Density Lipoprotein</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, 'yXWnTMdz9rV')}</TableCell>
+                                </TableRow>
+                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>
+                )}
                 <br></br>
             
                 </div>

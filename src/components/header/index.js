@@ -82,7 +82,7 @@ const Header = () => {
         <div className='header desktop'>
             <Button onClick={() => toggleDrawer(true)}><HiMenuAlt1 size={30} color='#B4CDED' /></Button>
             <img src='/logo512_white.png' alt='logo white' style={{ height: '3em', background: 'white' }} />
-            <h3 style={{ padding: 0 }}>Electronic Immunization Registry Beneficiary Portal</h3>
+            <h3 style={{ padding: 0 }}>Beneficiary Portal</h3>
             <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => setExpandedProfile(true)}>
                 {/* <label style={{ paddingRight: '1em' }}>{new Date().toLocaleDateString()}</label> */}
                 <img src={profile} alt='profile' style={{ width: '3em', height: '3em', paddingRight: '1em' }} />
@@ -98,7 +98,7 @@ const Header = () => {
         <div className='mobile'>
             {/* <Button onClick={() => toggleDrawer(true)}><HiMenuAlt1 size={30} color='#B4CDED' /></Button> */}
             <div className='header'>
-                <h3 style={{ padding: 5, fontSize: '1em', textAlign: 'center' }}>Electronic Immunization Registry Beneficiary Portal</h3>
+                <h3 style={{ padding: 5, fontSize: '1em', textAlign: 'center' }}>Beneficiary Portal</h3>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => setExpandedProfile(true)}>
                 <img src={profile} alt='profile' style={{ width: '2em', height: '2em', paddingRight: '1em' }} />

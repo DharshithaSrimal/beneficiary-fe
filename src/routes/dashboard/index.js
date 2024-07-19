@@ -263,8 +263,8 @@ const Dashboard = () => {
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <IconButton onClick={() => setProfileOpen(true)}><InfoTwoToneIcon color='primary' /></IconButton>
-                                <IconButton onClick={() => openPublic()}><PrintTwoTone color='primary' /></IconButton>
-                                <IconButton onClick={() => openTraveller()}><CardTravelTwoToneIcon color='primary' /></IconButton>
+                                {value === '1' && <PrintTwoTone color='primary' style={{ marginRight: '.5em', cursor: 'pointer' }} onClick={openPublic} />}
+                        {value === '1' && <CardTravelTwoToneIcon color='primary' style={{ marginRight: '.5em', cursor: 'pointer' }} onClick={openTraveller} />}
                                 <IconButton onClick={async () => {
                                     if (window.confirm(`Do you want to remove ${children[childPos].name} from your enrollments?`)) {
                                         try {
@@ -298,12 +298,12 @@ const Dashboard = () => {
                                         <TabList onChange={handleChange} aria-label="lab API tabs example">
                                         {
                                             fullEvents.length > 0 ?   
-                                                <Tab label="Immunization Registry" value="1" />                                                
+                                                <Tab label="Immunization" value="1" />                                                
                                             : null
                                         }
                                         {
                                             fullEvents.length > 0 ?     
-                                                <Tab label="Growth and Monitoring" value="2" />
+                                                <Tab label="Growth Monitoring" value="2" />
                                             : null
                                         }
                                         {
@@ -318,7 +318,7 @@ const Dashboard = () => {
                                         }
                                         {
                                             phcEvents.length > 0 ?   
-                                                <Tab label="Public Health Registry" value="5" />
+                                                <Tab label="Noncommunicable Diseases" value="5" />
                                             : null
                                         }
                                         </TabList>
