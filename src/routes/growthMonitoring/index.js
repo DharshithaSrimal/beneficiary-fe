@@ -27,12 +27,22 @@ import { lhfa_b_0_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/lhfa
 import { lhfa_g_0_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_girls_0-to-5-years_zscores";
 import { hcfa_b_0_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/hcfa/hcfa_boys_0-to-5-years_zscores";
 import { hcfa_g_0_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/hcfa/hcfa_girls_0-to-5-years_zscores";
+
+//test 
+import { lhfa_g_0_to_2_years_zscores } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_girls_0-to-2-years_zscores";
+import { lhfa_g_2_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_girls_2-to-5-years_zscores";
+import { lhfa_months } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_months";
+
 import Wfa_Boys from "./components/wfa_boys-0-to-5-years"
 import Wfa_Girls from "./components/wfa_girls-0-to-5-years"
 import Lhfa_Boys from "./components/lhfa_boys-0-to-5-years"
 import Lhfa_Girls from "./components/lhfa_girls-0-to-5-years"
 import Hcfa_Boys from "./components/hcfa_boys-0-to-5-years"
 import Hcfa_Girls from "./components/hcfa_girls-0-to-5-years"
+
+//test
+import Lhfa_Girls_New from "./components/lhfa_girls-0-to-5-years-new"
+
 import './styles.css';
 
 Chart.register(CategoryScale, Filler, annotationPlugin)
@@ -75,6 +85,7 @@ const GrowthMonitoring = () => {
         setValue(newValue);
     };
 
+    /*
     const [wfaBoyschartData, setWfaBoyschartData] = useState({
         labels: wfa_b_0_to_5_years_zscores.map((data) => data.Month), 
         datasets: [            
@@ -85,6 +96,7 @@ const GrowthMonitoring = () => {
                 borderColor: "black",
                 borderWidth: 2,
                 pointRadius: 0,
+                pointHitRadius: 0,
                 fill: {
                     target: "2",
                     above: "rgba(255,255,0,0.3)"
@@ -95,28 +107,32 @@ const GrowthMonitoring = () => {
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD2),
                 borderColor: "black",
                 borderWidth: 2,
-                pointRadius: 0
+                pointRadius: 0,
+                pointHitRadius: 0
             },
             {
                 label: "1",
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD1),
                 borderColor: "black",
                 borderWidth: 2,
-                pointRadius: 0
+                pointRadius: 0,
+                pointHitRadius: 0,
             },
             {
                 label: "0",
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD0),
                 borderColor: "black",
                 borderWidth: 2,
-                pointRadius: 0
+                pointRadius: 0,
+                pointHitRadius: 0,
             },
             {
                 label: "-1",
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD1neg),
                 borderColor: "black",
                 borderWidth: 2,
-                pointRadius: 0
+                pointRadius: 0,
+                pointHitRadius: 0,
             },
             {
                 label: "-2",
@@ -124,6 +140,7 @@ const GrowthMonitoring = () => {
                 borderColor: "black",
                 borderWidth: 2,
                 pointRadius: 0,
+                pointHitRadius: 0,
                 fill: {
                     target: "2",
                     below: "rgba(0,255,0,0.3)"
@@ -135,6 +152,7 @@ const GrowthMonitoring = () => {
                 borderColor: "black",
                 borderWidth: 2,
                 pointRadius: 0,
+                pointHitRadius: 0,
                 fill: {
                     target: "-1",
                     below: "rgba(255,0,0,0.3)"
@@ -160,6 +178,7 @@ const GrowthMonitoring = () => {
                 borderColor: "black",
                 borderWidth: 2,
                 pointRadius: 0,
+                pointHitRadius: 0,
                 fill: {
                     target: "2",
                     above: "rgba(255,255,0,0.3)"
@@ -170,28 +189,32 @@ const GrowthMonitoring = () => {
                 data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2),
                 borderColor: "black",
                 borderWidth: 2,
-                pointRadius: 0
+                pointRadius: 0,
+                pointHitRadius: 0
             },
             {
                 label: "1",
                 data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1),
                 borderColor: "black",
                 borderWidth: 2,
-                pointRadius: 0
+                pointRadius: 0,
+                pointHitRadius: 0,
             },
             {
                 label: "0",
                 data: wfa_g_0_to_5_years_zscores.map((data) => data.SD0),
                 borderColor: "black",
                 borderWidth: 2,
-                pointRadius: 0
+                pointRadius: 0,
+                pointHitRadius: 0,
             },
             {
                 label: "-1",
                 data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1neg),
                 borderColor: "black",
                 borderWidth: 2,
-                pointRadius: 0
+                pointRadius: 0,
+                pointHitRadius: 0,
             },
             {
                 label: "-2",
@@ -199,6 +222,7 @@ const GrowthMonitoring = () => {
                 borderColor: "black",
                 borderWidth: 2,
                 pointRadius: 0,
+                pointHitRadius: 0,
                 fill: {
                     target: "2",
                     below: "rgba(0,255,0,0.3)"
@@ -210,26 +234,104 @@ const GrowthMonitoring = () => {
                 borderColor: "black",
                 borderWidth: 2,
                 pointRadius: 0,
+                pointHitRadius: 0,
                 fill: {
                     target: "-1",
                     below: "rgba(255,0,0,0.3)"
                 },
             },
-            // {
-            //     label: "eventData",
-            //     data: [null,1,4,5],
-            //     borderColor: "blue",
-            //     borderWidth: 2,
-            //     pointRadius: 2
-            // }
-        ],
-        defaults: {
-            scale: {
-                ticks: { min: 0}
+            {
+                label: "eventData",
+                data: [null,1,4,5],
+                borderColor: "blue",
+                borderWidth: 2,
+                pointRadius: 2
             }
-        }
+        ],
     });
+    */
 
+    // const [wfaGirlschartData, setWfaGirlschartData] = useState({
+    //     labels: wfa_g_0_to_5_years_zscores.map((data) => data.Month), 
+    //     datasets: [            
+    //         {
+    //             // yAxisID: 'yAxes',
+    //             label: "3",
+    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD3),
+    //             borderColor: "black",
+    //             borderWidth: 2,
+    //             pointRadius: 0,
+    //             fill: {
+    //                 target: "2",
+    //                 above: "rgba(255,255,0,0.3)"
+    //             },
+    //         },
+    //         {
+    //             label: "2",
+    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2),
+    //             borderColor: "black",
+    //             borderWidth: 2,
+    //             pointRadius: 0
+    //         },
+    //         {
+    //             label: "1",
+    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1),
+    //             borderColor: "black",
+    //             borderWidth: 2,
+    //             pointRadius: 0
+    //         },
+    //         {
+    //             label: "0",
+    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD0),
+    //             borderColor: "black",
+    //             borderWidth: 2,
+    //             pointRadius: 0
+    //         },
+    //         {
+    //             label: "-1",
+    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1neg),
+    //             borderColor: "black",
+    //             borderWidth: 2,
+    //             pointRadius: 0
+    //         },
+    //         {
+    //             label: "-2",
+    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2neg),
+    //             borderColor: "black",
+    //             borderWidth: 2,
+    //             pointRadius: 0,
+    //             fill: {
+    //                 target: "2",
+    //                 below: "rgba(0,255,0,0.3)"
+    //             },
+    //         },
+    //         {
+    //             label: "-3",
+    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD3neg),
+    //             borderColor: "black",
+    //             borderWidth: 2,
+    //             pointRadius: 0,
+    //             fill: {
+    //                 target: "-1",
+    //                 below: "rgba(255,0,0,0.3)"
+    //             },
+    //         }
+    //         // {
+    //         //     label: "eventData",
+    //         //     data: [null,1,4,5],
+    //         //     borderColor: "blue",
+    //         //     borderWidth: 2,
+    //         //     pointRadius: 2
+    //         // }
+    //     ],
+    //     defaults: {
+    //         scale: {
+    //             ticks: { min: 0}
+    //         }
+    //     }
+    // });
+
+    /*
     const [lhfaBoyschartData, setLhfaBoyschartData] = useState({
         labels: lhfa_b_0_to_5_years_zscores.map((data) => data.Month), 
         datasets: [            
@@ -309,6 +411,157 @@ const GrowthMonitoring = () => {
             }
         }
     });
+    */
+
+    const [lhfaGirlschartData, setLhfaGirlschartData] = useState({
+        labels: lhfa_months.map((data) => data.Month), 
+        datasets: [ 
+            {
+                // yAxisID: 'yAxes',
+                label: "3a",
+                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD3),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: {
+                    target: "2a",
+                    above: "rgba(255,255,0,0.3)"
+                }
+            },
+            {
+                label: "2a",
+                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD2),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0
+            },
+            {
+                label: "1a",
+                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD1),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0
+            },
+            {
+                label: "0a",
+                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD0),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0
+            },
+            {
+                label: "-1a",
+                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD1neg),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0
+            },
+            {
+                label: "-2a",
+                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD2neg),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: {
+                    target: "2a",
+                    below: "rgba(0,255,0,0.3)"
+                }
+            },
+            {
+                label: "-3a",
+                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD3neg),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: {
+                    target: "-1a",
+                    below: "rgba(255,0,0,0.3)"
+                }
+            },
+
+            {
+                // yAxisID: 'yAxes',
+                label: "3",
+                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD3),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: {
+                    target: "2",
+                    below: "rgba(255,255,0,1)"
+                }
+            },
+            {
+                label: "2",
+                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD2),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0
+            },
+            {
+                label: "1",
+                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD1),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: {
+                    target: "-2",
+                    below: "rgba(255,255,0,0.3)"
+                }
+            },
+            {
+                label: "0",
+                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD0),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0
+            },
+            {
+                label: "-1",
+                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD1neg),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0
+            },
+            {
+                label: "-2",
+                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD2neg),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: {
+                    target: "-3",
+                    below: "rgba(0,255,0,0.3)"
+                }
+            },
+            {
+                label: "-3",
+                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD3neg),
+                borderColor: "black",
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: {
+                    target: "-1",
+                    below: "rgba(255,0,0,0.3)"
+                }
+            },
+            
+            {
+                // label: "eventData",
+                // data: [null,1,4,5],
+                // borderColor: "blue",
+                // borderWidth: 2,
+                // pointRadius: 2
+            }
+        ],
+        defaults: {
+            scale: {
+                ticks: { min: 0}
+            }
+        }
+    });
+
+    /*
 
     const [lhfaGirlschartData, setLhfaGirlschartData] = useState({
         labels: lhfa_g_0_to_5_years_zscores.map((data) => data.Month), 
@@ -549,16 +802,17 @@ const GrowthMonitoring = () => {
             }
         }
     });
+    */
 
     return (
     <div className='dashboard-container'>
         <div className='dashboard-wrapper'>
-            <h3 className="help-centered"> All charts for demo </h3>
+            {/* <h3 className="help-centered"> All charts for demo </h3> */}
 
             <div className='content-wrapper help-centered'></div>
             <div className='content-section content-wrapper'>
 
-                <div className="help-centered">
+                {/* <div className="help-centered">
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
@@ -571,7 +825,7 @@ const GrowthMonitoring = () => {
                                 <TableRow>
                                     <TableCell align='center'>
                                         <div className='App'>
-                                            <Wfa_Boys chartData={wfaBoyschartData}/>
+                                            <Wfa_Boys chartData={wfaBoyschartData} xValue={null} yValue={null}/>
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -672,11 +926,11 @@ const GrowthMonitoring = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </div>
+                </div> */}
 
-                <br/><br/>
+                {/* <br/><br/> */}
 
-                <div className="help-centered">
+                {/* <div className="help-centered">
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
@@ -790,11 +1044,11 @@ const GrowthMonitoring = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </div>
+                </div> */}
 
-                <br/><br/>
+                {/* <br/><br/> */}
 
-                <div className="help-centered">
+                    {/* <div className="help-centered">
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
@@ -908,9 +1162,9 @@ const GrowthMonitoring = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </div>
+                </div> */}
 
-                <br/><br/>
+                {/* <br/><br/> */}
 
                 <div className="help-centered">
                     <TableContainer component={Paper}>
@@ -925,7 +1179,7 @@ const GrowthMonitoring = () => {
                                 <TableRow>
                                     <TableCell align='center'>
                                         <div className='App'>
-                                            <Lhfa_Girls chartData={lhfaGirlschartData}/>
+                                            <Lhfa_Girls_New chartData={lhfaGirlschartData}/>
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -1028,9 +1282,9 @@ const GrowthMonitoring = () => {
                     </TableContainer>
                 </div>
 
-                <br/><br/>
+                {/* <br/><br/> */}
 
-                <div className="help-centered">
+                {/* <div className="help-centered">
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
@@ -1144,11 +1398,11 @@ const GrowthMonitoring = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </div>
+                </div> */}
 
-                <br/><br/>
+                {/* <br/><br/> */}
 
-                <div className="help-centered">
+                {/* <div className="help-centered">
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
@@ -1262,7 +1516,7 @@ const GrowthMonitoring = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </div>
+                </div> */}
             </div>
         </div>
     </div>
