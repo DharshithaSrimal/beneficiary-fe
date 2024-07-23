@@ -163,13 +163,15 @@ const ADeworming = () => {
     return <div className='dashboard-container'>
         <div className='dashboard-wrapper'>
             <div className='content-wrapper'>
-                <h4>Vitamin A</h4>
                 <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
+                            <TableRow className="phc-table-header">
+                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Vitamin A</TableCell>
+                            </TableRow>
                             <TableRow>
-                                <TableCell style={{ width: '50%' }}>Age due</TableCell>
-                                <TableCell align="center" style={{ width: '50%' }}>Date received</TableCell>
+                                <TableCell align="center" style={{ width: '50%', fontWeight: 'bold', fontSize: 'medium' }}>Age due</TableCell>
+                                <TableCell align="center" style={{ width: '50%', fontWeight: 'bold', fontSize: 'medium' }}>Date received</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -192,13 +194,16 @@ const ADeworming = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <h4>Deworming</h4>
+                <br></br>
                 <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
+                            <TableRow className="phc-table-header">
+                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Deworming</TableCell>
+                            </TableRow>
                             <TableRow>
-                                <TableCell style={{ width: '50%' }}>Age due</TableCell>
-                                <TableCell align="center" style={{ width: '50%' }}>Date received</TableCell>
+                                <TableCell align="center" style={{ width: '50%', fontWeight: 'bold', fontSize: 'medium' }}>Age due</TableCell>
+                                <TableCell align="center" style={{ width: '50%', fontWeight: 'bold', fontSize: 'medium' }}>Date received</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import StarIcon from '@mui/icons-material/Star';
+import CircleIcon from '@mui/icons-material/Circle';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -19,8 +19,6 @@ import male2 from '../../assets/avatar/male2.png'
 import female0 from '../../assets/avatar/female0.png'
 import female1 from '../../assets/avatar/female1.png'
 import female2 from '../../assets/avatar/female2.png'
-import { red } from '@mui/material/colors';
-import { TableHead } from '@mui/material';
 
 const srcList = [male0, female0, male1, female1, male2, female2];
 
@@ -39,12 +37,14 @@ var items = [
     "/banner2.png"
 ]
 
-const PublicHealthRegistry = () => {
+const PublicHealthRegistry = ({ phcEvents }) => {
     const [children, setChildren] = useState([]);
     const [childPos, setChildPos] = useState(null);
     const [child, setChild] = useState(null);
     const [fullEvents, setFullEvents] = useState([]);
     const [vacList, setVacList] = useState([]);
+    const [latestVisit, setLatestVisit] = useState(null);
+    const [monthsSinceLastVisit, setMonthsSinceLastVisit] = useState(null);
 
     const fetchUsers = async () => {
         fetch(await API_URL() + 'api/getEnrollments', {
@@ -84,197 +84,224 @@ const PublicHealthRegistry = () => {
                 .catch(err => console.log("Error Catch", err))
         }
     }
+    const getDataElementValue = (dataValues, dataElementId) => {
+        const dataElement = dataValues.find(element => element.dataElement === dataElementId);
+        return dataElement ? dataElement.value : 'N/A';
+    };
 
-    const fetchVaccineCard = async () => {
-        if (childPos !== null) {
-            fetch(await API_URL() + `api/getEventLog`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-token': getCookie()
-                },
-                body: JSON.stringify({
-                    epi: child.epi,
-                    entity_id: child.entity_instance
-                })
-            })
-                .then(res => res.json())
-                .then(out => {
-                    console.log("PVAC", out.data);
-                    if (out.data.events) {
-                        setVacList(out.data);
-                        setFullEvents(out.data.events);
-                    }
-                })
-                .catch(err => console.log("Error Catch", err))
+    useEffect(() => {
+        if (phcEvents && phcEvents.length > 0) {
+            // Sort events by eventDate
+            const sortedEvents = [...phcEvents].sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
+            const latestEvent = sortedEvents[0];
+            setLatestVisit(latestEvent);
+
+            // Calculate months since last visit
+            const lastVisitDate = new Date(latestEvent.eventDate);
+            const currentDate = new Date();
+            const monthsDifference = (currentDate.getFullYear() - lastVisitDate.getFullYear()) * 12 + (currentDate.getMonth() - lastVisitDate.getMonth());
+            setMonthsSinceLastVisit(monthsDifference);
         }
-    }
+    }, [phcEvents]);
 
-    const openPublic = async () => {
-        fetch(await API_URL() + `api/generatePublicQR`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-token': getCookie()
-            },
-            body: JSON.stringify({
-                epi: child.epi,
-                entity_instance: child.entity_instance
-            })
-        })
-            .then(res => res.json())
-            .then(out => {
-                console.log("Received QR", out);
-                window.open(`/public/${out.data.qr}`, '_blank');
-            })
-            .catch(err => console.log("Error Catch", err))
-    }
-
-    const openTraveller = async () => {
-        fetch(await API_URL() + `api/generatePublicQR`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-token': getCookie()
-            },
-            body: JSON.stringify({
-                epi: child.epi,
-                entity_instance: child.entity_instance
-            })
-        })
-            .then(res => res.json())
-            .then(out => {
-                console.log("Received QR", out);
-                window.open(`/traveller/${out.data.qr}`, '_blank');
-            })
-            .catch(err => console.log("Error Catch", err))
-    }
-
-    useEffect(() => { fetchUsers(); }, []);
+    useEffect(() => {  fetchUser(); }, []);
     useEffect(() => { fetchUser(); }, [childPos]);
-    useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
 
     return <div className='dashboard-container'>
         <div className='dashboard-wrapper'>
             <div className='content-wrapper'>
-                <h4>Diagnosis</h4>
-                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} aria-label="contacts">
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'red' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="Diabetes" />
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'green' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="Hyperlipidemia" />
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'green' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="COPD" />
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemIcon>
-                            <StarIcon sx={{ color: 'green' }}/>
-                        </ListItemIcon>
-                        <ListItemText primary="Asthma" />
-                    </ListItem>
-                </List>
+                {phcEvents && (
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableBody>
+                                <TableRow className="phc-table-header">
+                                    <TableCell className="phc-table-header-cell" colSpan={2} align="center">Visits</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Last visit</TableCell>
+                                    <TableCell align="center">{latestVisit ? new Date(latestVisit.eventDate).toLocaleDateString('en-CA') : 'N/A'}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Number of visits</TableCell>
+                                    <TableCell align="center">{phcEvents.length}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Months since last visits</TableCell>
+                                    <TableCell align="center">{monthsSinceLastVisit !== null ? monthsSinceLastVisit : 'N/A'}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Next visit</TableCell>
+                                    <TableCell align="center"></TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
                 <br></br>
-                <h4>Examinations</h4>
+                {latestVisit && (
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_DIABETES}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_HYPERLIPIDAEMIA}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_COPD}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_ASTHMA}`) !== 'N/A'
+                ) && (
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableBody>
-                            <TableRow>
-                                <TableCell>Height</TableCell>
-                                <TableCell align="center">183cm</TableCell>
+                            <TableRow className="phc-table-header">
+                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Diagnosis</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Weight</TableCell>
-                                <TableCell align="center">61kg (Date: 2023-09-14)</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Blood Pressure</TableCell>
-                                <TableCell align="center">137/97 mmHg (Date: 2023-09-14)</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Waist circumference</TableCell>
-                                <TableCell align="center">cm</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Waist circumference</TableCell>
-                                <TableCell align="center">cm</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Body fat</TableCell>
-                                <TableCell align="center">%</TableCell>
+                                <List className="diagnosis-row" sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} aria-label="contacts">
+                                    <ListItem disablePadding>
+                                        {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_DIABETES}`) !== 'N/A' && (
+                                            <ListItem disablePadding>
+                                                Diabetes - {getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_DIABETES}`)}
+                                            </ListItem>
+                                        )}
+                                    </ListItem>
+                                    <ListItem disablePadding>
+                                        {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_HYPERLIPIDAEMIA}`) !== 'N/A' && (
+                                            <ListItem disablePadding>
+                                                Hyperlipidemia - {getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_HYPERLIPIDAEMIA}`)}
+                                            </ListItem>
+                                        )}
+                                    </ListItem>
+                                    <ListItem disablePadding>
+                                        {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_COPD}`) !== 'N/A' && (
+                                            <ListItem disablePadding>
+                                                COPD - {getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_COPD}`)}
+                                            </ListItem>
+                                        )}
+                                    </ListItem>
+                                    <ListItem disablePadding>
+                                        {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_ASTHMA}`) !== 'N/A' && (
+                                            <ListItem disablePadding>
+                                                Asthma - {getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_ASTHMA}`)}
+                                            </ListItem>
+                                        )}
+                                    </ListItem>
+                                </List>
                             </TableRow>
                         </TableBody>
                     </Table>
-                </TableContainer>
+                </TableContainer> 
+                )}
                 <br></br>
-                <h4>Investigations</h4>
+                {latestVisit && (
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_HEIGHT}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WEIGHT}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_BLOOD_PRESSURE}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WAIST_CIRCUMFERENCE}`) !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WAIST_BODY_FAT}`) !== 'N/A'
+                ) && (
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableBody>
+                                <TableRow className="phc-table-header">
+                                    <TableCell className="phc-table-header-cell" colSpan={2} align="center">Examinations</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Height</TableCell>
+                                    <TableCell align="center">{latestVisit ? getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_HEIGHT}`): 'N/A'}cm</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Weight</TableCell>
+                                    <TableCell align="center">
+                                    {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WEIGHT}`) ? (
+                                        <>
+                                            {getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WEIGHT}`)}kg ({new Date(latestVisit.eventDate).toISOString().split('T')[0]})
+                                        </>
+                                    ) : 'N/A'}
+                                </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Blood Pressure</TableCell>
+                                    <TableCell align="center">{latestVisit ? getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_BLOOD_PRESSURE}`): 'N/A'} ({new Date(latestVisit.eventDate).toISOString().split('T')[0]}) </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Waist circumference</TableCell>
+                                    <TableCell align="center">{latestVisit ? getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WAIST_CIRCUMFERENCE}`): 'N/A'} ({new Date(latestVisit.eventDate).toISOString().split('T')[0]}) </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Body fat</TableCell>
+                                    <TableCell align="center">{latestVisit ? getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_WAIST_BODY_FAT}`): 'N/A'} ({new Date(latestVisit.eventDate).toISOString().split('T')[0]}) </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
+                <br></br>
+                {latestVisit && (
+                    getDataElementValue(latestVisit.dataValues, 'e86IssaHvSm') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'yptOqRaEaYg') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'ZI3RQBfK7p7') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'E9pZuvjqutZ') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'lqAyxwQyTB1') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'V9NHh4JU8Uf') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'Oa5cJZSmV7l') !== 'N/A' ||
+                    getDataElementValue(latestVisit.dataValues, 'yXWnTMdz9rV') !== 'N/A'
+                ) && (
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableBody>
-                            <TableRow>
-                                <TableCell>Fasting Blood Sugar</TableCell>
-                                <TableCell align="center">183cm</TableCell>
+                            <TableRow className="phc-table-header">
+                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Investigations</TableCell>
                             </TableRow>
-                            <TableRow>
-                                <TableCell>Random Blood Sugar</TableCell>
-                                <TableCell align="center">61kg (Date: 2023-09-14)</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>HBA1C</TableCell>
-                                <TableCell align="center">137/97 mmHg (Date: 2023-09-14)</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Total Cholesterol</TableCell>
-                                <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Triglycerides</TableCell>
-                                <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>HDL - High Density Lipoprotein</TableCell>
-                                <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>LDL - Low Density Lipoprotein</TableCell>
-                                <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>VLDL - Very Low Density Lipoprotein</TableCell>
-                                <TableCell align="center">mg/dl</TableCell>
-                            </TableRow>
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Fasting_Blood_Sugar}`) !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>Fasting Blood Sugar</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Fasting_Blood_Sugar}`)} mmHg</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Random_Blood_Sugar}`) !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>Random Blood Sugar</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Random_Blood_Sugar}`)} mmHg</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Random_HBA1C}`) !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>HBA1C</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, `${process.env.REACT_APP_Random_HBA1C}`)}</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, 'E9pZuvjqutZ') !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>Total Cholesterol</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, 'E9pZuvjqutZ')}</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, 'lqAyxwQyTB1') !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>Triglycerides</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, 'lqAyxwQyTB1')}</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, 'V9NHh4JU8Uf') !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>HDL - High Density Lipoprotein</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, 'V9NHh4JU8Uf')}</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, 'Oa5cJZSmV7l') !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>LDL - Low Density Lipoprotein</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, 'Oa5cJZSmV7l')}</TableCell>
+                                </TableRow>
+                            )}
+                            {latestVisit && getDataElementValue(latestVisit.dataValues, 'yXWnTMdz9rV') !== 'N/A' && (
+                                <TableRow>
+                                    <TableCell>VLDL - Very Low Density Lipoprotein</TableCell>
+                                    <TableCell align="center">{getDataElementValue(latestVisit.dataValues, 'yXWnTMdz9rV')}</TableCell>
+                                </TableRow>
+                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <h4>Visits</h4>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                        <TableRow>
-                                <TableCell align="center">Date</TableCell>
-                                <TableCell align="center">Facility</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell></TableCell>
-                                <TableCell align="center"></TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                )}
                 <br></br>
-            </div>
+            
+                </div>
         </div>
     </div>
 }

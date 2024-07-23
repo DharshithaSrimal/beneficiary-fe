@@ -57,6 +57,7 @@ const Dashboard = () => {
     const [enrollOpen, setEnrollOpen] = useState(false);
     const [child, setChild] = useState(null);
     const [fullEvents, setFullEvents] = useState([]);
+    const [phcEvents, setPhcEvents] = useState([]);
     const [vacList, setVacList] = useState([]);
 
     const fetchUsers = async () => {
@@ -76,6 +77,7 @@ const Dashboard = () => {
 
     const fetchUser = async () => {
         setFullEvents([]);
+        setPhcEvents([]);
         if (children[childPos]) {
             fetch(await API_URL() + 'api/getEnrollmentDetails', {
                 method: 'POST',
@@ -84,7 +86,9 @@ const Dashboard = () => {
                     'x-token': getCookie()
                 },
                 body: JSON.stringify({
-                    epi: children[childPos].epi
+                    epi: children[childPos].epi,
+                    phcId: children[childPos].phcId
+
                 })
             })
                 .then(res => res.json())
@@ -122,6 +126,30 @@ const Dashboard = () => {
                 .catch(err => console.log("Error Catch", err))
         }
     }
+
+    const fetchPhcData = async () => {
+        if (childPos !== null) {
+            fetch(await API_URL() + `api/getPhcData`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-token': getCookie()
+                },
+                body: JSON.stringify({
+                    phcId: child.phcId,
+                    entity_id: child.entity_instance
+                })
+            })
+                .then(res => res.json())
+                .then(out => {
+                    if (out.events) {
+                        setPhcEvents(out.events);
+                    }
+                })
+                .catch(err => console.log("Error Catch", err))
+        }
+    }
+
 
     const openPublic = async () => {
         fetch(await API_URL() + `api/generatePublicQR`, {
@@ -166,6 +194,7 @@ const Dashboard = () => {
     useEffect(() => { fetchUsers(); }, []);
     useEffect(() => { fetchUser(); }, [childPos]);
     useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
+    useEffect(() => { if (child) { fetchPhcData(); } }, [child]);
 
     const [value, setValue] = React.useState('1');
 
@@ -217,30 +246,15 @@ const Dashboard = () => {
                                 }
                             }
                             return <div style={{ padding: '1em', background: index !== childPos ? '' : 'rgb(248, 219, 163)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '8em' }} onClick={() => setChildPos(childPos === index ? null : index)}>
-                                <img src={src} alt='child' style={{ width: '5em' }} />
                                 <h6 style={{ margin: 0, textAlign: 'center', padding: '5px 0' }}>{child.name}</h6>
+                                <img src={src} alt='child' style={{ width: '5em' }} />
                                 <p style={{ fontSize: '0.6em', padding: 0 }}>({`${age} Y ${months} M`})</p>
                             </div>
                         })
                     }
                 </div>
                 <Enrollment open={enrollOpen} setOpen={setEnrollOpen} refresh={fetchUsers} />
-                <Box sx={{ width: '100%', typography: 'body1' }} className='spread'>
-                    <TabContext value={value}>
-                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                            <TabList onChange={handleChange} aria-label="lab API tabs example">
-                                <Tab label="Growth and Monitoring" value="1" />
-                                <Tab label="Development Milestones" value="2" />
-                                <Tab label="Vitamin A & Deworming" value="3" />
-                                <Tab label="Public Health Registry" value="4" />
-                            </TabList>
-                        </Box>
-                        <TabPanel value="1" className='overflow full-height'>{<GrowthMonitoring/>}</TabPanel>
-                        <TabPanel value="2" className='overflow full-height'>{<Milestones/>}</TabPanel>
-                        <TabPanel value="3" className='overflow full-height'>{<ADeworming/>}</TabPanel>
-                        <TabPanel value="4" className='overflow full-height'>{<PublicHealthRegistry/>}</TabPanel>
-                    </TabContext>
-                </Box>
+                
                 {
                     childPos !== null ?
                         <>
@@ -249,8 +263,8 @@ const Dashboard = () => {
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <IconButton onClick={() => setProfileOpen(true)}><InfoTwoToneIcon color='primary' /></IconButton>
-                                <IconButton onClick={() => openPublic()}><PrintTwoTone color='primary' /></IconButton>
-                                <IconButton onClick={() => openTraveller()}><CardTravelTwoToneIcon color='primary' /></IconButton>
+                                {value === '1' && <PrintTwoTone color='primary' style={{ marginRight: '.5em', cursor: 'pointer' }} onClick={openPublic} />}
+                        {value === '1' && <CardTravelTwoToneIcon color='primary' style={{ marginRight: '.5em', cursor: 'pointer' }} onClick={openTraveller} />}
                                 <IconButton onClick={async () => {
                                     if (window.confirm(`Do you want to remove ${children[childPos].name} from your enrollments?`)) {
                                         try {
@@ -277,25 +291,70 @@ const Dashboard = () => {
                                     }
                                 }}><PersonRemoveTwoToneIcon color='error' /></IconButton>
                             </div>
-                            <VaccineCard full={fullEvents} vacs={vacList} />
+                            
+                            <Box sx={{ width: '100%', typography: 'body1' }} className='spread'>
+                                <TabContext value={value}>
+                                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                        <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                        {
+                                            fullEvents.length > 0 ?   
+                                                <Tab label="Immunization" value="1" />                                                
+                                            : null
+                                        }
+                                        {
+                                            fullEvents.length > 0 ?     
+                                                <Tab label="Growth Monitoring" value="2" />
+                                            : null
+                                        }
+                                        {
+                                            fullEvents.length > 0 ?
+                                                <Tab label="Development Milestones" value="3" />
+                                            : null
+                                        }
+                                        {
+                                            fullEvents.length > 0 ?
+                                                <Tab label="Vitamin A & Deworming" value="4" />
+                                            : null
+                                        }
+                                        {
+                                            phcEvents.length > 0 ?   
+                                                <Tab label="Noncommunicable Diseases" value="5" />
+                                            : null
+                                        }
+                                        </TabList>
+                                    </Box>
+                                    {
+                                        fullEvents.length > 0 ?                                          
+                                            <TabPanel value="1" className='overflow full-height'><VaccineCard full={fullEvents} vacs={vacList} /></TabPanel>                                            
+                                        : null
+                                    }
+                                    {
+                                        fullEvents.length > 0 ?
+                                            <TabPanel value="2" className='overflow full-height'>{<GrowthMonitoring/>}</TabPanel>
+                                        : null
+                                    }
+                                    {
+                                        fullEvents.length > 0 ?
+                                            <TabPanel value="3" className='overflow full-height'>{<Milestones/>}</TabPanel>
+                                        : null
+                                    }
+                                    {
+                                        fullEvents.length > 0 ?
+                                            <TabPanel value="4" className='overflow full-height'>{<ADeworming/>}</TabPanel>
+                                        : null
+                                    }
+                                    {
+                                        phcEvents.length > 0 ?     
+                                            <TabPanel value="5" className='overflow full-height'><PublicHealthRegistry phcEvents={phcEvents}/></TabPanel>
+                                        : null
+                                    }
+                                </TabContext>
+                            </Box>
+
                             <ProfileDetails profileOpen={profileOpen} setProfileOpen={setProfileOpen} user={child ?? children[childPos]} />
                         </>
                         : null
                 }
-                {/* <div className='common-head'>
-                    <Grid container spacing={2} className='centered'>
-                        <Grid item xs={12} md={6}>
-                            <Carousel>
-                                {
-                                    items.map((item, i) => <img key={i} src={item} alt='banner' />)
-                                }
-                            </Carousel>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Chart />
-                        </Grid>
-                    </Grid>
-                </div> */}
             </div>
         </div>
     </div>

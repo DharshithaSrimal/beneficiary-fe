@@ -21,12 +21,12 @@ export const ProfileDetails = ({ profileOpen, setProfileOpen, user }) => {
         }
         return <div style={{ marginBottom: '1em' }}>
             <div style={{ paddingBottom: 3, borderBottom: '1px solid #d7d7d7', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <h5 style={{ margin: 0, width: 'fit-content' }}>{title}</h5>
+                <h4 style={{ margin: 0, width: 'fit-content' }}>{title}</h4>
                 <div onClick={() => setExpanded(!expanded)}><ExpandCircleDownTwoToneIcon color='primary' style={headerStyle} /></div>
             </div>
             {expanded ? <div>
                 <Grid container spacing={2} style={{ marginTop: '1em' }}>
-                    {fields.map((field) => <Grid item xs={12} md={6}><DetailRow title={field.title} prop={field.value} /></Grid>)}
+                    {fields.map((field) => <Grid item xs={12} md={12}><DetailRow title={field.title} prop={field.value} /></Grid>)}
                 </Grid>
             </div> : null}
         </div>
@@ -78,19 +78,22 @@ export const ProfileDetails = ({ profileOpen, setProfileOpen, user }) => {
                 <DetailSection
                     title='Personal Information'
                     fields={[
-                        { title: 'Vaccination No. :', value: 'epi' },
-                        { title: 'Fullname :', value: 'name' },
-                        { title: 'Foolhuma No. :', value: 'foolhuma' },
+                        // { title: 'Vaccination No. :', value: 'epi' },
                         { title: 'Beneficiary National ID :', value: 'nic' },
-                        { title: 'Date of Birth :', value: 'dob' },
+                        { title: 'Fullname :', value: 'name' },
+                        // { title: 'Foolhuma No. :', value: 'foolhuma' },
                         { title: 'Gender :', value: 'sex' },
+                        { title: 'Date of Birth :', value: 'dob' },
+                        { title: 'Residential Address :', value: 'residential_address' },
+                        { title: 'Atoll of Residence :', value: 'residential_no' },
                         { title: 'Island of Residence :', value: 'residential_island' },
-                        { title: "Mother's Name :", value: 'mother_name' },
-                        { title: "Mother's National ID :", value: 'mother_nic' },
-                        { title: "Mother's Contact No :", value: 'mother_contact' },
-                        { title: "Care Giver's Name", value: 'careGiver_name' },
-                        { title: "Care Giver's ID", value: 'careGiver_nic' },
-                        { title: "Other Contact No.", value: 'careGiver_contact' },
+                        // { title: "Mother's Name :", value: 'mother_name' },
+                        // { title: "Mother's National ID :", value: 'mother_nic' },
+                        { title: "Contact Number :", value: 'mother_contact' },
+                        { title: "email :", value: 'email' },
+                        // { title: "Care Giver's Name", value: 'careGiver_name' },
+                        // { title: "Care Giver's ID", value: 'careGiver_nic' },
+                        // { title: "Other Contact No.", value: 'careGiver_contact' },
                     ]}
                 />
                 {/* <DetailSection

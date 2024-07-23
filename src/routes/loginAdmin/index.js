@@ -8,7 +8,7 @@ const LoginAdmin = () => {
 
     return <div className='login-container'>
         <img src='/logo512.png' className='login-img' alt='Logo' />
-        <h1 className='title'>Electronic Immunization Registry Beneficiary Portal</h1>
+        <h1 className='title'>Beneficiary Portal</h1>
         <div className='login-form'>
             <div className='input-row'>
                 <label>Username</label>
