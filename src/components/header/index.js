@@ -1,6 +1,6 @@
 import './styles.css'
 import { HiMenuAlt1 } from 'react-icons/hi';
-import { Button, Box, Drawer, List, ListItem, ListItemButton, ListItemText, Avatar, Divider } from '@mui/material';
+import { Button, Box, Drawer, List, ListItem, ListItemButton, ListItemText, Avatar, Divider, Grid } from '@mui/material';
 import { useState } from 'react';
 import profile from '../../assets/profile.png'
 import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone';
@@ -80,8 +80,12 @@ const Header = () => {
 
     return <>
         <div className='header desktop'>
-            <Button onClick={() => toggleDrawer(true)}><HiMenuAlt1 size={30} color='#B4CDED' /></Button>
-            <img src='/logo512_white.png' alt='logo white' style={{ height: '3em', background: 'white' }} />
+            <div>
+                <Grid container direction="row" justifyContent="flex-start" alignItems="flex-start">
+                    <Button onClick={() => toggleDrawer(true)}><HiMenuAlt1 size={30} color='#B4CDED' /></Button>
+                    <img src='/logo512.png' alt='logo white' style={{ height: '3em', background: 'white' }} />
+                </Grid>
+            </div>
             <h3 style={{ padding: 0 }}>Beneficiary Portal</h3>
             <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => setExpandedProfile(true)}>
                 {/* <label style={{ paddingRight: '1em' }}>{new Date().toLocaleDateString()}</label> */}

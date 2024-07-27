@@ -1,5 +1,245 @@
 export const lhfa_b_2_to_5_years_zscores = [
     {
+        "Month": 0,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 1,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 2,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 3,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 4,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 5,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 6,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 7,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 8,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 9,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 10,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 11,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 12,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 13,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 14,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 15,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 16,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 17,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 18,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 19,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 20,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 21,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 22,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
+        "Month": 23,
+        "SD0": null,
+        "SD1": null,
+        "SD2": null,
+        "SD3": null,
+        "SD1neg": null,
+        "SD2neg": null,
+        "SD3neg": null
+    },
+    {
         "Month": 24,
         "SD0": 87.1,
         "SD1": 90.2,

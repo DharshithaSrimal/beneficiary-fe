@@ -1,15 +1,5 @@
 export const wfa_b_0_to_5_years_zscores = [
     {
-        "Month": -0.5,
-        "SD0": 3.3,
-        "SD1": 3.9,
-        "SD2": 4.4,
-        "SD3": 5.0,
-        "SD1neg": 2.9,
-        "SD2neg": 2.5,
-        "SD3neg": 2.1
-    },
-    {
         "Month": 0,
         "SD0": 3.3,
         "SD1": 3.9,
