@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -8,55 +8,47 @@ import TabPanel from '@mui/lab/TabPanel';
 import Header from '../../components/header';
 
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
+import { Table, TableBody, TableCell, TableContainer, TableHead } from '@mui/material';
+// import TableBody from '@mui/material/TableBody';
+// import TableCell from '@mui/material/TableCell';
+// import TableContainer from '@mui/material/TableContainer';
+// import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 
 import Chart from 'chart.js/auto'
-import { CategoryScale, defaults, Filler, LineController } from 'chart.js';
+import { CategoryScale, defaults, Filler, LineController, registerables } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import zoomPlugin from 'chartjs-plugin-zoom'
+
+import { growthDataElements } from '../../constants';
 
 import { wfa_b_0_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/wfa/wfa_boys_0-to-5-years_zscores";
 import { wfa_g_0_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/wfa/wfa_girls_0-to-5-years_zscores";
-import { lhfa_b_0_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_boys_0-to-5-years_zscores";
-import { lhfa_g_0_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_girls_0-to-5-years_zscores";
 import { hcfa_b_0_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/hcfa/hcfa_boys_0-to-5-years_zscores";
 import { hcfa_g_0_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/hcfa/hcfa_girls_0-to-5-years_zscores";
 
 //test 
 import { lhfa_g_0_to_2_years_zscores } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_girls_0-to-2-years_zscores";
 import { lhfa_g_2_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_girls_2-to-5-years_zscores";
+import { lhfa_b_0_to_2_years_zscores } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_boys_0-to-2-years_zscores";
+import { lhfa_b_2_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_boys_2-to-5-years_zscores";
 import { lhfa_months } from "./DataSets/whoStandard/ZScores/lhfa/lhfa_months";
 
-import Wfa_Boys from "./components/wfa_boys-0-to-5-years"
-import Wfa_Girls from "./components/wfa_girls-0-to-5-years"
-import Lhfa_Boys from "./components/lhfa_boys-0-to-5-years"
-import Lhfa_Girls from "./components/lhfa_girls-0-to-5-years"
-import Hcfa_Boys from "./components/hcfa_boys-0-to-5-years"
-import Hcfa_Girls from "./components/hcfa_girls-0-to-5-years"
+import { wflh_b_0_to_2_years_zscores } from "./DataSets/whoStandard/ZScores/wflh/wflh_boys_0-to-2-years_zscores";
+import { wflh_b_2_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/wflh/wflh_boys_2-to-5-years_zscores";
+import { wflh_g_0_to_2_years_zscores } from "./DataSets/whoStandard/ZScores/wflh/wflh_girls_0-to-2-years_zscores";
+import { wflh_g_2_to_5_years_zscores } from "./DataSets/whoStandard/ZScores/wflh/wflh_girls_2-to-5-years_zscores";
+import { wflh_length_height } from "./DataSets/whoStandard/ZScores/wflh/wflh_length_height";
 
-//test
-import Lhfa_Girls_New from "./components/lhfa_girls-0-to-5-years-new"
+import DrawChart from "./components/drawChart"
+
 
 import './styles.css';
+import { da } from 'date-fns/locale';
 
-Chart.register(CategoryScale, Filler, annotationPlugin)
-
-/*
-    Data Requirement
-        Gender
-        DOB
-        DataPoints (Events)
-
-    @TODO 
-    - Disable DataPoint (tooltip) for base chart
-*/
-
+Chart.register(CategoryScale, Filler, annotationPlugin, zoomPlugin, ...registerables )
 
   function ToggleVisibility({children}) {
     const [show, setShow] = useState();
@@ -78,17 +70,88 @@ Chart.register(CategoryScale, Filler, annotationPlugin)
     );
   }
 
-const GrowthMonitoring = () => {
+const GrowthMonitoring = ({childData, allChildEvents}) => {
+
+    // console.log("ALL EVENET", allChildEvents);
+    // console.log("Growth Data Elements", growthDataElements);
+
+    const deWeightId = growthDataElements.DATA_ELEMENT_WEIGHT;
+    const deLengthHeightId = growthDataElements.DATA_ELEMENT_LENGTH_HEIGHT;
+    const deHeadCircumference = growthDataElements.DATA_ELEMENT_HEAD_CIRCUMFERENCE;
+    const deAgeAtReportInMonths = growthDataElements.AGE_AT_THE_TIME_OF_REPORTING_MONTHS;
+    const ageAtTheTimeOfReporting = growthDataElements.AGE_AT_THE_TIME_OF_REPORTING_MONTHS;
+    const indiWeightForAge = growthDataElements.INDICATOR_WEIGHT_FOR_AGE;
+    const indiLengthHeightForAge = growthDataElements.INDICATOR_LENGTH_HEIGHT_FOR_AGE;
+    const indiWeightForLengthHeight = growthDataElements.INDICATOR_WEIGHT_FOR_LENGTH_HEIGHT;
+    const indiHeadCircumferenece = growthDataElements.INDICATOR_HEAD_CIRCUMFERENCE_FOR_AGE;
+
+    var latestWeightForAge = "";
+    var latestLengthHeightForAge = "";
+    var latestWeightForLengthHeight = "";
+    var latestHeadCircumferenceForAge = "";
+
+    if (allChildEvents.length > 0) {
+        latestWeightForAge = (allChildEvents[0].dataValues.find(o => o.dataElement === indiWeightForAge)).value
+        latestLengthHeightForAge = (allChildEvents[0].dataValues.find(o => o.dataElement === indiLengthHeightForAge)).value
+        latestWeightForLengthHeight = (allChildEvents[0].dataValues.find(o => o.dataElement === indiWeightForLengthHeight)).value
+        latestHeadCircumferenceForAge = ''
+    }
+    
+    var weightForAgeDataPoint = [] //x: age(months)     y: weight
+    var lengthHeightForAgeDataPoint = [] //x: age(months)   y: Length/height
+    var weightForLengthHeightDataPoint = [] //x: length/height  y: weight
+    var headCircumferenceDataPoint = [] //x: age(months)    y: headcircumference
+
+    allChildEvents.map((data) => {
+
+        if(data.eventDate) {
+
+            let ageInMonths = data.dataValues.find(o => o.dataElement === ageAtTheTimeOfReporting);
+            let weightValue = data.dataValues.find(o => o.dataElement === deWeightId);
+            let lengthHeightValue = data.dataValues.find(o => o.dataElement === deLengthHeightId);
+            let headCircumferenceValue = data.dataValues.find(o => o.dataElement === deHeadCircumference);
+            
+
+            weightForAgeDataPoint.push({
+                x: parseInt(ageInMonths.value),
+                y: parseFloat(weightValue.value)
+            })
+
+            lengthHeightForAgeDataPoint.push({
+                x: parseInt(ageInMonths.value),
+                y: lengthHeightValue.value
+            })
+
+            weightForLengthHeightDataPoint.push({
+                x: parseFloat(lengthHeightValue.value),
+                y: parseFloat(weightValue.value)
+            })
+
+            headCircumferenceDataPoint.push({
+                x: parseInt(ageInMonths.value),
+                y: headCircumferenceValue.value
+            })
+
+        }
+
+    })
+
+    // console.log("lengthHeightForAgeDataPoint", lengthHeightForAgeDataPoint)
+    console.log("weightForLengthHeightDataPoint", weightForLengthHeightDataPoint)
+    // console.log("headCircumferenceDataPoint", headCircumferenceDataPoint)
+
+
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    /*
+    
     const [wfaBoyschartData, setWfaBoyschartData] = useState({
-        labels: wfa_b_0_to_5_years_zscores.map((data) => data.Month), 
-        datasets: [            
+        dataSets: {
+            labels: wfa_b_0_to_5_years_zscores.map((data) => data.Month), 
+            datasets: [            
             {
                 // yAxisID: 'yAxes',
                 label: "3",
@@ -160,1033 +223,1164 @@ const GrowthMonitoring = () => {
             },
             {
                 label: "eventData",
-                data: [null,1,4,5],
+                data: weightForAgeDataPoint.reverse(),
                 borderColor: "blue",
                 borderWidth: 2,
                 pointRadius: 2
             }
-        ],
+            ]
+        },
+        chartProperties: {
+            chartTitle: 'Weight for Age (Boys)',
+            xAxisValue: 'Age (months)',
+            yAxisValue: 'Weight (kg)',
+            showYearBreakLine: true
+        }
     });
 
     const [wfaGirlschartData, setWfaGirlschartData] = useState({
-        labels: wfa_g_0_to_5_years_zscores.map((data) => data.Month), 
-        datasets: [            
-            {
-                // yAxisID: 'yAxes',
-                label: "3",
-                data: wfa_g_0_to_5_years_zscores.map((data) => data.SD3),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                pointHitRadius: 0,
-                fill: {
-                    target: "2",
-                    above: "rgba(255,255,0,0.3)"
+        dataSets: {
+            labels: wfa_g_0_to_5_years_zscores.map((data) => data.Month), 
+            datasets: [            
+                {
+                    // yAxisID: 'yAxes',
+                    label: "3",
+                    data: wfa_g_0_to_5_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "2",
+                        above: "rgba(255,255,0,0.3)"
+                    },
                 },
-            },
-            {
-                label: "2",
-                data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                pointHitRadius: 0
-            },
-            {
-                label: "1",
-                data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                pointHitRadius: 0,
-            },
-            {
-                label: "0",
-                data: wfa_g_0_to_5_years_zscores.map((data) => data.SD0),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                pointHitRadius: 0,
-            },
-            {
-                label: "-1",
-                data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                pointHitRadius: 0,
-            },
-            {
-                label: "-2",
-                data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                pointHitRadius: 0,
-                fill: {
-                    target: "2",
-                    below: "rgba(0,255,0,0.3)"
+                {
+                    label: "2",
+                    data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0
                 },
-            },
-            {
-                label: "-3",
-                data: wfa_g_0_to_5_years_zscores.map((data) => data.SD3neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                pointHitRadius: 0,
-                fill: {
-                    target: "-1",
-                    below: "rgba(255,0,0,0.3)"
+                {
+                    label: "1",
+                    data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
                 },
-            },
-            {
-                label: "eventData",
-                data: [null,1,4,5],
-                borderColor: "blue",
-                borderWidth: 2,
-                pointRadius: 2
-            }
-        ],
+                {
+                    label: "0",
+                    data: wfa_g_0_to_5_years_zscores.map((data) => data.SD0),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                },
+                {
+                    label: "-1",
+                    data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                },
+                {
+                    label: "-2",
+                    data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "2",
+                        below: "rgba(0,255,0,0.3)"
+                    },
+                },
+                {
+                    label: "-3",
+                    data: wfa_g_0_to_5_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-1",
+                        below: "rgba(255,0,0,0.3)"
+                    },
+                },
+                {
+                    label: "",
+                    data: weightForAgeDataPoint.reverse(),
+                    borderColor: "blue",
+                    borderWidth: 2,
+                    pointRadius: 2
+                }
+            ],
+        },
+        chartProperties: {
+            chartTitle: 'Weight for Age (Girls)',
+            xAxisValue: 'Age (months)',
+            yAxisValue: 'Weight (kg)',
+            showYearBreakLine: true
+        }
     });
-    */
 
-    // const [wfaGirlschartData, setWfaGirlschartData] = useState({
-    //     labels: wfa_g_0_to_5_years_zscores.map((data) => data.Month), 
-    //     datasets: [            
-    //         {
-    //             // yAxisID: 'yAxes',
-    //             label: "3",
-    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD3),
-    //             borderColor: "black",
-    //             borderWidth: 2,
-    //             pointRadius: 0,
-    //             fill: {
-    //                 target: "2",
-    //                 above: "rgba(255,255,0,0.3)"
-    //             },
-    //         },
-    //         {
-    //             label: "2",
-    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2),
-    //             borderColor: "black",
-    //             borderWidth: 2,
-    //             pointRadius: 0
-    //         },
-    //         {
-    //             label: "1",
-    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1),
-    //             borderColor: "black",
-    //             borderWidth: 2,
-    //             pointRadius: 0
-    //         },
-    //         {
-    //             label: "0",
-    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD0),
-    //             borderColor: "black",
-    //             borderWidth: 2,
-    //             pointRadius: 0
-    //         },
-    //         {
-    //             label: "-1",
-    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1neg),
-    //             borderColor: "black",
-    //             borderWidth: 2,
-    //             pointRadius: 0
-    //         },
-    //         {
-    //             label: "-2",
-    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2neg),
-    //             borderColor: "black",
-    //             borderWidth: 2,
-    //             pointRadius: 0,
-    //             fill: {
-    //                 target: "2",
-    //                 below: "rgba(0,255,0,0.3)"
-    //             },
-    //         },
-    //         {
-    //             label: "-3",
-    //             data: wfa_g_0_to_5_years_zscores.map((data) => data.SD3neg),
-    //             borderColor: "black",
-    //             borderWidth: 2,
-    //             pointRadius: 0,
-    //             fill: {
-    //                 target: "-1",
-    //                 below: "rgba(255,0,0,0.3)"
-    //             },
-    //         }
-    //         // {
-    //         //     label: "eventData",
-    //         //     data: [null,1,4,5],
-    //         //     borderColor: "blue",
-    //         //     borderWidth: 2,
-    //         //     pointRadius: 2
-    //         // }
-    //     ],
-    //     defaults: {
-    //         scale: {
-    //             ticks: { min: 0}
-    //         }
-    //     }
-    // });
+    const [lhfaGirlschartData, setLhfaGirlschartData] = useState({
+        dataSets: {
+            labels: lhfa_months.map((data) => data.Month), 
+            datasets: [ 
+                {
+                    label: "3a",
+                    data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "2a",
+                        above: "rgba(255,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "2a",
+                    data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD2),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "1a",
+                    data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD1),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "0a",
+                    data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD0),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-1a",
+                    data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-2a",
+                    data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0,
+                    fill: {
+                        target: "2a",
+                        below: "rgba(0,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "-3a",
+                    data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-1a",
+                        below: "rgba(255,0,0,0.3)"
+                    }
+                },
+                {
+                    label: "3",
+                    data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "2",
+                        below: "rgba(255,255,0,1)"
+                    }
+                },
+                {
+                    label: "2",
+                    data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD2),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "1",
+                    data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD1),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-2",
+                        below: "rgba(255,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "0",
+                    data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD0),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-1",
+                    data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-2",
+                    data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-3",
+                        below: "rgba(0,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "-3",
+                    data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-1",
+                        below: "rgba(255,0,0,0.3)"
+                    }
+                },
+                {
+                    label: "eventData",
+                    data: lengthHeightForAgeDataPoint.reverse(),
+                    borderColor: "blue",
+                    borderWidth: 2,
+                    pointRadius: 2
+                }
+            ],
+            defaults: {
+                scale: {
+                    ticks: { min: 0}
+                }
+            }
+        },
+        chartProperties: {
+            chartTitle: 'Length / Height for Age (Girls)',
+            xAxisValue: 'Age (months)',
+            yAxisValue: 'Length / Height (cm)',
+            beginWithZeroAtAxisX: false,
+            beginWithZeroAtAxisY: false,
+            showYearBreakLine: true
+        }
+    });
 
-    /*
     const [lhfaBoyschartData, setLhfaBoyschartData] = useState({
-        labels: lhfa_b_0_to_5_years_zscores.map((data) => data.Month), 
-        datasets: [            
-            {
-                // yAxisID: 'yAxes',
-                label: "3",
-                data: lhfa_b_0_to_5_years_zscores.map((data) => data.SD3),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2",
-                    above: "rgba(255,255,0,0.3)"
+        dataSets: {
+            labels: lhfa_months.map((data) => data.Month), 
+            datasets: [ 
+                {
+                    label: "3a",
+                    data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "2a",
+                        above: "rgba(255,255,0,0.3)"
+                    }
                 },
-            },
-            {
-                label: "2",
-                data: lhfa_b_0_to_5_years_zscores.map((data) => data.SD2),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "1",
-                data: lhfa_b_0_to_5_years_zscores.map((data) => data.SD1),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "0",
-                data: lhfa_b_0_to_5_years_zscores.map((data) => data.SD0),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-1",
-                data: lhfa_b_0_to_5_years_zscores.map((data) => data.SD1neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-2",
-                data: lhfa_b_0_to_5_years_zscores.map((data) => data.SD2neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2",
-                    below: "rgba(0,255,0,0.3)"
+                {
+                    label: "2a",
+                    data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD2),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
                 },
-            },
-            {
-                label: "-3",
-                data: lhfa_b_0_to_5_years_zscores.map((data) => data.SD3neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "-1",
-                    below: "rgba(255,0,0,0.3)"
+                {
+                    label: "1a",
+                    data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD1),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
                 },
-            },
-            // {
-            //     label: "eventData",
-            //     data: [null,1,4,5],
-            //     borderColor: "blue",
-            //     borderWidth: 2,
-            //     pointRadius: 2
-            // }
-        ],
-        defaults: {
-            scale: {
-                ticks: { min: 0}
+                {
+                    label: "0a",
+                    data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD0),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-1a",
+                    data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-2a",
+                    data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0,
+                    fill: {
+                        target: "2a",
+                        below: "rgba(0,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "-3a",
+                    data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-1a",
+                        below: "rgba(255,0,0,0.3)"
+                    }
+                },
+                {
+                    label: "3",
+                    data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "2",
+                        below: "rgba(255,255,0,1)"
+                    }
+                },
+                {
+                    label: "2",
+                    data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD2),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "1",
+                    data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD1),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-2",
+                        below: "rgba(255,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "0",
+                    data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD0),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-1",
+                    data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-2",
+                    data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-3",
+                        below: "rgba(0,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "-3",
+                    data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-1",
+                        below: "rgba(255,0,0,0.3)"
+                    }
+                },
+                
+                {
+                    label: "eventData",
+                    data: lengthHeightForAgeDataPoint.reverse(),
+                    borderColor: "blue",
+                    borderWidth: 2,
+                    pointRadius: 2
+                }
+            ],
+            defaults: {
+                scale: {
+                    ticks: { min: 0}
+                }
             }
-        }
-    });
-    */
-
-    const [lhfaGirlschartData, setLhfaGirlschartData] = useState({
-        labels: lhfa_months.map((data) => data.Month), 
-        datasets: [ 
-            {
-                // yAxisID: 'yAxes',
-                label: "3a",
-                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD3),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2a",
-                    above: "rgba(255,255,0,0.3)"
-                }
-            },
-            {
-                label: "2a",
-                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD2),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "1a",
-                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD1),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "0a",
-                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD0),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-1a",
-                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD1neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-2a",
-                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD2neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2a",
-                    below: "rgba(0,255,0,0.3)"
-                }
-            },
-            {
-                label: "-3a",
-                data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD3neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "-1a",
-                    below: "rgba(255,0,0,0.3)"
-                }
-            },
-
-            {
-                // yAxisID: 'yAxes',
-                label: "3",
-                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD3),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2",
-                    below: "rgba(255,255,0,1)"
-                }
-            },
-            {
-                label: "2",
-                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD2),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "1",
-                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD1),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "-2",
-                    below: "rgba(255,255,0,0.3)"
-                }
-            },
-            {
-                label: "0",
-                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD0),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-1",
-                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD1neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-2",
-                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD2neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "-3",
-                    below: "rgba(0,255,0,0.3)"
-                }
-            },
-            {
-                label: "-3",
-                data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD3neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "-1",
-                    below: "rgba(255,0,0,0.3)"
-                }
-            },
-            
-            {
-                // label: "eventData",
-                // data: [null,1,4,5],
-                // borderColor: "blue",
-                // borderWidth: 2,
-                // pointRadius: 2
-            }
-        ],
-        defaults: {
-            scale: {
-                ticks: { min: 0}
-            }
+        },
+        chartProperties: {
+            chartTitle: 'Length / Height for Age (Boys)',
+            xAxisValue: 'Age (months)',
+            yAxisValue: 'Length / Height (cm)',
+            beginWithZeroAtAxisX: false,
+            beginWithZeroAtAxisY: false,
+            showYearBreakLine: true
         }
     });
 
-    /*
-
-    const [lhfaGirlschartData, setLhfaGirlschartData] = useState({
-        labels: lhfa_g_0_to_5_years_zscores.map((data) => data.Month), 
-        datasets: [            
-            {
-                // yAxisID: 'yAxes',
-                label: "3",
-                data: lhfa_g_0_to_5_years_zscores.map((data) => data.SD3),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2",
-                    above: "rgba(255,255,0,0.3)"
+    const [wflhGirlschartData, setWflhGirlschartData] = useState({
+        dataSets: {
+            labels: wflh_length_height.map((data) => data.Length_height), 
+            datasets: [ 
+                {
+                    label: "3a",
+                    data: wflh_g_0_to_2_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "2a",
+                        above: "rgba(255,255,0,0.3)"
+                    }
                 },
-            },
-            {
-                label: "2",
-                data: lhfa_g_0_to_5_years_zscores.map((data) => data.SD2),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "1",
-                data: lhfa_g_0_to_5_years_zscores.map((data) => data.SD1),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "0",
-                data: lhfa_g_0_to_5_years_zscores.map((data) => data.SD0),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-1",
-                data: lhfa_g_0_to_5_years_zscores.map((data) => data.SD1neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-2",
-                data: lhfa_g_0_to_5_years_zscores.map((data) => data.SD2neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2",
-                    below: "rgba(0,255,0,0.3)"
+                {
+                    label: "2a",
+                    data: wflh_g_0_to_2_years_zscores.map((data) => data.SD2),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
                 },
-            },
-            {
-                label: "-3",
-                data: lhfa_g_0_to_5_years_zscores.map((data) => data.SD3neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "-1",
-                    below: "rgba(255,0,0,0.3)"
+                {
+                    label: "1a",
+                    data: wflh_g_0_to_2_years_zscores.map((data) => data.SD1),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
                 },
-            },
-            // {
-            //     label: "eventData",
-            //     data: [null,1,4,5],
-            //     borderColor: "blue",
-            //     borderWidth: 2,
-            //     pointRadius: 2
-            // }
-        ],
-        defaults: {
-            scale: {
-                ticks: { min: 0}
+                {
+                    label: "0a",
+                    data: wflh_g_0_to_2_years_zscores.map((data) => data.SD0),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-1a",
+                    data: wflh_g_0_to_2_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-2a",
+                    data: wflh_g_0_to_2_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0,
+                    fill: {
+                        target: "2a",
+                        below: "rgba(0,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "-3a",
+                    data: wflh_g_0_to_2_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-1a",
+                        below: "rgba(255,0,0,0.3)"
+                    }
+                },
+                {
+                    label: "3",
+                    data: wflh_g_2_to_5_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "2",
+                        below: "rgba(255,255,0,1)"
+                    }
+                },
+                {
+                    label: "2",
+                    data: wflh_g_2_to_5_years_zscores.map((data) => data.SD2),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "1",
+                    data: wflh_g_2_to_5_years_zscores.map((data) => data.SD1),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-2",
+                        below: "rgba(255,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "0",
+                    data: wflh_g_2_to_5_years_zscores.map((data) => data.SD0),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-1",
+                    data: wflh_g_2_to_5_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-2",
+                    data: wflh_g_2_to_5_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-3",
+                        below: "rgba(0,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "-3",
+                    data: wflh_g_2_to_5_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-1",
+                        below: "rgba(255,0,0,0.3)"
+                    }
+                },
+                
+                {
+                    label: "",
+                    data: weightForLengthHeightDataPoint,
+                    borderColor: "blue",
+                    borderWidth: 2,
+                    pointRadius: 2
+                }
+            ],
+            defaults: {
+                scale: {
+                    ticks: { min: 0}
+                }
             }
+        },
+        chartProperties: {
+            chartTitle: 'Weight for Length / Height (Girls)',
+            xAxisValue: 'Length / Height (cm)',
+            yAxisValue: 'Weight (Kg)',
+            beginWithZeroAtAxisX: false,
+            beginWithZeroAtAxisY: false,
+            showYearBreakLine: false
         }
     });
+
+    const [wflhBoyschartData, setWflhBoyschartData] = useState({
+        dataSets: {
+            labels: wflh_length_height.map((data) => data.Length_height), 
+            datasets: [ 
+                {
+                    label: "3a",
+                    data: wflh_b_0_to_2_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "2a",
+                        above: "rgba(255,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "2a",
+                    data: wflh_b_0_to_2_years_zscores.map((data) => data.SD2),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "1a",
+                    data: wflh_b_0_to_2_years_zscores.map((data) => data.SD1),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "0a",
+                    data: wflh_b_0_to_2_years_zscores.map((data) => data.SD0),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-1a",
+                    data: wflh_b_0_to_2_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-2a",
+                    data: wflh_b_0_to_2_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0,
+                    fill: {
+                        target: "2a",
+                        below: "rgba(0,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "-3a",
+                    data: wflh_b_0_to_2_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-1a",
+                        below: "rgba(255,0,0,0.3)"
+                    }
+                },
+                {
+                    label: "3",
+                    data: wflh_b_2_to_5_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "2",
+                        below: "rgba(255,255,0,1)"
+                    }
+                },
+                {
+                    label: "2",
+                    data: wflh_b_2_to_5_years_zscores.map((data) => data.SD2),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "1",
+                    data: wflh_b_2_to_5_years_zscores.map((data) => data.SD1),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-2",
+                        below: "rgba(255,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "0",
+                    data: wflh_b_2_to_5_years_zscores.map((data) => data.SD0),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-1",
+                    data: wflh_b_2_to_5_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointHitRadius: 0,
+                    pointRadius: 0
+                },
+                {
+                    label: "-2",
+                    data: wflh_b_2_to_5_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-3",
+                        below: "rgba(0,255,0,0.3)"
+                    }
+                },
+                {
+                    label: "-3",
+                    data: wflh_b_2_to_5_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    fill: {
+                        target: "-1",
+                        below: "rgba(255,0,0,0.3)"
+                    }
+                },
+                
+                {
+                    label: "",
+                    data: weightForLengthHeightDataPoint.reverse(),
+                    borderColor: "blue",
+                    borderWidth: 2,
+                    pointRadius: 2
+                }
+            ],
+            defaults: {
+                scale: {
+                    ticks: { min: 0}
+                }
+            }
+        },
+        chartProperties: {
+            chartTitle: 'Weight for Length / Height (Boys)',
+            xAxisValue: 'Length / Height (cm)',
+            yAxisValue: 'Weight (Kg)',
+            beginWithZeroAtAxisX: false,
+            beginWithZeroAtAxisY: false,
+            showYearBreakLine: false
+        }
+    });  
 
     const [hcfaBoyschartData, setHcfaBoyschartData] = useState({
-        labels: hcfa_b_0_to_5_years_zscores.map((data) => data.Month), 
-        datasets: [            
-            {
-                // yAxisID: 'yAxes',
-                label: "3",
-                data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD3),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2",
-                    above: "rgba(255,255,0,0.3)"
+        dataSets: {
+            labels: hcfa_b_0_to_5_years_zscores.map((data) => data.Month), 
+            datasets: [            
+                {
+                    // yAxisID: 'yAxes',
+                    label: "3",
+                    data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0
                 },
-            },
-            {
-                label: "2",
-                data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD2),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "1",
-                data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD1),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "0",
-                data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD0),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-1",
-                data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD1neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-2",
-                data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD2neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2",
-                    below: "rgba(0,255,0,0.3)"
+                {
+                    label: "2",
+                    data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD2),
+                    borderColor: "red",
+                    borderWidth: 2,
+                    pointRadius: 0
                 },
-            },
-            {
-                label: "-3",
-                data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD3neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "-1",
-                    below: "rgba(255,0,0,0.3)"
+                {
+                    label: "1",
+                    data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD1),
+                    borderColor: "orange",
+                    borderWidth: 2,
+                    pointRadius: 0
                 },
-            },
-            // {
-            //     label: "eventData",
-            //     data: [null,1,4,5],
-            //     borderColor: "blue",
-            //     borderWidth: 2,
-            //     pointRadius: 2
-            // }
-        ],
-        defaults: {
-            scale: {
-                ticks: { min: 0}
+                {
+                    label: "0",
+                    data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD0),
+                    borderColor: "green",
+                    borderWidth: 2,
+                    pointRadius: 0
+                },
+                {
+                    label: "-1",
+                    data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "orange",
+                    borderWidth: 2,
+                    pointRadius: 0
+                },
+                {
+                    label: "-2",
+                    data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "red",
+                    borderWidth: 2,
+                    pointRadius: 0
+                },
+                {
+                    label: "-3",
+                    data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                },
+                {
+                    label: "eventData",
+                    data: headCircumferenceDataPoint.reverse(),
+                    borderColor: "blue",
+                    borderWidth: 2,
+                    pointRadius: 2
+                }
+            ],
+            defaults: {
+                scale: {
+                    ticks: { min: 0}
+                }
             }
+        },
+        chartProperties: {
+            chartTitle: 'Head circumference for age (Boys)',
+            xAxisValue: 'Age (months)',
+            yAxisValue: 'Head circumference (cm)',
+            beginWithZeroAtAxisX: false,
+            beginWithZeroAtAxisY: false,
+            showYearBreakLine: true
         }
     });
 
     const [hcfaGirlschartData, setHcfaGirlschartData] = useState({
-        labels: hcfa_g_0_to_5_years_zscores.map((data) => data.Month), 
-        datasets: [            
-            {
-                // yAxisID: 'yAxes',
-                label: "3",
-                data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD3),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2",
-                    above: "rgba(255,255,0,0.3)"
+        dataSets: {
+            labels: hcfa_g_0_to_5_years_zscores.map((data) => data.Month), 
+            datasets: [            
+                {
+                    // yAxisID: 'yAxes',
+                    label: "3",
+                    data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD3),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0
                 },
-            },
-            {
-                label: "2",
-                data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD2),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "1",
-                data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD1),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "0",
-                data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD0),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-1",
-                data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD1neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0
-            },
-            {
-                label: "-2",
-                data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD2neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "2",
-                    below: "rgba(0,255,0,0.3)"
+                {
+                    label: "2",
+                    data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD2),
+                    borderColor: "red",
+                    borderWidth: 2,
+                    pointRadius: 0
                 },
-            },
-            {
-                label: "-3",
-                data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD3neg),
-                borderColor: "black",
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: {
-                    target: "-1",
-                    below: "rgba(255,0,0,0.3)"
+                {
+                    label: "1",
+                    data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD1),
+                    borderColor: "orange",
+                    borderWidth: 2,
+                    pointRadius: 0
                 },
-            },
-            // {
-            //     label: "eventData",
-            //     data: [null,1,4,5],
-            //     borderColor: "blue",
-            //     borderWidth: 2,
-            //     pointRadius: 2
-            // }
-        ],
-        defaults: {
-            scale: {
-                ticks: { min: 0}
+                {
+                    label: "0",
+                    data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD0),
+                    borderColor: "green",
+                    borderWidth: 2,
+                    pointRadius: 0
+                },
+                {
+                    label: "-1",
+                    data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD1neg),
+                    borderColor: "orange",
+                    borderWidth: 2,
+                    pointRadius: 0
+                },
+                {
+                    label: "-2",
+                    data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD2neg),
+                    borderColor: "red",
+                    borderWidth: 2,
+                    pointRadius: 0
+                },
+                {
+                    label: "-3",
+                    data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD3neg),
+                    borderColor: "black",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                },
+                {
+                    label: "eventData",
+                    data: headCircumferenceDataPoint.reverse(),
+                    borderColor: "blue",
+                    borderWidth: 2,
+                    pointRadius: 2
+                }
+            ],
+            defaults: {
+                scale: {
+                    ticks: { min: 0}
+                }
             }
+        },
+        chartProperties: {
+            chartTitle: 'Head circumference for age (Girls)',
+            xAxisValue: 'Age (months)',
+            yAxisValue: 'Head circumference (cm)',
+            beginWithZeroAtAxisX: false,
+            beginWithZeroAtAxisY: false,
+            showYearBreakLine: true
         }
     });
-    */
+
+    const chartRef = React.useRef(null);
+
+    const handleResetZoom = () => {
+        if (chartRef && chartRef.current) {
+        chartRef.current.resetZoom();
+        }
+    };
 
     return (
     <div className='dashboard-container'>
         <div className='dashboard-wrapper'>
-            {/* <h3 className="help-centered"> All charts for demo </h3> */}
-
             <div className='content-wrapper help-centered'></div>
             <div className='content-section content-wrapper'>
-
-                {/* <div className="help-centered">
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">Weight for Age (Boys)</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell align='center'>
-                                        <div className='App'>
-                                            <Wfa_Boys chartData={wfaBoyschartData} xValue={null} yValue={null}/>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell align='center'>
-                                    Latest weight for age: Normal
-                                    </TableCell>
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell align='center'>
-                                        <div className="App">
-                                            <ToggleVisibility>
-
-                                            <br/><br/>
-
-                                                <TableContainer component={Paper}>
-                                                    <Table sx={{ minWidth: 650, }} aria-label="simple table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell align="center">Date</TableCell>
-                                                                <TableCell align="center">Value</TableCell>
-                                                                <TableCell align="center">Flag</TableCell>
-                                                            </TableRow>
-                                                        </TableHead>
-
-                                                        <TableBody>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-01-01</TableCell>
-                                                                <TableCell align='center'>3.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-02-05</TableCell>
-                                                                <TableCell align='center'>4.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-03-06</TableCell>
-                                                                <TableCell align='center'>4.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-04-05</TableCell>
-                                                                <TableCell align='center'>5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-05-01</TableCell>
-                                                                <TableCell align='center'>5.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-06-05</TableCell>
-                                                                <TableCell align='center'>6.1</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-07-02</TableCell>
-                                                                <TableCell align='center'>6.8</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-08-05</TableCell>
-                                                                <TableCell align='center'>7.4</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-09-04</TableCell>
-                                                                <TableCell align='center'>8.2</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-10-08</TableCell>
-                                                                <TableCell align='center'>9.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-11-01</TableCell>
-                                                                <TableCell align='center'>9.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-12-05</TableCell>
-                                                                <TableCell align='center'>10.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-
-                                                        </TableBody>
-                                                    </Table>
-                                                </TableContainer>
-                                            </ToggleVisibility>
-                                        </div>
-
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div> */}
-
-                {/* <br/><br/> */}
-
-                {/* <div className="help-centered">
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">Weight for Age (Girls)</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell align='center'>
-                                        <div className='App'>
-                                            <Wfa_Girls chartData={wfaGirlschartData}/>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell align='center'>
-                                    Latest weight for age: Normal
-                                    </TableCell>
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell align='center'>
-                                        <div className="App">
-                                            <ToggleVisibility>
-
-                                            <br/><br/>
-
-                                                <TableContainer component={Paper}>
-                                                    <Table sx={{ minWidth: 650, }} aria-label="simple table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell align="center">Date</TableCell>
-                                                                <TableCell align="center">Value</TableCell>
-                                                                <TableCell align="center">Flag</TableCell>
-                                                            </TableRow>
-                                                        </TableHead>
-
-                                                        <TableBody>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-01-01</TableCell>
-                                                                <TableCell align='center'>3.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-02-05</TableCell>
-                                                                <TableCell align='center'>4.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-03-06</TableCell>
-                                                                <TableCell align='center'>4.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-04-05</TableCell>
-                                                                <TableCell align='center'>5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-05-01</TableCell>
-                                                                <TableCell align='center'>5.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-06-05</TableCell>
-                                                                <TableCell align='center'>6.1</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-07-02</TableCell>
-                                                                <TableCell align='center'>6.8</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-08-05</TableCell>
-                                                                <TableCell align='center'>7.4</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-09-04</TableCell>
-                                                                <TableCell align='center'>8.2</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-10-08</TableCell>
-                                                                <TableCell align='center'>9.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-11-01</TableCell>
-                                                                <TableCell align='center'>9.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-12-05</TableCell>
-                                                                <TableCell align='center'>10.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-
-                                                        </TableBody>
-                                                    </Table>
-                                                </TableContainer>
-                                            </ToggleVisibility>
-                                        </div>
-
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div> */}
-
-                {/* <br/><br/> */}
-
-                    {/* <div className="help-centered">
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">Length / Height for Age (Boys)</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell align='center'>
-                                        <div className='App'>
-                                            <Lhfa_Boys chartData={lhfaBoyschartData}/>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell align='center'>
-                                    Latest weight for age: Normal
-                                    </TableCell>
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell align='center'>
-                                        <div className="App">
-                                            <ToggleVisibility>
-
-                                            <br/><br/>
-
-                                                <TableContainer component={Paper}>
-                                                    <Table sx={{ minWidth: 650, }} aria-label="simple table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell align="center">Date</TableCell>
-                                                                <TableCell align="center">Value</TableCell>
-                                                                <TableCell align="center">Flag</TableCell>
-                                                            </TableRow>
-                                                        </TableHead>
-
-                                                        <TableBody>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-01-01</TableCell>
-                                                                <TableCell align='center'>3.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-02-05</TableCell>
-                                                                <TableCell align='center'>4.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-03-06</TableCell>
-                                                                <TableCell align='center'>4.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-04-05</TableCell>
-                                                                <TableCell align='center'>5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-05-01</TableCell>
-                                                                <TableCell align='center'>5.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-06-05</TableCell>
-                                                                <TableCell align='center'>6.1</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-07-02</TableCell>
-                                                                <TableCell align='center'>6.8</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-08-05</TableCell>
-                                                                <TableCell align='center'>7.4</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-09-04</TableCell>
-                                                                <TableCell align='center'>8.2</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-10-08</TableCell>
-                                                                <TableCell align='center'>9.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-11-01</TableCell>
-                                                                <TableCell align='center'>9.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-12-05</TableCell>
-                                                                <TableCell align='center'>10.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-
-                                                        </TableBody>
-                                                    </Table>
-                                                </TableContainer>
-                                            </ToggleVisibility>
-                                        </div>
-
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div> */}
-
-                {/* <br/><br/> */}
 
                 <div className="help-centered">
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">Length / Height for Age (Girls)</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            
                             <TableBody>
                                 <TableRow>
                                     <TableCell align='center'>
                                         <div className='App'>
-                                            <Lhfa_Girls_New chartData={lhfaGirlschartData}/>
+                                            {
+                                                childData.sex === 'Male' ? <DrawChart ref={chartRef} chartData={wfaBoyschartData}/> : <DrawChart ref={chartRef} chartData={wfaGirlschartData}/>
+                                            }
+                                            {/* <Button variant="outlined" onClick={handleResetZoom}> Reset Zoom </Button> */}
                                         </div>
                                     </TableCell>
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell align='center'>
-                                    Latest weight for age: Normal
+                                        Latest weight for age: 
+                                        {
+                                            latestWeightForAge ? ' ' + latestWeightForAge : ' No Data'
+                                        }
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell align='center'>
+                                        <div className="App">
+
+                                            <ToggleVisibility>
+
+                                            <br/><br/>
+
+                                                <TableContainer component={Paper}>
+                                                    <Table sx={{ minWidth: 650, }} aria-label="simple table">
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell align="center">Date</TableCell>
+                                                                <TableCell align="center">Value</TableCell>
+                                                                <TableCell align="center">Flag</TableCell>
+                                                            </TableRow>
+                                                        </TableHead>                                                        
+                                                        <TableBody>
+                                                            {
+                                                                allChildEvents.map((data) => {
+
+                                                                    if(data.eventDate) {
+                                                                    
+                                                                        // console.log(data);
+
+                                                                        let date = new Date(data.eventDate);
+                                                                        let newDate = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+
+                                                                        // console.log(newDate)
+
+                                                                        let weightValue = data.dataValues.find(o => o.dataElement === deWeightId);
+                                                                        let weightFlag = data.dataValues.find(o => o.dataElement === indiWeightForAge);
+
+                                                                        return (
+                                                                            <TableRow>
+                                                                                <TableCell align='center'>{newDate}</TableCell>
+                                                                                <TableCell align='center'>{weightValue.value}</TableCell>
+                                                                                <TableCell align='center'>{weightFlag.value}</TableCell>
+                                                                            </TableRow>
+
+                                                                        );
+
+                                                                    } else {
+                                                                        return(
+                                                                            <TableRow>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                            </TableRow>
+                                                                        )
+                                                                    }
+                                                                    
+                                                                })
+                                                            }
+                                                            
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </ToggleVisibility>
+                                        </div>
+
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+
+                <br/><br/>
+
+                <div className="help-centered">
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">                            
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell align='center'>
+                                        <div className='App'>
+                                            {
+                                                childData.sex === 'Male' ? <DrawChart chartData={lhfaBoyschartData}/> : <DrawChart chartData={lhfaGirlschartData}/>
+                                            }
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell align='center'>
+                                        Latest Length / Height for Age:
+                                        {
+                                            latestLengthHeightForAge ? ' ' + latestLengthHeightForAge : ' No Data'
+                                        }
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell align='center'>
+                                        <div className="App">
+                                            
+                                            <ToggleVisibility>
+
+                                            <br/><br/>
+
+                                                <TableContainer component={Paper}>
+                                                    <Table sx={{ minWidth: 650, }} aria-label="simple table">
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell align="center">Date</TableCell>
+                                                                <TableCell align="center">Value</TableCell>
+                                                                <TableCell align="center">Flag</TableCell>
+                                                            </TableRow>
+                                                        </TableHead>
+
+                                                        <TableBody>
+                                                            {
+                                                                allChildEvents.map((data) => {
+
+                                                                    if(data.eventDate) {
+                                                                    
+                                                                        // console.log(data);
+
+                                                                        let date = new Date(data.eventDate);
+                                                                        let newDate = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+
+                                                                        // console.log(newDate)
+
+                                                                        let lengthHeightValue = data.dataValues.find(o => o.dataElement === deLengthHeightId);
+                                                                        let lengthHeightFlag = data.dataValues.find(o => o.dataElement === indiLengthHeightForAge);
+
+                                                                        return (
+                                                                            <TableRow>
+                                                                                <TableCell align='center'>{newDate}</TableCell>
+                                                                                <TableCell align='center'>{lengthHeightValue.value}</TableCell>
+                                                                                <TableCell align='center'>{lengthHeightFlag.value}</TableCell>
+                                                                            </TableRow>
+
+                                                                        );
+                                                                    } else {
+                                                                        return(
+                                                                            <TableRow>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                            </TableRow>
+                                                                        )
+                                                                    }
+                                                                    
+                                                                })
+                                                            }
+
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </ToggleVisibility>
+                                        </div>
+
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+                
+
+                <br/><br/>
+
+                <div className="help-centered">
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell align='center'>
+                                        <div className='App'>
+                                            {
+                                                childData.sex === 'Male' ? <DrawChart chartData={wflhBoyschartData}/> : <DrawChart chartData={wflhGirlschartData}/>
+                                            }
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell align='center'>
+                                        Latest Weight for Length / Height:
+                                        {
+                                            latestWeightForLengthHeight ? ' ' + latestWeightForLengthHeight : ' No Data'
+                                        }
                                     </TableCell>
                                 </TableRow>
 
@@ -1208,66 +1402,41 @@ const GrowthMonitoring = () => {
                                                         </TableHead>
 
                                                         <TableBody>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-01-01</TableCell>
-                                                                <TableCell align='center'>3.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-02-05</TableCell>
-                                                                <TableCell align='center'>4.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-03-06</TableCell>
-                                                                <TableCell align='center'>4.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-04-05</TableCell>
-                                                                <TableCell align='center'>5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-05-01</TableCell>
-                                                                <TableCell align='center'>5.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-06-05</TableCell>
-                                                                <TableCell align='center'>6.1</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-07-02</TableCell>
-                                                                <TableCell align='center'>6.8</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-08-05</TableCell>
-                                                                <TableCell align='center'>7.4</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-09-04</TableCell>
-                                                                <TableCell align='center'>8.2</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-10-08</TableCell>
-                                                                <TableCell align='center'>9.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-11-01</TableCell>
-                                                                <TableCell align='center'>9.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-12-05</TableCell>
-                                                                <TableCell align='center'>10.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
+                                                            {
+                                                                allChildEvents.map((data) => {
+
+                                                                    if(data.eventDate) {
+                                                                    
+                                                                        // console.log(data);
+
+                                                                        let date = new Date(data.eventDate);
+                                                                        let newDate = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+
+                                                                        // console.log(newDate)
+
+                                                                        let lengthHeightValue = data.dataValues.find(o => o.dataElement === deLengthHeightId);
+                                                                        let lengthHeightFlag = data.dataValues.find(o => o.dataElement === indiLengthHeightForAge);
+
+                                                                        return (
+                                                                            <TableRow>
+                                                                                <TableCell align='center'>{newDate}</TableCell>
+                                                                                <TableCell align='center'>{lengthHeightValue.value}</TableCell>
+                                                                                <TableCell align='center'>{lengthHeightFlag.value}</TableCell>
+                                                                            </TableRow>
+
+                                                                        );
+                                                                    } else {
+                                                                        return(
+                                                                            <TableRow>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                            </TableRow>
+                                                                        )
+                                                                    }
+                                                                    
+                                                                })
+                                                            }
 
                                                         </TableBody>
                                                     </Table>
@@ -1282,29 +1451,28 @@ const GrowthMonitoring = () => {
                     </TableContainer>
                 </div>
 
-                {/* <br/><br/> */}
+                <br/><br/>
 
-                {/* <div className="help-centered">
+                <div className="help-centered">
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">Head circumference for Age (Boys)</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">                            
                             <TableBody>
                                 <TableRow>
                                     <TableCell align='center'>
                                         <div className='App'>
-                                            <Hcfa_Boys chartData={hcfaBoyschartData}/>
+                                        {
+                                                childData.sex === 'Male' ? <DrawChart chartData={hcfaBoyschartData}/> : <DrawChart chartData={hcfaGirlschartData}/>
+                                            }
                                         </div>
                                     </TableCell>
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell align='center'>
-                                    Latest weight for age: Normal
+                                        Latest Head Circumference for Age:
+                                        {
+                                            latestHeadCircumferenceForAge ? ' ' + latestHeadCircumferenceForAge : ' No Data'
+                                        }
                                     </TableCell>
                                 </TableRow>
 
@@ -1326,66 +1494,41 @@ const GrowthMonitoring = () => {
                                                         </TableHead>
 
                                                         <TableBody>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-01-01</TableCell>
-                                                                <TableCell align='center'>3.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-02-05</TableCell>
-                                                                <TableCell align='center'>4.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-03-06</TableCell>
-                                                                <TableCell align='center'>4.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-04-05</TableCell>
-                                                                <TableCell align='center'>5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-05-01</TableCell>
-                                                                <TableCell align='center'>5.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-06-05</TableCell>
-                                                                <TableCell align='center'>6.1</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-07-02</TableCell>
-                                                                <TableCell align='center'>6.8</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-08-05</TableCell>
-                                                                <TableCell align='center'>7.4</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-09-04</TableCell>
-                                                                <TableCell align='center'>8.2</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-10-08</TableCell>
-                                                                <TableCell align='center'>9.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-11-01</TableCell>
-                                                                <TableCell align='center'>9.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-12-05</TableCell>
-                                                                <TableCell align='center'>10.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
+                                                            {
+                                                                allChildEvents.map((data) => {
+
+                                                                    if(data.eventDate) {
+                                                                    
+                                                                        // console.log(data);
+
+                                                                        let date = new Date(data.eventDate);
+                                                                        let newDate = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+
+                                                                        // console.log(newDate)
+
+                                                                        let headCircumferenceValue = data.dataValues.find(o => o.dataElement === deHeadCircumference);
+                                                                        let headCircumferenceFlag = data.dataValues.find(o => o.dataElement === indiHeadCircumferenece);
+
+                                                                        return (
+                                                                            <TableRow>
+                                                                                <TableCell align='center'>{newDate}</TableCell>
+                                                                                <TableCell align='center'>{headCircumferenceValue.value}</TableCell>
+                                                                                <TableCell align='center'></TableCell>
+                                                                            </TableRow>
+
+                                                                        );
+                                                                    } else {
+                                                                        return(
+                                                                            <TableRow>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                                <TableCell align='center'>No Data</TableCell>
+                                                                            </TableRow>
+                                                                        )
+                                                                    }
+                                                                    
+                                                                })
+                                                            }
 
                                                         </TableBody>
                                                     </Table>
@@ -1398,125 +1541,7 @@ const GrowthMonitoring = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </div> */}
-
-                {/* <br/><br/> */}
-
-                {/* <div className="help-centered">
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">Head circumference for Age (Girls)</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell align='center'>
-                                        <div className='App'>
-                                            <Hcfa_Girls chartData={hcfaGirlschartData}/>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell align='center'>
-                                    Latest weight for age: Normal
-                                    </TableCell>
-                                </TableRow>
-
-                                <TableRow>
-                                    <TableCell align='center'>
-                                        <div className="App">
-                                            <ToggleVisibility>
-
-                                            <br/><br/>
-
-                                                <TableContainer component={Paper}>
-                                                    <Table sx={{ minWidth: 650, }} aria-label="simple table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell align="center">Date</TableCell>
-                                                                <TableCell align="center">Value</TableCell>
-                                                                <TableCell align="center">Flag</TableCell>
-                                                            </TableRow>
-                                                        </TableHead>
-
-                                                        <TableBody>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-01-01</TableCell>
-                                                                <TableCell align='center'>3.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-02-05</TableCell>
-                                                                <TableCell align='center'>4.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-03-06</TableCell>
-                                                                <TableCell align='center'>4.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-04-05</TableCell>
-                                                                <TableCell align='center'>5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-05-01</TableCell>
-                                                                <TableCell align='center'>5.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-06-05</TableCell>
-                                                                <TableCell align='center'>6.1</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-07-02</TableCell>
-                                                                <TableCell align='center'>6.8</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-08-05</TableCell>
-                                                                <TableCell align='center'>7.4</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-09-04</TableCell>
-                                                                <TableCell align='center'>8.2</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-10-08</TableCell>
-                                                                <TableCell align='center'>9.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-11-01</TableCell>
-                                                                <TableCell align='center'>9.5</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell align='center'>2024-12-05</TableCell>
-                                                                <TableCell align='center'>10.0</TableCell>
-                                                                <TableCell align='center'>Normal</TableCell>
-                                                            </TableRow>
-
-                                                        </TableBody>
-                                                    </Table>
-                                                </TableContainer>
-                                            </ToggleVisibility>
-                                        </div>
-
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div> */}
+                </div>
             </div>
         </div>
     </div>

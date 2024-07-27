@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material';
+import { IconButton, Backdrop, CircularProgress, Button } from '@mui/material';
 import * as React from 'react';
 import Header from '../../components/header';
 import Marquee from "react-fast-marquee";
@@ -51,6 +51,14 @@ var items = [
 ]
 
 const Dashboard = () => {
+    const [openBackdrop, setOpenBackdrop] = useState(false);
+    const handleCloseBackdrop = () => {
+        setOpenBackdrop(false);
+    };
+    const handleOpenBackdrop = () => {
+        setOpenBackdrop(true);
+    };
+
     const [children, setChildren] = useState([]);
     const [childPos, setChildPos] = useState(null);
     const [profileOpen, setProfileOpen] = useState(false);
@@ -58,6 +66,7 @@ const Dashboard = () => {
     const [child, setChild] = useState(null);
     const [fullEvents, setFullEvents] = useState([]);
     const [phcEvents, setPhcEvents] = useState([]);
+    const [growthEvents, setGrowthEvents] = useState([]);
     const [vacList, setVacList] = useState([]);
 
     const fetchUsers = async () => {
@@ -78,7 +87,9 @@ const Dashboard = () => {
     const fetchUser = async () => {
         setFullEvents([]);
         setPhcEvents([]);
+        setGrowthEvents([]);
         if (children[childPos]) {
+            handleOpenBackdrop();
             fetch(await API_URL() + 'api/getEnrollmentDetails', {
                 method: 'POST',
                 headers: {
@@ -95,7 +106,7 @@ const Dashboard = () => {
                 .then(out => {
                     if (out.data && out.data.child) {
                         setChild(out.data.child);
-                        console.log("FETCH USER", out.data.child);
+                        // console.log("FETCH USER", out.data.child);
                     }
                 })
                 .catch(err => console.log("Error Catch", err))
@@ -117,10 +128,12 @@ const Dashboard = () => {
             })
                 .then(res => res.json())
                 .then(out => {
-                    console.log("PVAC", out.data);
+                    // console.log("PVAC", out.data);
+                    handleCloseBackdrop();
                     if (out.data.events) {
                         setVacList(out.data);
                         setFullEvents(out.data.events);
+                        // console.log("Full events", out.data.events)
                     }
                 })
                 .catch(err => console.log("Error Catch", err))
@@ -144,12 +157,37 @@ const Dashboard = () => {
                 .then(out => {
                     if (out.events) {
                         setPhcEvents(out.events);
+                        // console.log("DATA", out.events)
                     }
                 })
                 .catch(err => console.log("Error Catch", err))
         }
     }
 
+    const fetchChildGrowthData = async () => {
+        if (childPos !== null) {
+            fetch(await API_URL() + `api/getGrowthMonitoring`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-token': getCookie()
+                },
+                body: JSON.stringify({
+                    epi: child.epi
+                })
+            })
+                .then(res => res.json())
+                .then(out => {
+                    // console.log("PVAC", out.events);
+                    handleCloseBackdrop();
+                    if (out.events) {
+                        setGrowthEvents(out.events);
+                        // console.log("Full events", out.data.events)
+                    }
+                })
+                .catch(err => console.log("Error Catch", err))
+        }
+    }
 
     const openPublic = async () => {
         fetch(await API_URL() + `api/generatePublicQR`, {
@@ -195,7 +233,10 @@ const Dashboard = () => {
     useEffect(() => { fetchUser(); }, [childPos]);
     useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
     useEffect(() => { if (child) { fetchPhcData(); } }, [child]);
+    useEffect(() => { if (child) { fetchChildGrowthData(); } }, [child]);
 
+
+    // console.log("FULL EVENTS from Dashboard", fullEvents)
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
@@ -203,6 +244,17 @@ const Dashboard = () => {
     };
 
     return <div className='dashboard-container'>
+
+    <div>
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackdrop}
+        onClick={handleCloseBackdrop}
+        >
+        <CircularProgress color="inherit" />
+        </Backdrop>
+    </div>
+
         <Header />
         <div className='dashboard-wrapper'>
             <div className='content-wrapper'>
@@ -216,6 +268,7 @@ const Dashboard = () => {
                     <div style={{ padding: '1em', display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => {
                         setChildPos(null);
                         setEnrollOpen(true);
+                        // console.log("clicked");
                     }}>
                         <img src="/new.png" alt='child' style={{ width: '3em' }} />
                     </div>
@@ -223,7 +276,12 @@ const Dashboard = () => {
                         children.map((child, index) => {
                             let src = srcList[0];
                             const age = child.dob ? (new Date().getFullYear() - new Date(child.dob).getFullYear()) : null;
-                            const months = child.dob ? (new Date().getMonth() - new Date(child.dob).getMonth()) : null;
+                            if(age < 5) {
+                                var months = child.dob ? (new Date().getMonth() - new Date(child.dob).getMonth()) : null;
+                                var months = months + " M";
+                            } else {
+                                var months = '';
+                            }
                             if (child.sex === "M") {
                                 if (age && age < 2) {
                                     src = infant;
@@ -245,10 +303,13 @@ const Dashboard = () => {
                                     src = female2;
                                 }
                             }
-                            return <div style={{ padding: '1em', background: index !== childPos ? '' : 'rgb(248, 219, 163)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '8em' }} onClick={() => setChildPos(childPos === index ? null : index)}>
+                            return <div 
+                                    style={{ padding: '1em', background: index !== childPos ? '' : 'rgb(248, 219, 163)', 
+                                    cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '8em' }} 
+                                    onClick={() => setChildPos(childPos === index ? null : index)}>
                                 <h6 style={{ margin: 0, textAlign: 'center', padding: '5px 0' }}>{child.name}</h6>
                                 <img src={src} alt='child' style={{ width: '5em' }} />
-                                <p style={{ fontSize: '0.6em', padding: 0 }}>({`${age} Y ${months} M`})</p>
+                                <p style={{ fontSize: '0.6em', padding: 0 }}>({`${age} Y ${months}`})</p>
                             </div>
                         })
                     }
@@ -330,7 +391,7 @@ const Dashboard = () => {
                                     }
                                     {
                                         fullEvents.length > 0 ?
-                                            <TabPanel value="2" className='overflow full-height'>{<GrowthMonitoring/>}</TabPanel>
+                                            <TabPanel value="2" className='overflow full-height'>{<GrowthMonitoring childData={child} allChildEvents={growthEvents}/>}</TabPanel>
                                         : null
                                     }
                                     {
