@@ -72,7 +72,7 @@ Chart.register(CategoryScale, Filler, annotationPlugin, zoomPlugin, ...registera
 
 const GrowthMonitoring = ({childData, allChildEvents}) => {
 
-    // console.log("ALL EVENET", allChildEvents);
+    // console.log("ALL EVENET", childData);
     // console.log("Growth Data Elements", growthDataElements);
 
     const deWeightId = growthDataElements.DATA_ELEMENT_WEIGHT;

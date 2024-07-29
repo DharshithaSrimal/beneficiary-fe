@@ -67,6 +67,7 @@ const Dashboard = () => {
     const [fullEvents, setFullEvents] = useState([]);
     const [phcEvents, setPhcEvents] = useState([]);
     const [growthEvents, setGrowthEvents] = useState([]);
+    const [developmentEvents, setDevelopmentEvents] = useState([]);
     const [vacList, setVacList] = useState([]);
 
     const fetchUsers = async () => {
@@ -88,6 +89,7 @@ const Dashboard = () => {
         setFullEvents([]);
         setPhcEvents([]);
         setGrowthEvents([]);
+        setDevelopmentEvents([]);
         if (children[childPos]) {
             handleOpenBackdrop();
             fetch(await API_URL() + 'api/getEnrollmentDetails', {
@@ -173,7 +175,8 @@ const Dashboard = () => {
                     'x-token': getCookie()
                 },
                 body: JSON.stringify({
-                    epi: child.epi
+                    epi: child.epi,
+                    entity_id: child.entity_instance
                 })
             })
                 .then(res => res.json())
@@ -182,6 +185,32 @@ const Dashboard = () => {
                     handleCloseBackdrop();
                     if (out.events) {
                         setGrowthEvents(out.events);
+                        // console.log("Full events", out.data.events)
+                    }
+                })
+                .catch(err => console.log("Error Catch", err))
+        }
+    }
+
+    const fetchChildDevelopmentData = async () => {
+        if (childPos !== null) {
+            fetch(await API_URL() + `api/getDevelopmentMilestones`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-token': getCookie()
+                },
+                body: JSON.stringify({
+                    epi: child.epi,
+                    entity_id: child.entity_instance
+                })
+            })
+                .then(res => res.json())
+                .then(out => {
+                    // console.log("PVAC", out.events);
+                    handleCloseBackdrop();
+                    if (out.events) {
+                        setDevelopmentEvents(out.events);
                         // console.log("Full events", out.data.events)
                     }
                 })
@@ -234,6 +263,7 @@ const Dashboard = () => {
     useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
     useEffect(() => { if (child) { fetchPhcData(); } }, [child]);
     useEffect(() => { if (child) { fetchChildGrowthData(); } }, [child]);
+    useEffect(() => { if (child) { fetchChildDevelopmentData(); } }, [child]);
 
 
     // console.log("FULL EVENTS from Dashboard", fullEvents)
@@ -396,7 +426,7 @@ const Dashboard = () => {
                                     }
                                     {
                                         fullEvents.length > 0 ?
-                                            <TabPanel value="3" className='overflow full-height'>{<Milestones/>}</TabPanel>
+                                            <TabPanel value="3" className='overflow full-height'>{<Milestones developmentEvents={developmentEvents}/>}</TabPanel>
                                         : null
                                     }
                                     {
