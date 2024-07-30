@@ -426,7 +426,7 @@ const Dashboard = () => {
                                     }
                                     {
                                         fullEvents.length > 0 ?
-                                            <TabPanel value="3" className='overflow full-height'>{<Milestones developmentEvents={developmentEvents}/>}</TabPanel>
+                                            <TabPanel value="3" className='overflow full-height'>{<Milestones childData={child} developmentEvents={developmentEvents}/>}</TabPanel>
                                         : null
                                     }
                                     {
