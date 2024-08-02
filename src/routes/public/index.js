@@ -374,7 +374,7 @@ const Public = () => {
 
     return <div>
         <ReportContent ref={printRef} />
-        <Fab color="primary" aria-label="add" style={{ position: 'sticky', bottom: 20, left: '90%' }} onClick={handlePrint}>
+        <Fab color="error" aria-label="add" style={{ position: 'sticky', bottom: 20, left: '90%' }} onClick={handlePrint}>
             <PrintIcon />
         </Fab>
     </div>

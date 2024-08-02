@@ -16,7 +16,12 @@ export const VaccineCard = ({ basic, full, vacs }) => {
     const retrieveDate = (list, vaccine) => {
         const vac = list.filter((item) => item.dataElement === vaccine);
         if (vac && vac.length > 0 && vac[0].value === 'true') {
-            return new Date(vac[0].date).toLocaleDateString();
+            let newDate = new Date(vac[0].date);
+            newDate = newDate.getFullYear() + '-' + newDate.getMonth() + '-' + newDate.getDate();
+
+            console.log(newDate)
+
+            return newDate;
         }
         return "-";
     }
@@ -111,8 +116,8 @@ export const VaccineCard = ({ basic, full, vacs }) => {
             <h5>Childhood Immunization (EPI):</h5>
             <div className="desktop">
                 <table style={{ width: '100%' }}>
-                    <tr>
-                        <th style={{ width: '12.5%' }} className="filled">Vaccines</th>
+                    <tr className="tableheader">
+                        <th style={{ width: '12.5%' }} className="filled">Vacciness</th>
                         <th style={{ width: '12.5%' }} className="filled">At Birth</th>
                         <th style={{ width: '12.5%' }} className="filled">2 Month</th>
                         <th style={{ width: '12.5%' }} className="filled">4 Month</th>

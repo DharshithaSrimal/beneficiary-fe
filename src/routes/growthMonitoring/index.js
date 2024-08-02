@@ -73,7 +73,7 @@ Chart.register(CategoryScale, Filler, annotationPlugin, zoomPlugin, ...registera
 const GrowthMonitoring = ({childData, allChildEvents}) => {
 
     // console.log("ALL EVENET", childData);
-    // console.log("Growth Data Elements", growthDataElements);
+    console.log("Growth Data Elements", allChildEvents);
 
     const deWeightId = growthDataElements.DATA_ELEMENT_WEIGHT;
     const deLengthHeightId = growthDataElements.DATA_ELEMENT_LENGTH_HEIGHT;
@@ -156,7 +156,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 // yAxisID: 'yAxes',
                 label: "3",
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD3),
-                borderColor: "black",
+                borderColor: "rgba(0,0,0,0.3)",
                 borderWidth: 2,
                 pointRadius: 0,
                 pointHitRadius: 0,
@@ -168,7 +168,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             {
                 label: "2",
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD2),
-                borderColor: "black",
+                borderColor: "rgba(0,0,0,0.3)",
                 borderWidth: 2,
                 pointRadius: 0,
                 pointHitRadius: 0
@@ -176,7 +176,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             {
                 label: "1",
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD1),
-                borderColor: "black",
+                borderColor: "rgba(0,0,0,0.3)",
                 borderWidth: 2,
                 pointRadius: 0,
                 pointHitRadius: 0,
@@ -184,7 +184,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             {
                 label: "0",
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD0),
-                borderColor: "black",
+                borderColor: "rgba(0,0,0,0.3)",
                 borderWidth: 2,
                 pointRadius: 0,
                 pointHitRadius: 0,
@@ -192,7 +192,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             {
                 label: "-1",
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD1neg),
-                borderColor: "black",
+                borderColor: "rgba(0,0,0,0.3)",
                 borderWidth: 2,
                 pointRadius: 0,
                 pointHitRadius: 0,
@@ -200,7 +200,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             {
                 label: "-2",
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD2neg),
-                borderColor: "black",
+                borderColor: "rgba(0,0,0,0.3)",
                 borderWidth: 2,
                 pointRadius: 0,
                 pointHitRadius: 0,
@@ -212,7 +212,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             {
                 label: "-3",
                 data: wfa_b_0_to_5_years_zscores.map((data) => data.SD3neg),
-                borderColor: "black",
+                borderColor: "rgba(0,0,0,0.3)",
                 borderWidth: 2,
                 pointRadius: 0,
                 pointHitRadius: 0,
@@ -222,15 +222,16 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 },
             },
             {
-                label: "eventData",
+                label: "",
                 data: weightForAgeDataPoint.reverse(),
-                borderColor: "blue",
+                borderColor: "black",
                 borderWidth: 2,
                 pointRadius: 2
             }
             ]
         },
         chartProperties: {
+            chartShortCode: 'wfa',
             chartTitle: 'Weight for Age (Boys)',
             xAxisValue: 'Age (months)',
             yAxisValue: 'Weight (kg)',
@@ -246,7 +247,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                     // yAxisID: 'yAxes',
                     label: "3",
                     data: wfa_g_0_to_5_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -258,7 +259,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "2",
                     data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0
@@ -266,7 +267,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "1",
                     data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -274,7 +275,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "0",
                     data: wfa_g_0_to_5_years_zscores.map((data) => data.SD0),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -282,7 +283,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-1",
                     data: wfa_g_0_to_5_years_zscores.map((data) => data.SD1neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -290,7 +291,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-2",
                     data: wfa_g_0_to_5_years_zscores.map((data) => data.SD2neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -302,7 +303,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3",
                     data: wfa_g_0_to_5_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -314,13 +315,14 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "",
                     data: weightForAgeDataPoint.reverse(),
-                    borderColor: "blue",
+                    borderColor: "black",
                     borderWidth: 2,
                     pointRadius: 2
                 }
             ],
         },
         chartProperties: {
+            chartShortCode: 'wfa',
             chartTitle: 'Weight for Age (Girls)',
             xAxisValue: 'Age (months)',
             yAxisValue: 'Weight (kg)',
@@ -335,7 +337,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "3a",
                     data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -347,7 +349,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "2a",
                     data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD2),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -355,7 +357,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "1a",
                     data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD1),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -363,7 +365,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "0a",
                     data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD0),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -371,7 +373,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-1a",
                     data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD1neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -379,7 +381,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-2a",
                     data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD2neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0,
@@ -391,7 +393,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3a",
                     data: lhfa_g_0_to_2_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -403,7 +405,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "3",
                     data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -415,7 +417,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "2",
                     data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD2),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -423,7 +425,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "1",
                     data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD1),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -435,7 +437,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "0",
                     data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD0),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -443,7 +445,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-1",
                     data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD1neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -451,7 +453,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-2",
                     data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD2neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -463,7 +465,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3",
                     data: lhfa_g_2_to_5_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -473,9 +475,9 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                     }
                 },
                 {
-                    label: "eventData",
+                    label: "",
                     data: lengthHeightForAgeDataPoint.reverse(),
-                    borderColor: "blue",
+                    borderColor: "black",
                     borderWidth: 2,
                     pointRadius: 2
                 }
@@ -487,6 +489,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             }
         },
         chartProperties: {
+            chartShortCode: 'lhfa',
             chartTitle: 'Length / Height for Age (Girls)',
             xAxisValue: 'Age (months)',
             yAxisValue: 'Length / Height (cm)',
@@ -503,7 +506,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "3a",
                     data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -515,7 +518,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "2a",
                     data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD2),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -523,7 +526,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "1a",
                     data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD1),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -531,7 +534,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "0a",
                     data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD0),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -539,7 +542,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-1a",
                     data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD1neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -547,7 +550,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-2a",
                     data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD2neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0,
@@ -559,7 +562,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3a",
                     data: lhfa_b_0_to_2_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -571,7 +574,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "3",
                     data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -583,7 +586,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "2",
                     data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD2),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -591,7 +594,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "1",
                     data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD1),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -603,7 +606,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "0",
                     data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD0),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -611,7 +614,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-1",
                     data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD1neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -619,7 +622,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-2",
                     data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD2neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -631,7 +634,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3",
                     data: lhfa_b_2_to_5_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -642,9 +645,9 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 },
                 
                 {
-                    label: "eventData",
+                    label: "",
                     data: lengthHeightForAgeDataPoint.reverse(),
-                    borderColor: "blue",
+                    borderColor: "black",
                     borderWidth: 2,
                     pointRadius: 2
                 }
@@ -656,6 +659,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             }
         },
         chartProperties: {
+            chartShortCode: 'lhfa',
             chartTitle: 'Length / Height for Age (Boys)',
             xAxisValue: 'Age (months)',
             yAxisValue: 'Length / Height (cm)',
@@ -672,7 +676,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "3a",
                     data: wflh_g_0_to_2_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -684,7 +688,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "2a",
                     data: wflh_g_0_to_2_years_zscores.map((data) => data.SD2),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -692,7 +696,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "1a",
                     data: wflh_g_0_to_2_years_zscores.map((data) => data.SD1),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -700,7 +704,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "0a",
                     data: wflh_g_0_to_2_years_zscores.map((data) => data.SD0),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -708,7 +712,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-1a",
                     data: wflh_g_0_to_2_years_zscores.map((data) => data.SD1neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -716,7 +720,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-2a",
                     data: wflh_g_0_to_2_years_zscores.map((data) => data.SD2neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0,
@@ -728,7 +732,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3a",
                     data: wflh_g_0_to_2_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -740,7 +744,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "3",
                     data: wflh_g_2_to_5_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -752,7 +756,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "2",
                     data: wflh_g_2_to_5_years_zscores.map((data) => data.SD2),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -760,7 +764,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "1",
                     data: wflh_g_2_to_5_years_zscores.map((data) => data.SD1),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -772,7 +776,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "0",
                     data: wflh_g_2_to_5_years_zscores.map((data) => data.SD0),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -780,7 +784,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-1",
                     data: wflh_g_2_to_5_years_zscores.map((data) => data.SD1neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -788,7 +792,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-2",
                     data: wflh_g_2_to_5_years_zscores.map((data) => data.SD2neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -800,7 +804,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3",
                     data: wflh_g_2_to_5_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -813,7 +817,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "",
                     data: weightForLengthHeightDataPoint,
-                    borderColor: "blue",
+                    borderColor: "black",
                     borderWidth: 2,
                     pointRadius: 2
                 }
@@ -825,6 +829,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             }
         },
         chartProperties: {
+            chartShortCode: 'wflh',
             chartTitle: 'Weight for Length / Height (Girls)',
             xAxisValue: 'Length / Height (cm)',
             yAxisValue: 'Weight (Kg)',
@@ -841,7 +846,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "3a",
                     data: wflh_b_0_to_2_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -853,7 +858,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "2a",
                     data: wflh_b_0_to_2_years_zscores.map((data) => data.SD2),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -861,7 +866,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "1a",
                     data: wflh_b_0_to_2_years_zscores.map((data) => data.SD1),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -869,7 +874,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "0a",
                     data: wflh_b_0_to_2_years_zscores.map((data) => data.SD0),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -877,7 +882,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-1a",
                     data: wflh_b_0_to_2_years_zscores.map((data) => data.SD1neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -885,7 +890,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-2a",
                     data: wflh_b_0_to_2_years_zscores.map((data) => data.SD2neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0,
@@ -897,7 +902,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3a",
                     data: wflh_b_0_to_2_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -909,7 +914,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "3",
                     data: wflh_b_2_to_5_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -921,7 +926,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "2",
                     data: wflh_b_2_to_5_years_zscores.map((data) => data.SD2),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -929,7 +934,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "1",
                     data: wflh_b_2_to_5_years_zscores.map((data) => data.SD1),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -941,7 +946,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "0",
                     data: wflh_b_2_to_5_years_zscores.map((data) => data.SD0),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -949,7 +954,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-1",
                     data: wflh_b_2_to_5_years_zscores.map((data) => data.SD1neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointHitRadius: 0,
                     pointRadius: 0
@@ -957,7 +962,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-2",
                     data: wflh_b_2_to_5_years_zscores.map((data) => data.SD2neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -969,7 +974,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3",
                     data: wflh_b_2_to_5_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 0,
@@ -982,7 +987,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "",
                     data: weightForLengthHeightDataPoint.reverse(),
-                    borderColor: "blue",
+                    borderColor: "black",
                     borderWidth: 2,
                     pointRadius: 2
                 }
@@ -994,6 +999,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             }
         },
         chartProperties: {
+            chartShortCode: 'wflh',
             chartTitle: 'Weight for Length / Height (Boys)',
             xAxisValue: 'Length / Height (cm)',
             yAxisValue: 'Weight (Kg)',
@@ -1011,7 +1017,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                     // yAxisID: 'yAxes',
                     label: "3",
                     data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0
                 },
@@ -1053,14 +1059,14 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3",
                     data: hcfa_b_0_to_5_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                 },
                 {
-                    label: "eventData",
+                    label: "",
                     data: headCircumferenceDataPoint.reverse(),
-                    borderColor: "blue",
+                    borderColor: "black",
                     borderWidth: 2,
                     pointRadius: 2
                 }
@@ -1072,6 +1078,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             }
         },
         chartProperties: {
+            chartShortCode: 'hcfa',
             chartTitle: 'Head circumference for age (Boys)',
             xAxisValue: 'Age (months)',
             yAxisValue: 'Head circumference (cm)',
@@ -1089,7 +1096,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                     // yAxisID: 'yAxes',
                     label: "3",
                     data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD3),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0
                 },
@@ -1131,14 +1138,14 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 {
                     label: "-3",
                     data: hcfa_g_0_to_5_years_zscores.map((data) => data.SD3neg),
-                    borderColor: "black",
+                    borderColor: "rgba(0,0,0,0.3)",
                     borderWidth: 2,
                     pointRadius: 0,
                 },
                 {
-                    label: "eventData",
+                    label: "",
                     data: headCircumferenceDataPoint.reverse(),
-                    borderColor: "blue",
+                    borderColor: "black",
                     borderWidth: 2,
                     pointRadius: 2
                 }
@@ -1150,6 +1157,7 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             }
         },
         chartProperties: {
+            chartShortCode: 'hcfa',
             chartTitle: 'Head circumference for age (Girls)',
             xAxisValue: 'Age (months)',
             yAxisValue: 'Head circumference (cm)',
@@ -1207,11 +1215,11 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
 
                                                 <TableContainer component={Paper}>
                                                     <Table sx={{ minWidth: 650, }} aria-label="simple table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell align="center">Date</TableCell>
-                                                                <TableCell align="center">Value</TableCell>
-                                                                <TableCell align="center">Flag</TableCell>
+                                                        <TableHead className='table-header'>
+                                                            <TableRow className="phc-table-header">
+                                                                <TableCell className="phc-table-header-cell" align="center">Date</TableCell>
+                                                                <TableCell className="phc-table-header-cell" align="center">Value</TableCell>
+                                                                <TableCell className="phc-table-header-cell" align="center">Flag</TableCell>
                                                             </TableRow>
                                                         </TableHead>                                                        
                                                         <TableBody>
@@ -1300,13 +1308,13 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
 
                                                 <TableContainer component={Paper}>
                                                     <Table sx={{ minWidth: 650, }} aria-label="simple table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell align="center">Date</TableCell>
-                                                                <TableCell align="center">Value</TableCell>
-                                                                <TableCell align="center">Flag</TableCell>
+                                                        <TableHead className='table-header'>
+                                                            <TableRow className="phc-table-header">
+                                                                <TableCell className="phc-table-header-cell" align="center">Date</TableCell>
+                                                                <TableCell className="phc-table-header-cell" align="center">Value</TableCell>
+                                                                <TableCell className="phc-table-header-cell" align="center">Flag</TableCell>
                                                             </TableRow>
-                                                        </TableHead>
+                                                        </TableHead>  
 
                                                         <TableBody>
                                                             {
@@ -1393,13 +1401,13 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
 
                                                 <TableContainer component={Paper}>
                                                     <Table sx={{ minWidth: 650, }} aria-label="simple table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell align="center">Date</TableCell>
-                                                                <TableCell align="center">Value</TableCell>
-                                                                <TableCell align="center">Flag</TableCell>
+                                                        <TableHead className='table-header'>
+                                                            <TableRow className="phc-table-header">
+                                                                <TableCell className="phc-table-header-cell" align="center">Date</TableCell>
+                                                                <TableCell className="phc-table-header-cell" align="center">Value</TableCell>
+                                                                <TableCell className="phc-table-header-cell" align="center">Flag</TableCell>
                                                             </TableRow>
-                                                        </TableHead>
+                                                        </TableHead>  
 
                                                         <TableBody>
                                                             {
@@ -1485,13 +1493,13 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
 
                                                 <TableContainer component={Paper}>
                                                     <Table sx={{ minWidth: 650, }} aria-label="simple table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell align="center">Date</TableCell>
-                                                                <TableCell align="center">Value</TableCell>
-                                                                <TableCell align="center">Flag</TableCell>
+                                                        <TableHead className='table-header'>
+                                                            <TableRow className="phc-table-header">
+                                                                <TableCell className="phc-table-header-cell" align="center">Date</TableCell>
+                                                                <TableCell className="phc-table-header-cell" align="center">Value</TableCell>
+                                                                <TableCell className="phc-table-header-cell" align="center">Flag</TableCell>
                                                             </TableRow>
-                                                        </TableHead>
+                                                        </TableHead>  
 
                                                         <TableBody>
                                                             {

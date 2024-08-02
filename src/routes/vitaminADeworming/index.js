@@ -167,53 +167,64 @@ const ADeworming = () => {
                     <Table>
                         <TableHead>
                             <TableRow className="phc-table-header">
-                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Vitamin A</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell align="center" style={{ width: '50%', fontWeight: 'bold', fontSize: 'medium' }}>Age due</TableCell>
-                                <TableCell align="center" style={{ width: '50%', fontWeight: 'bold', fontSize: 'medium' }}>Date received</TableCell>
+                            <TableCell className="phc-table-header-cell" align="center" >Age</TableCell>
+                                <TableCell className="phc-table-header-cell" align="center">
+                                    Vitamin A Schedule <br/>
+                                    <span className='dateReceived'>Date Received</span>
+                                </TableCell>
+                                <TableCell className="phc-table-header-cell" align="center">
+                                    Deworming Schedule <br/>
+                                    <span className='dateReceived'>Date Received</span>
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             <TableRow>
-                                <TableCell style={{ width: '50%' }}>9 months due</TableCell>
-                                <TableCell align="center" style={{ width: '50%' }}></TableCell>
+                                <TableCell align='center'> 2 Years </TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
                             </TableRow>
+
                             <TableRow>
-                                <TableCell style={{ width: '50%' }}>18 months due</TableCell>
-                                <TableCell align="center" style={{ width: '50%' }}></TableCell>
+                                <TableCell align='center'> 2 <sup>1/2</sup> Years </TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" className='grey-row'></TableCell>
                             </TableRow>
+
                             <TableRow>
-                                <TableCell style={{ width: '50%' }}>2 years due</TableCell>
-                                <TableCell align="center" style={{ width: '50%' }}></TableCell>
+                                <TableCell align='center'> 3 Years </TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
                             </TableRow>
+
                             <TableRow>
-                                <TableCell style={{ width: '50%' }}>2 1/2 years due</TableCell>
-                                <TableCell align="center" style={{ width: '50%' }}></TableCell>
+                                <TableCell align='center'> 3 <sup>1/2</sup> Years </TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center"  className='grey-row'></TableCell>
                             </TableRow>
+
+                            <TableRow>
+                                <TableCell align='center'> 4 Years </TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
+                            </TableRow>
+
+                            <TableRow>
+                                <TableCell align='center'> 4 <sup>1/2</sup> Years </TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center"  className='grey-row'></TableCell>
+                            </TableRow>
+
+                            <TableRow>
+                                <TableCell align='center'> 5 Years </TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}></TableCell>
+                            </TableRow>
+                            
                         </TableBody>
                     </Table>
                 </TableContainer>
                 <br></br>
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow className="phc-table-header">
-                                <TableCell className="phc-table-header-cell" colSpan={2} align="center">Deworming</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell align="center" style={{ width: '50%', fontWeight: 'bold', fontSize: 'medium' }}>Age due</TableCell>
-                                <TableCell align="center" style={{ width: '50%', fontWeight: 'bold', fontSize: 'medium' }}>Date received</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell style={{ width: '50%' }}>2 years due</TableCell>
-                                <TableCell align="center" style={{ width: '50%' }}></TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
             </div>
         </div>
     </div>

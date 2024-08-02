@@ -1,5 +1,6 @@
 import { Dataset } from "@mui/icons-material";
 import { id } from "date-fns/locale";
+import { tooltip } from "leaflet";
 import React from "react";
 import { Line } from "react-chartjs-2";
 
@@ -174,6 +175,117 @@ function DrawChart({ chartData }) {
                         annotation: {
                             annotations: annotationData
                         },
+                        tooltip: {
+                            enabled: true,
+                                // intersect: false,
+                                position: 'nearest',
+                                backgroundColor: 'white',
+                                bodyFont: {
+                                    size: 12
+                                },
+                                bodyColor: 'black',
+                                borderColor: 'black',
+                                borderWidth: 1,
+                                padding: 12,
+                                caretPadding: 4,
+                                boxPadding: 4,
+                                usePointStyle: true,
+                                animation: false,
+                                displayColors: false,
+                            callbacks: {
+                                title: () => '',
+                                label: function(context) {
+
+                                    console.log(context)
+
+                                    let label = context.dataset.label || '';
+
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+
+                                        if(chartData.chartProperties.chartShortCode == 'wfa' || chartData.chartProperties.chartShortCode == 'wflh') {
+                                            label += `Weight: ${context.parsed.y} kg `;
+                                        }
+
+                                        if(chartData.chartProperties.chartShortCode == 'lhfa') {
+                                            label += `Length / Height: ${context.parsed.y} cm `;
+                                        }
+
+                                        if(chartData.chartProperties.chartShortCode == 'hcfa') {
+                                            label += `Head Circumference: ${context.parsed.y} cm `;
+                                        }
+                                    }
+                                    return label;
+                                    // let sum = 0;
+
+                                    // tooltipItems.forEach(function(tooltipItem) {
+
+                                    // })
+
+                                    // return tooltipItems;
+                                }
+                            }
+                            
+
+                        
+                        //     filter: (tooltipItem) => tooltipItem.dataset.id === 'measurementData',
+                            // callbacks: {
+                                // title: () => '',
+                                // beforeLabel: (tooltipItem) => {
+                                //     const date = new Date(tooltipItem.raw.eventDate).toLocaleDateString();
+                                //     return `${date}`;
+                                // },
+                                // label: (tooltipItem) => {
+                                    // const date = new Date(tooltipItem.raw.eventDate);
+                                    // let yValue = Number(tooltipItem.formattedValue.replace(',', '.'));
+                                    // let xValue = Number(tooltipItem.label.replace(',', '.'));
+                                    // // const weeks = differenceInWeeks(date, dateOfBirth);
+                                    // const weeks = differenceInWeeks(date, dateOfBirth);
+
+                                    // let xLabel = '';
+
+                                    // yValue = Number(yValue.toFixed(2));
+                                    // xValue = Number(xValue.toFixed(2));
+
+                                    // const yLabel = `${yAxisLabel}: ${yValue} ${yUnit}`;
+                                    // xLabel = `${xAxisLabel}: ${xValue} ${xUnit}`;
+
+                                    // if (xAxisLabel === TimeUnitCodes.weeks) {
+                                    //     xLabel = `${i18n.t('Age')}: `;
+                                    //     xLabel += `${weeks} ${(weeks === 1) ? timeUnitData.Weeks.singular : timeUnitData.Weeks.plural} `;
+                                    // }
+
+                                    // if (xAxisLabel === TimeUnitCodes.months) {
+                                    //     const months = differenceInMonths(date, dateOfBirth) % 12;
+                                    //     const years = differenceInYears(date, dateOfBirth);
+                    
+                                    //     xLabel = `${i18n.t('Age')}: `;
+                    
+                                    //     if (weeks <= 13) {
+                                    //         xLabel += `${weeks} ${(weeks === 1) ? timeUnitData.Weeks.singular : timeUnitData.Weeks.plural} `;
+                                    //     }
+                    
+                                    //     if (weeks > 13) {
+                                    //         if (years > 0) {
+                                    //             xLabel += `${years} ${(years === 1) ? timeUnitData.Years.singular : timeUnitData.Years.plural} `;
+                                    //         }
+                    
+                                    //         if (months > 0) {
+                                    //             xLabel += `${months} ${(months === 1) ? timeUnitData.Months.singular : timeUnitData.Months.plural} `;
+                                    //         }
+                                    //     }
+                                    // }
+
+                                    // const labels = [];
+                                    // labels.push('Wight in Kg');
+                                    // labels.push('Age in Months');
+
+                                    // return labels;
+                                // }
+                            // }
+                        }
                         // zoom: {
                         //     zoom: {
                         //         wheel: {

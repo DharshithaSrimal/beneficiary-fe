@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Alert, Snackbar, TextField, Backdrop, CircularProgress, Button, FormControl } from '@mui/material';
+import { Alert, Snackbar, TextField, Backdrop, CircularProgress, Button, FormControl, Link } from '@mui/material';
 import { useRef, useState } from 'react';
 import { API_URL } from '../../constants';
 import './styles.css';
@@ -16,6 +16,11 @@ const Login = () => {
     };
     const handleOpen = () => {
         setOpen(true);
+    };
+
+    const [forgotPassword, setForgotPassword] = useState(false);
+    const showForgotPassword = () => {
+        setForgotPassword(true);
     };
 
     return <div className='login-container'>
@@ -39,6 +44,16 @@ const Login = () => {
             <div className='input-row help-centered'>
                 <TextField type="password" id="standard-basic" size='small' label="Password" variant="standard" inputRef={passwordRef}/>
             </div>
+            <br/>
+            {
+                forgotPassword == true &&
+            
+                <div className='help-centered'>
+                    <Link href="#" underline="hover">
+                        Forgot Password ?
+                    </Link>
+                </div>
+            }
             <div className='login-btn'>
                 <LoadingButton variant="contained" loading={isLoading} onClick={async () => {
                     setIsLoading(true);
@@ -67,6 +82,7 @@ const Login = () => {
                             }
                         } else {
                             setMessage({ text: "Invalid Email/Mobile", status: 400 });
+                            showForgotPassword();
                         }
                     } else {
                         setMessage({ text: "Email/Mobile and password required", status: 400 });

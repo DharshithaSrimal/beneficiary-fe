@@ -671,6 +671,7 @@ const Milestones = ({childData, developmentEvents}) => {
             m3_48to60_1 = data.dataValues.find(o => o.dataElement === m3_48to60_1_id)
             m3_48to60_2 = data.dataValues.find(o => o.dataElement === m3_48to60_2_id)
             m3_48to60_3 = data.dataValues.find(o => o.dataElement === m3_48to60_3_id)
+            m3_48to60_4 = data.dataValues.find(o => o.dataElement === m3_48to60_4_id)
             m3_48to60_5 = data.dataValues.find(o => o.dataElement === m3_48to60_5_id)
             m3_48to60_6 = data.dataValues.find(o => o.dataElement === m3_48to60_6_id)
 
