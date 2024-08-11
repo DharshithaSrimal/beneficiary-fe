@@ -110,361 +110,178 @@ const Milestones = ({childData, developmentEvents}) => {
     var childDob = new Date(childData.dob)
     var ageInMonths = monthDiff(childDob)
 
-    // const classes = {
-    //     root: {
-    //       flexGrow: 1
-    //     },
-    //     disabled: {
-    //         paper: {
-    //             padding: 12,
-    //             //   textAlign: "center",
-    //             color: "rgba(0,0,0,0.26)",
-    //             fontFamily: 'Open Sans',
-    //             backgroundColor: "rgba(0,0,0,0.12)",
-    //             minHeight: 150
-    //         },
-    //         cardTitle: {
-    //             fontWeight: 800,
-    //             fontSize: 14,
-    //             paddingBottom: 10
-    //         }, 
-    //         cardMonths: {
-    //             fontSize: 12
-    //         },
-    //     },
-    //     success: {
-    //         paper: {
-    //         padding: 12,
-    //         //   textAlign: "center",
-    //         color: "#FFF",
-    //         fontFamily: 'Open Sans',
-    //         backgroundColor: "#1F7A1F"
-    //         },
-    //         cardTitle: {
-    //             fontWeight: 800,
-    //             fontSize: 14,
-    //             paddingBottom: 10
-    //         }, 
-    //         cardMonths: {
-    //             fontSize: 12,
-    //             color: "#dfdfdf"
-    //         },
-    //     },
-    //     failure: {
-    //         paper: {
-    //         padding: 12,
-    //         //   textAlign: "center",
-    //         color: "#FFF",
-    //         fontFamily: 'Open Sans',
-    //         backgroundColor: "#C41C1C"
-    //         },
-    //         cardTitle: {
-    //             fontWeight: 800,
-    //             fontSize: 14,
-    //             paddingBottom: 10
-    //         }, 
-    //         cardMonths: {
-    //             fontSize: 12,
-    //             color: "#dfdfdf"
-    //         },
-    //     },
-    //     milestoneTitle: {
-    //         paper: {
-    //             padding: 12,
-    //             paddingRight: 20,
-    //             paddingLeft: 20,
-    //             //   textAlign: "center",
-    //             color: "#FFF",
-    //             fontSize: 20,
-    //             fontWeight: 800,
-    //             fontFamily: 'Open Sans',
-    //             backgroundColor: "#0B6BCB",
-    //             borderRadius: 0
-    //         }
-    //     },
-    //     milestoneTag: {
-    //         paper: {
-    //             padding: 12,
-    //             paddingLeft: 15,
-    //             //   textAlign: "center",
-    //             // color: "#FFF",
-    //             fontSize: 18,
-    //             fontWeight: 800,
-    //             fontFamily: 'Open Sans',
-    //             // backgroundColor: "#0B6BCB",
-    //             borderRadius: 0
-    //         }
-    //     }
-    //   };
-
-    // //Milestone 1
-    // var m1_0to2_1_paper = classes.disabled.paper;
-    // var m1_0to2_1_cardTitle = classes.disabled.cardTitle;
-    // var m1_0to2_1_cardMonths = classes.disabled.cardMonths;
-
-    // var m1_0to2_2_paper = classes.disabled.paper;
-    // var m1_0to2_2_cardTitle = classes.disabled.cardTitle;
-    // var m1_0to2_2_cardMonths = classes.disabled.cardMonths;
-
-    // var m1_0to2_3_paper = classes.disabled.paper;
-    // var m1_0to2_3_cardTitle = classes.disabled.cardTitle;
-    // var m1_0to2_3_cardMonths = classes.disabled.cardMonths;
-
-    // var m1_0to2_4_paper = classes.disabled.paper;
-    // var m1_0to2_4_cardTitle = classes.disabled.cardTitle;
-    // var m1_0to2_4_cardMonths = classes.disabled.cardMonths;
-
-    // var m1_2to4_1_paper = classes.disabled.paper;
-    // var m1_2to4_1_cardTitle = classes.disabled.cardTitle;
-    // var m1_2to4_1_cardMonths = classes.disabled.cardMonths;
-
-    // var m1_2to4_2_paper = classes.disabled.paper;
-    // var m1_2to4_2_cardTitle = classes.disabled.cardTitle;
-    // var m1_2to4_2_cardMonths = classes.disabled.cardMonths;
-
-    // var m1_2to4_3_paper = classes.disabled.paper;
-    // var m1_2to4_3_cardTitle = classes.disabled.cardTitle;
-    // var m1_2to4_3_cardMonths = classes.disabled.cardMonths;
-
-    // // Milestone 2
-    // var m2_0to2_1_paper = classes.disabled.paper;
-    // var m2_0to2_1_cardTitle = classes.disabled.cardTitle;
-    // var m2_0to2_1_cardMonths = classes.disabled.cardMonths;
-
-    // var m2_0to2_2_paper = classes.disabled.paper;
-    // var m2_0to2_2_cardTitle = classes.disabled.cardTitle;
-    // var m2_0to2_2_cardMonths = classes.disabled.cardMonths;
-
-    // var m2_0to4_1_paper = classes.disabled.paper;
-    // var m2_0to4_1_cardTitle = classes.disabled.cardTitle;
-    // var m2_0to4_1_cardMonths = classes.disabled.cardMonths;
-
-    // var m2_0to4_2_paper = classes.disabled.paper;
-    // var m2_0to4_2_cardTitle = classes.disabled.cardTitle;
-    // var m2_0to4_2_cardMonths = classes.disabled.cardMonths;
-
-    // var m2_0to4_3_paper = classes.disabled.paper;
-    // var m2_0to4_3_cardTitle = classes.disabled.cardTitle;
-    // var m2_0to4_3_cardMonths = classes.disabled.cardMonths;
-
-    // // Milestone 3
-    // var m3_0to2_1_paper = classes.disabled.paper;
-    // var m3_0to2_1_cardTitle = classes.disabled.cardTitle;
-    // var m3_0to2_1_cardMonths = classes.disabled.cardMonths;
-
-    // var m3_0to2_2_paper = classes.disabled.paper;
-    // var m3_0to2_2_cardTitle = classes.disabled.cardTitle;
-    // var m3_0to2_2_cardMonths = classes.disabled.cardMonths;
-
-    // var m3_2to4_1_paper = classes.disabled.paper;
-    // var m3_2to4_1_cardTitle = classes.disabled.cardTitle;
-    // var m3_2to4_1_cardMonths = classes.disabled.cardMonths;
-
-    // var m3_2to4_2_paper = classes.disabled.paper;
-    // var m3_2to4_2_cardTitle = classes.disabled.cardTitle;
-    // var m3_2to4_2_cardMonths = classes.disabled.cardMonths;
-
-    // //Milestone 4
-    // var m4_0to2_1_paper = classes.disabled.paper;
-    // var m4_0to2_1_cardTitle = classes.disabled.cardTitle;
-    // var m4_0to2_1_cardMonths = classes.disabled.cardMonths;
-
-    // var m4_0to2_2_paper = classes.disabled.paper;
-    // var m4_0to2_2_cardTitle = classes.disabled.cardTitle;
-    // var m4_0to2_2_cardMonths = classes.disabled.cardMonths;
-
-    // var m4_0to2_3_paper = classes.disabled.paper;
-    // var m4_0to2_3_cardTitle = classes.disabled.cardTitle;
-    // var m4_0to2_3_cardMonths = classes.disabled.cardMonths;
-
-    // var m4_2to4_1_paper = classes.disabled.paper;
-    // var m4_2to4_1_cardTitle = classes.disabled.cardTitle;
-    // var m4_2to4_1_cardMonths = classes.disabled.cardMonths;
-
-    // var m4_2to4_2_paper = classes.disabled.paper;
-    // var m4_2to4_2_cardTitle = classes.disabled.cardTitle;
-    // var m4_2to4_2_cardMonths = classes.disabled.cardMonths;
-
-    // var m4_2to4_3_paper = classes.disabled.paper;
-    // var m4_2to4_3_cardTitle = classes.disabled.cardTitle;
-    // var m4_2to4_3_cardMonths = classes.disabled.cardMonths;
-
-    // var m4_2to4_4_paper = classes.disabled.paper;
-    // var m4_2to4_4_cardTitle = classes.disabled.cardTitle;
-    // var m4_2to4_4_cardMonths = classes.disabled.cardMonths;
-
-    // var m4_2to4_5_paper = classes.disabled.paper;
-    // var m4_2to4_5_cardTitle = classes.disabled.cardTitle;
-    // var m4_2to4_5_cardMonths = classes.disabled.cardMonths;
-
-    
-    // console.log ("developmentEvents", developmentEvents)
-
-
     var m1_0to2_1_id = "v6P3nKGeHLL";
     var m1_0to2_2_id = "LiLtoNpzbiU";
     var m1_0to2_3_id = "SN74UaUnfqx";
     var m1_0to2_4_id = "Rsa3kO41gUW";
-    var m1_2to4_1_id = "";
-    var m1_2to4_2_id = "";
-    var m1_2to4_3_id = "";
-    var m1_4to6_1_id = ""; 
-    var m1_4to6_2_id = ""; 
-    var m1_4to6_3_id = "";
-    var m1_6to9_1_id = ""; 
-    var m1_6to9_2_id = ""; 
-    var m1_6to9_3_id = "";
-    var m1_6to9_4_id = ""; 
-    var m1_6to9_5_id = "";
-    var m1_9to12_1_id = "";
-    var m1_12to15_1_id = ""; 
-    var m1_12to15_2_id = ""; 
-    var m1_12to15_3_id = "";
-    var m1_12to15_4_id = ""; 
-    var m1_12to15_5_id = "";
-    var m1_15to18_1_id = ""; 
-    var m1_15to18_2_id = ""; 
-    var m1_15to18_3_id = "";
-    var m1_15to18_4_id = ""; 
-    var m1_15to18_5_id = "";
-    var m1_18to24_1_id = ""; 
-    var m1_18to24_2_id = "";
-    var m1_24to30_1_id = ""; 
-    var m1_24to30_2_id = ""; 
-    var m1_24to30_3_id = "";
-    var m1_30to36_1_id = ""; 
-    var m1_30to36_2_id = ""; 
-    var m1_30to36_3_id = "";
-    var m1_36to48_1_id = ""; 
-    var m1_36to48_2_id = ""; 
-    var m1_36to48_3_id = "";
-    var m1_36to48_4_id = ""; 
-    var m1_36to48_5_id = ""; 
-    var m1_36to48_6_id = "";
-    var m1_48to60_1_id = ""; 
-    var m1_48to60_2_id = ""; 
-    var m1_48to60_3_id = "";
-
     var m2_0to2_1_id = "EzOd4SWHTPt";
     var m2_0to2_2_id = "kGvcjLkNHrF";
-    var m2_2to4_1_id = ""; 
-    var m2_2to4_2_id = "";
-    var m2_2to4_3_id = "";
-    var m2_4to6_1_id = ""; 
-    var m2_4to6_2_id = ""; 
-    var m2_4to6_3_id = "";
-    var m2_6to9_1_id = ""; 
-    var m2_6to9_2_id = "";
-    var m2_9to12_1_id = ""; 
-    var m2_9to12_2_id = ""; 
-    var m2_9to12_3_id = "";
-    var m2_12to15_1_id = ""; 
-    var m2_12to15_2_id = ""; 
-    var m2_12to15_3_id = ""; 
-    var m2_12to15_4_id = "";
-    var m2_15to18_1_id = ""; 
-    var m2_15to18_2_id = "";
-    var m2_18to24_1_id = ""; 
-    var m2_18to24_2_id = ""; 
-    var m2_18to24_3_id = ""; 
-    var m2_18to24_4_id = "";
-    var m2_24to30_1_id = ""; 
-    var m2_24to30_2_id = ""; 
-    var m2_24to30_3_id = ""; 
-    var m2_24to30_4_id = "";
-    var m2_30to36_1_id = ""; 
-    var m2_30to36_2_id = ""; 
-    var m2_30to36_3_id = ""; 
-    var m2_30to36_4_id = ""; 
-    var m2_30to36_5_id = "";
-    var m2_36to48_1_id = ""; 
-    var m2_36to48_2_id = ""; 
-    var m2_36to48_3_id = ""; 
-    var m2_36to48_4_id = "";
-    var m2_48to60_1_id = ""; 
-    var m2_48to60_2_id = ""; 
-    var m2_48to60_3_id = ""; 
-    var m2_48to60_4_id = "";
-
     var m3_0to2_1_id = "d1ZEgqpvfOC";
     var m3_0to2_2_id = "zhLgObBMGzY";
-    var m3_2to4_1_id = ""; 
-    var m3_2to4_2_id = "";
-    var m3_4to6_1_id = ""; 
-    var m3_4to6_2_id = ""; 
-    var m3_4to6_3_id = "";
-    var m3_6to9_1_id = ""; 
-    var m3_6to9_2_id = "";
-    var m3_9to12_1_id = ""; 
-    var m3_9to12_2_id = "";
-    var m3_12to15_1_id = ""; 
-    var m3_12to15_2_id = "";
-    var m3_15to18_1_id = ""; 
-    var m3_15to18_2_id = "";
-    var m3_18to24_1_id = ""; 
-    var m3_18to24_2_id = ""; 
-    var m3_18to24_3_id = "";
-    var m3_24to30_1_id = ""; 
-    var m3_24to30_2_id = ""; 
-    var m3_24to30_3_id = ""; 
-    var m3_24to30_4_id = "";
-    var m3_30to36_1_id = ""; 
-    var m3_30to36_2_id = "";
-    var m3_36to48_1_id = ""; 
-    var m3_36to48_2_id = ""; 
-    var m3_36to48_3_id = "";
-    var m3_48to60_1_id = ""; 
-    var m3_48to60_2_id = ""; 
-    var m3_48to60_3_id = ""; 
-    var m3_48to60_4_id = ""; 
-    var m3_48to60_5_id = ""; 
-    var m3_48to60_6_id = "";
-
     var m4_0to2_1_id = "h3MGqOKUhE7";
     var m4_0to2_2_id = "XW3VkvrPKuM";
     var m4_0to2_3_id = "qrGLVpwbNFK";
-    var m4_2to4_1_id = ""; 
-    var m4_2to4_2_id = ""; 
-    var m4_2to4_3_id = ""; 
-    var m4_2to4_4_id = ""; 
-    var m4_2to4_5_id = "";
-    var m4_4to6_1_id = ""; 
-    var m4_4to6_2_id = ""; 
-    var m4_4to6_3_id = "";
-    var m4_6to9_1_id = ""; 
-    var m4_6to9_2_id = ""; 
-    var m4_6to9_3_id = ""; 
-    var m4_6to9_4_id = "";
-    var m4_9to12_1_id = ""; 
-    var m4_9to12_2_id = ""; 
-    var m4_9to12_3_id = ""; 
-    var m4_9to12_4_id = "";
-    var m4_12to15_1_id = ""; 
-    var m4_12to15_2_id = "";
-    var m4_15to18_1_id = ""; 
-    var m4_15to18_2_id = ""; 
-    var m4_15to18_3_id = ""; 
-    var m4_15to18_4_id = ""; 
-    var m4_15to18_5_id = ""; 
-    var m4_15to18_6_id = "";
-    var m4_18to24_1_id = ""; 
-    var m4_18to24_2_id = ""; 
-    var m4_18to24_3_id = ""; 
-    var m4_18to24_4_id = "";
-    var m4_24to30_1_id = ""; 
-    var m4_24to30_2_id = ""; 
-    var m4_24to30_3_id = ""; 
-    var m4_24to30_4_id = "";
-    var m4_30to36_1_id = ""; 
-    var m4_30to36_2_id = ""; 
-    var m4_30to36_3_id = "";
-    var m4_36to48_1_id = ""; 
-    var m4_36to48_2_id = ""; 
-    var m4_36to48_3_id = ""; 
-    var m4_36to48_4_id = "";
-    var m4_48to60_1_id = ""; 
-    var m4_48to60_2_id = ""; 
-    var m4_48to60_3_id = ""; 
+
+    var m1_2to4_1_id = "SNXt6LOxMGa";
+    var m1_2to4_2_id = "FPeIQMEilIS";
+    var m1_2to4_3_id = "ZIZRtoeS72p";
+    var m2_2to4_1_id = "jtJj5nh59l3"; 
+    var m2_2to4_2_id = "GvqZoeEHoj1";
+    var m2_2to4_3_id = "JpMpJvKMzlx";
+    var m3_2to4_1_id = "B0r0kl6Va86"; 
+    var m3_2to4_2_id = "ClulicDx3kE";
+    var m3_4to6_1_id = "hHgo7FgA01O"; 
+    var m3_4to6_2_id = "EtL48Crs4D1"; 
+    var m3_4to6_3_id = "ImlyTatODld";
+    var m4_2to4_1_id = "GLF7L9tWg1x"; 
+    var m4_2to4_2_id = "pPSfJI2mdOd"; 
+    var m4_2to4_3_id = "s55ijnINENz"; 
+    var m4_2to4_4_id = "Vmn1UFdDPql"; 
+    var m4_2to4_5_id = "VcgUaRUJ7p5";
+
+    var m1_4to6_1_id = "BFYqEvuYhTb"; 
+    var m1_4to6_2_id = "A0lMIsLff0Y"; 
+    var m1_4to6_3_id = "S2cDT2ufA1g";
+    var m2_4to6_1_id = "nLZnNoHKuWe"; 
+    var m2_4to6_2_id = "OECpmFBeRYp"; 
+    var m2_4to6_3_id = "KgDJp7Kv1y2";
+    var m4_4to6_1_id = "CV1M3clYYLX"; 
+    var m4_4to6_2_id = "Yf1qoTRkg1W"; 
+    var m4_4to6_3_id = "VNg76wOq1ur";
+
+    var m1_6to9_1_id = "Y3NMYG4m7LP"; 
+    var m1_6to9_2_id = "iYHYn2oLwVA"; 
+    var m1_6to9_3_id = "EGv20qicP6O";
+    var m1_6to9_4_id = "VglBcJspvWO"; 
+    var m1_6to9_5_id = "MOpm0R80QQD";
+    var m2_6to9_1_id = "BCNkBiGDLgN"; 
+    var m2_6to9_2_id = "fXHGJycVIlS";
+    var m3_6to9_1_id = "YAux9O5v8UJ"; 
+    var m3_6to9_2_id = "dypIsDrn3vR";
+    var m4_6to9_1_id = "lzwJckCyzPM"; 
+    var m4_6to9_2_id = "rQidZVTSVmv"; 
+    var m4_6to9_3_id = "FyRsVdelcXr"; 
+    var m4_6to9_4_id = "YzyLBCTUlz6";
+
+    var m1_9to12_1_id = "fAlhbqKrsHl";
+    var m2_9to12_1_id = "h49K7aswWGk"; 
+    var m2_9to12_2_id = "MEKZaxPmq4N"; 
+    var m2_9to12_3_id = "KqY8yOlS5ju2";
+    var m3_9to12_1_id = "fsscOTuM2aD"; 
+    var m3_9to12_2_id = "tkpnjsWSgnV";
+    var m4_9to12_1_id = "YadcF6m2bKP"; 
+    var m4_9to12_2_id = "Wm0KOlcv8a7"; 
+    var m4_9to12_3_id = "CvT7O2JJQTP"; 
+    var m4_9to12_4_id = "hb5AzJ6kBJd";
+
+    var m1_12to15_1_id = "OCsRefg01aH"; 
+    var m1_12to15_2_id = "yZjgaEWC7bA"; 
+    var m1_12to15_3_id = "yZjgaEWC7bA";
+    var m1_12to15_4_id = "pVuu2CsP17m"; 
+    var m1_12to15_5_id = "eJpH8Ts59l0";
+    var m2_12to15_1_id = "KPFQKGPyd2B"; 
+    var m2_12to15_2_id = "tPk14m2iS7g"; 
+    var m2_12to15_3_id = "NFSBlWfZWqE"; 
+    var m2_12to15_4_id = "UjDWOyppeEd";
+    var m3_12to15_1_id = "MlNstzonpb8"; 
+    var m3_12to15_2_id = "ZMqt88AXnRU";
+    var m4_12to15_1_id = "Q2uHikunQQW"; 
+    var m4_12to15_2_id = "RK0V2Zuc13i";
+
+    var m1_15to18_1_id = "OCiEkrxqdZn"; 
+    var m1_15to18_2_id = "RKwV1OQzloj"; 
+    var m1_15to18_3_id = "ZZmZYXAd8yL";
+    var m1_15to18_4_id = "vzw6cZ3lk9W"; 
+    var m1_15to18_5_id = "nYklpEt8rHd";
+    var m2_15to18_1_id = "SLkF9QoNJRm"; 
+    var m2_15to18_2_id = "X7Ne3jsZfCt";
+    var m3_15to18_1_id = "ltRsaPtRIdN"; 
+    var m3_15to18_2_id = "zTlDIw05LwH";
+    var m4_15to18_1_id = "plHOADDXFV0"; 
+    var m4_15to18_2_id = "KOo5QdHNNnQ"; 
+    var m4_15to18_3_id = "cZdeAkX2d7w"; 
+    var m4_15to18_4_id = "aKEIJG9faBS"; 
+    var m4_15to18_5_id = "EgLwN2tsp2n"; 
+    var m4_15to18_6_id = "otH3hpFJ3kz";
+
+    var m1_18to24_1_id = "cyzNWnUxJp1"; 
+    var m1_18to24_2_id = "TI06wTBnnDD";
+    var m2_18to24_1_id = "DIO9DmZTsNK"; 
+    var m2_18to24_2_id = "fK6wLTJPELi"; 
+    var m2_18to24_3_id = "zHZW0GEoa7A"; 
+    var m2_18to24_4_id = "GEHFSPlYFiu";
+    var m3_18to24_1_id = "eu5sYlCrFWk"; 
+    var m3_18to24_2_id = "msvoHdkxFS7"; 
+    var m3_18to24_3_id = "gTmtnGc7Z9c";
+    var m4_18to24_1_id = "a9jCDF4r3K5"; 
+    var m4_18to24_2_id = "Xi2y10NS8CP"; 
+    var m4_18to24_3_id = "WacPPRceUuY"; 
+    var m4_18to24_4_id = "afzJFSDRJGX";
+
+    var m1_24to30_1_id = "FNclZes5Sfw"; 
+    var m1_24to30_2_id = "Er8EANmCeUo"; 
+    var m1_24to30_3_id = "pQsjBUZlTKB";
+    var m2_24to30_1_id = "GT23yyIl9zu"; 
+    var m2_24to30_2_id = "x3fCJVREMxO"; 
+    var m2_24to30_3_id = "zLnBRBJMgbP"; 
+    var m2_24to30_4_id = "ivFlZLh8izA";
+    var m3_24to30_1_id = "oi9sITzJpOl"; 
+    var m3_24to30_2_id = "dcNUqmoADBc"; 
+    var m3_24to30_3_id = "rFmlXPij9Cb"; 
+    var m3_24to30_4_id = "zvmWTGuoEJG";
+    var m4_24to30_1_id = "gKQWC2ZjVUt"; 
+    var m4_24to30_2_id = "gKQWC2ZjVUt"; 
+    var m4_24to30_3_id = "gKQWC2ZjVUt"; 
+    var m4_24to30_4_id = "gKQWC2ZjVUt";
+
+    var m1_30to36_1_id = "aDypcXGRqA6"; 
+    var m1_30to36_2_id = "PQmnQ5AVjWj";
+    var m2_30to36_1_id = "LqJdYyfNvhn"; 
+    var m2_30to36_2_id = "AW7k0bYTWEM"; 
+    var m2_30to36_3_id = "lwtKUHJa7II"; 
+    var m2_30to36_4_id = "mKLxcGOVZVE"; 
+    var m2_30to36_5_id = "Gyewqo7yLAh";
+    var m3_30to36_1_id = "GNdccG3KT6j"; 
+    var m3_30to36_2_id = "X4ZkZP1at9Q";
+    var m4_30to36_1_id = "XE7br0YsdKh"; 
+    var m4_30to36_2_id = "F8Aw2ZLnlDZ"; 
+    var m4_30to36_3_id = "qGiMgRay1C5";
+
+    var m1_36to48_1_id = "XRjYUdBJlxQ"; 
+    var m1_36to48_2_id = "GdVd3cyASbF"; 
+    var m1_36to48_3_id = "Z11PooicwQf";
+    var m1_36to48_4_id = "RgaR3gJ4ZNa"; 
+    var m1_36to48_5_id = "PwA58Dp6Pp0"; 
+    var m1_36to48_6_id = "kgI4NIoN8bh";
+    var m2_36to48_1_id = "lEvtZYWWBl8"; 
+    var m2_36to48_2_id = "oMhi69Bpvga"; 
+    var m2_36to48_3_id = "D2P1mqoItLu"; 
+    var m2_36to48_4_id = "WNt73M1UMQZ";
+    var m3_36to48_1_id = "PikIn1sEnEs"; 
+    var m3_36to48_2_id = "V4JtXtz3oZp"; 
+    var m3_36to48_3_id = "zmcH2d7fw1u";
+    var m4_36to48_1_id = "OUCMPGNiCJG"; 
+    var m4_36to48_2_id = "JUTFDk6HgIy"; 
+    var m4_36to48_3_id = "CcQ30eJTKd6"; 
+    var m4_36to48_4_id = "wjFOyrt8GxW";
+
+    var m1_48to60_1_id = "MJlMkWhxz6d"; 
+    var m1_48to60_2_id = "lroCx9ynNJl"; 
+    var m1_48to60_3_id = "LNJlFrtfttI";
+    var m2_48to60_1_id = "ejJ5p4QOPtf"; 
+    var m2_48to60_2_id = "uQhwAkt93UX"; 
+    var m2_48to60_3_id = "SYlAWpVdHdz"; 
+    var m2_48to60_4_id = "ywEKfspryor";
+    var m3_48to60_1_id = "V5itRoIDNnR"; 
+    var m3_48to60_2_id = "BiOP6WABZOo"; 
+    var m3_48to60_3_id = "DrKejQdr9S7"; 
+    var m3_48to60_4_id = "s6eK8rAr2Cg"; 
+    var m3_48to60_5_id = "UodCOksr8Ka"; 
+    var m3_48to60_6_id = "hLRArhXSM6U";
+
+    var m4_48to60_1_id = "MdD0CR7h8fs"; 
+    var m4_48to60_2_id = "T2Me8Dz48t3";
+    
     
 
     var m1_0to2_1, m1_0to2_2, m1_0to2_3, m1_0to2_4;
@@ -565,7 +382,6 @@ const Milestones = ({childData, developmentEvents}) => {
 
             m1_30to36_1 = data.dataValues.find(o => o.dataElement === m1_30to36_1_id)
             m1_30to36_2 = data.dataValues.find(o => o.dataElement === m1_30to36_2_id)
-            m1_30to36_3 = data.dataValues.find(o => o.dataElement === m1_30to36_3_id)
 
             m1_36to48_1 = data.dataValues.find(o => o.dataElement === m1_36to48_1_id)
             m1_36to48_2 = data.dataValues.find(o => o.dataElement === m1_36to48_2_id)
@@ -730,7 +546,6 @@ const Milestones = ({childData, developmentEvents}) => {
 
             m4_48to60_1 = data.dataValues.find(o => o.dataElement === m4_48to60_1_id)
             m4_48to60_2 = data.dataValues.find(o => o.dataElement === m4_48to60_2_id)
-            m4_48to60_3 = data.dataValues.find(o => o.dataElement === m4_48to60_3_id)
 
 
             // console.log(data);

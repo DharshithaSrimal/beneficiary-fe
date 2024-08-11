@@ -7,12 +7,12 @@
 }
 
 .login-img {
-    width: 25%;
-    height: auto;
+    width: 100%;
+    /* height: auto; */
 }
 
 .login-form {
-    width: 33%;
+    width: 50%;
     margin-top: 1.5em;
     margin-bottom: 1.5em;
 }
@@ -29,6 +29,15 @@
     }
 
     .login-img {
-        width: 30% !important;
+        width: 80% !important;
+        margin-bottom: 10px;
+    }
+
+    .input-row .MuiFormControl-root {
+        width: 100% !important;
+    }
+
+    .input-row label {
+        width: 100% !important;
     }
 }

@@ -38,6 +38,9 @@ var items = [
 ]
 
 const PublicHealthRegistry = ({ phcEvents }) => {
+
+    console.log("PHC Events", phcEvents)
+    
     const [children, setChildren] = useState([]);
     const [childPos, setChildPos] = useState(null);
     const [child, setChild] = useState(null);
