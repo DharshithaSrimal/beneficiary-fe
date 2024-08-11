@@ -87,7 +87,7 @@ export default function Enrollment({ open = false, setOpen, id, refresh }) {
             <DialogContent>
                 <p style={{ color: '#344966', margin: 5, fontSize: '0.8em' }}>Beneficiary National ID</p>
                 <input type="text" size="small" style={TxtBox} placeholder="Beneficiary National ID" ref={nicRef} />
-                <p style={{ color: '#344966', margin: 5, fontSize: '0.8em' }}>Contact No</p>
+                <p style={{ color: '#344966', margin: 5, fontSize: '0.8em' }}>Beneficiary Contact No</p>
                 <input type="number" size="small" style={TxtBox} placeholder="Contact No" ref={contactRef} />
                 {/* <p style={{ color: '#344966', margin: 5, fontSize: '0.8em' }}>Foolhuma Form Number (Optional)</p> */}
                 <input type="hidden" size="small" style={TxtBox} placeholder="Foolhuma Form Number" ref={foolhumaRef} />

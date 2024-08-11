@@ -1,6 +1,6 @@
 import './styles.css'
 import { HiMenuAlt1 } from 'react-icons/hi';
-import { Button, Box, Drawer, List, ListItem, ListItemButton, ListItemText, Avatar, Divider, Grid } from '@mui/material';
+import { Button, Box, List, ListItem, ListItemButton, ListItemText, Avatar, Divider, Grid, Stack, Item } from '@mui/material';
 import { useState } from 'react';
 import profile from '../../assets/profile.png'
 import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone';
@@ -12,6 +12,10 @@ import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import BeenhereTwoToneIcon from '@mui/icons-material/BeenhereTwoTone';
 import DoorBackTwoToneIcon from '@mui/icons-material/DoorBackTwoTone';
 import Beneficiary from './beneficiary';
+
+import Drawer from '@mui/joy/Drawer';
+import DialogTitle from '@mui/joy/DialogTitle';
+import ModalClose from '@mui/joy/ModalClose';
 
 const Header = () => {
     const [expanded, setExpanded] = useState(false);
@@ -83,7 +87,11 @@ const Header = () => {
             <div>
                 <Grid container direction="row" justifyContent="flex-start" alignItems="flex-start">
                     <Button onClick={() => toggleDrawer(true)}><HiMenuAlt1 size={30} color='#B4CDED' /></Button>
-                    <img src='/logo512.png' alt='logo white' style={{ height: '3em', background: 'white' }} />
+                    <Grid direction="row">
+                        <img src='./footer_logo.png' alt='logo white' style={{ width: '10em', height: '2.5sem', marginRight: 20}} />
+                        <img src='./logo512_stroke.png' alt='logo white' style={{ width: '5em', height: '2.5sem'}} />
+                    </Grid>
+                    
                 </Grid>
             </div>
             <h3 style={{ padding: 0 }}>Beneficiary Portal</h3>
@@ -99,8 +107,29 @@ const Header = () => {
                 <SideBar />
             </Drawer>
         </div>
-        <div className='mobile'>
-            {/* <Button onClick={() => toggleDrawer(true)}><HiMenuAlt1 size={30} color='#B4CDED' /></Button> */}
+        <div className='header mobile'>
+            <div>
+                <Grid container direction="row" justifyContent="space-between" alignItems="flex-start">
+                    <Button onClick={() => toggleDrawer(true)}><HiMenuAlt1 size={30} color='#B4CDED' /></Button>
+                    <h3>Beneficiary Portal</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => setExpandedProfile(true)}>
+                        {/* <label style={{ paddingRight: '1em' }}>{new Date().toLocaleDateString()}</label> */}
+                        <img src={profile} alt='profile' style={{ width: '3em', height: '3em', paddingRight: '1em' }} />
+                    </div>
+                    <Drawer
+                        anchor='left'
+                        open={expanded}
+                        onClose={() => toggleDrawer(false)}
+                    >
+                        <SideBar />
+                    </Drawer>
+                </Grid>
+            </div>
+            
+            
+        </div>
+        {/* <div className='mobile'>
+            <Button onClick={() => toggleDrawer(true)}><HiMenuAlt1 size={30} color='#B4CDED' /></Button>
             <div className='header'>
                 <h3 style={{ padding: 5, fontSize: '1em', textAlign: 'center' }}>Beneficiary Portal</h3>
             </div>
@@ -114,15 +143,16 @@ const Header = () => {
             >
                 <SideBar />
             </Drawer>
-        </div>
+        </div> */}
         <Drawer
             anchor='bottom'
             open={expandedProfile}
             onClose={() => setExpandedProfile(!expandedProfile)}
         >
-            <div style={{ minHeight: '75vh', textAlign: 'center' }}>
+            {/* <ModalClose /> */}
+            {/* <div style={{ minHeight: '75vh', textAlign: 'center' }}> */}
                 <Beneficiary/>
-            </div>
+            {/* </div> */}
         </Drawer>
     </>
 }

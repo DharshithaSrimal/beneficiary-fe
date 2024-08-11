@@ -73,7 +73,7 @@ Chart.register(CategoryScale, Filler, annotationPlugin, zoomPlugin, ...registera
 const GrowthMonitoring = ({childData, allChildEvents}) => {
 
     // console.log("ALL EVENET", childData);
-    console.log("Growth Data Elements", allChildEvents);
+    // console.log("Growth Data Elements", allChildEvents);
 
     const deWeightId = growthDataElements.DATA_ELEMENT_WEIGHT;
     const deLengthHeightId = growthDataElements.DATA_ELEMENT_LENGTH_HEIGHT;
@@ -98,9 +98,13 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
     }
     
     var weightForAgeDataPoint = [] //x: age(months)     y: weight
+    var weightForAgeDataPoints = [] //x: age(months)     y: weight
     var lengthHeightForAgeDataPoint = [] //x: age(months)   y: Length/height
+    var lengthHeightForAgeDataPoints = [] //x: age(months)   y: Length/height
     var weightForLengthHeightDataPoint = [] //x: length/height  y: weight
+    var weightForLengthHeightDataPoints = [] //x: length/height  y: weight
     var headCircumferenceDataPoint = [] //x: age(months)    y: headcircumference
+    var headCircumferenceDataPoints = [] //x: age(months)    y: headcircumference
 
     allChildEvents.map((data) => {
 
@@ -109,12 +113,17 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             let ageInMonths = data.dataValues.find(o => o.dataElement === ageAtTheTimeOfReporting);
             let weightValue = data.dataValues.find(o => o.dataElement === deWeightId);
             let lengthHeightValue = data.dataValues.find(o => o.dataElement === deLengthHeightId);
-            let headCircumferenceValue = data.dataValues.find(o => o.dataElement === deHeadCircumference);
-            
+            let headCircumferenceValue = data.dataValues.find(o => o.dataElement === deHeadCircumference);   
 
             weightForAgeDataPoint.push({
                 x: parseInt(ageInMonths.value),
                 y: parseFloat(weightValue.value)
+            })
+
+            weightForAgeDataPoints.push({
+                x: parseInt(ageInMonths.value),
+                y: parseFloat(weightValue.value),
+                date: data.eventDate
             })
 
             lengthHeightForAgeDataPoint.push({
@@ -122,9 +131,21 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 y: lengthHeightValue.value
             })
 
+            lengthHeightForAgeDataPoints.push({
+                x: parseInt(ageInMonths.value),
+                y: lengthHeightValue.value,
+                date: data.eventDate
+            })
+
             weightForLengthHeightDataPoint.push({
                 x: parseFloat(lengthHeightValue.value),
                 y: parseFloat(weightValue.value)
+            })
+
+            weightForLengthHeightDataPoints.push({
+                x: parseFloat(lengthHeightValue.value),
+                y: parseFloat(weightValue.value),
+                date: data.eventDate
             })
 
             headCircumferenceDataPoint.push({
@@ -132,12 +153,18 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
                 y: headCircumferenceValue.value
             })
 
+            headCircumferenceDataPoints.push({
+                x: parseInt(ageInMonths.value),
+                y: headCircumferenceValue.value,
+                date: data.eventDate
+            })
+
         }
 
     })
 
     // console.log("lengthHeightForAgeDataPoint", lengthHeightForAgeDataPoint)
-    console.log("weightForLengthHeightDataPoint", weightForLengthHeightDataPoint)
+    // console.log("weightForLengthHeightDataPoint", weightForLengthHeightDataPoint)
     // console.log("headCircumferenceDataPoint", headCircumferenceDataPoint)
 
 
@@ -235,7 +262,8 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             chartTitle: 'Weight for Age (Boys)',
             xAxisValue: 'Age (months)',
             yAxisValue: 'Weight (kg)',
-            showYearBreakLine: true
+            showYearBreakLine: true,
+            dataPoints: weightForAgeDataPoints
         }
     });
 
@@ -326,7 +354,8 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             chartTitle: 'Weight for Age (Girls)',
             xAxisValue: 'Age (months)',
             yAxisValue: 'Weight (kg)',
-            showYearBreakLine: true
+            showYearBreakLine: true,
+            dataPoints: weightForAgeDataPoints
         }
     });
 
@@ -495,7 +524,8 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             yAxisValue: 'Length / Height (cm)',
             beginWithZeroAtAxisX: false,
             beginWithZeroAtAxisY: false,
-            showYearBreakLine: true
+            showYearBreakLine: true,
+            dataPoints: lengthHeightForAgeDataPoints
         }
     });
 
@@ -665,7 +695,8 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             yAxisValue: 'Length / Height (cm)',
             beginWithZeroAtAxisX: false,
             beginWithZeroAtAxisY: false,
-            showYearBreakLine: true
+            showYearBreakLine: true,
+            dataPoints: lengthHeightForAgeDataPoints
         }
     });
 
@@ -835,7 +866,8 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             yAxisValue: 'Weight (Kg)',
             beginWithZeroAtAxisX: false,
             beginWithZeroAtAxisY: false,
-            showYearBreakLine: false
+            showYearBreakLine: false,
+            dataPoints: weightForLengthHeightDataPoints
         }
     });
 
@@ -1005,7 +1037,8 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             yAxisValue: 'Weight (Kg)',
             beginWithZeroAtAxisX: false,
             beginWithZeroAtAxisY: false,
-            showYearBreakLine: false
+            showYearBreakLine: false,
+            dataPoints: weightForLengthHeightDataPoints
         }
     });  
 
@@ -1084,7 +1117,8 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             yAxisValue: 'Head circumference (cm)',
             beginWithZeroAtAxisX: false,
             beginWithZeroAtAxisY: false,
-            showYearBreakLine: true
+            showYearBreakLine: true,
+            dataPoints: headCircumferenceDataPoints
         }
     });
 
@@ -1163,7 +1197,8 @@ const GrowthMonitoring = ({childData, allChildEvents}) => {
             yAxisValue: 'Head circumference (cm)',
             beginWithZeroAtAxisX: false,
             beginWithZeroAtAxisY: false,
-            showYearBreakLine: true
+            showYearBreakLine: true,
+            dataPoints: headCircumferenceDataPoints
         }
     });
 

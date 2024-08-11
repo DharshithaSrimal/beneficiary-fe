@@ -196,25 +196,40 @@ function DrawChart({ chartData }) {
                                 title: () => '',
                                 label: function(context) {
 
-                                    console.log(context)
+                                    console.log("context", context)
 
-                                    let label = context.dataset.label || '';
-
-                                    if (label) {
-                                        label += ': ';
-                                    }
+                                    let label = [];
+                                    
                                     if (context.parsed.y !== null) {
 
                                         if(chartData.chartProperties.chartShortCode == 'wfa' || chartData.chartProperties.chartShortCode == 'wflh') {
-                                            label += `Weight: ${context.parsed.y} kg `;
+                                            label.push(`Weight: ${context.parsed.y} kg`);
+
+                                            let eventDateParsed = new Date(chartData.chartProperties.dataPoints.find(val => val.x == context.parsed.x).date)
+                                            let newParsedDate = eventDateParsed.getFullYear() + '-' + eventDateParsed.getMonth() + '-' + eventDateParsed.getDate();
+
+                                            //take the x value, find the date by x value
+                                            label.push(`Date: ${newParsedDate}`);
                                         }
 
                                         if(chartData.chartProperties.chartShortCode == 'lhfa') {
-                                            label += `Length / Height: ${context.parsed.y} cm `;
+                                            label.push(`Length / Height: ${context.parsed.y} cm `);
+
+                                            let eventDateParsed = new Date(chartData.chartProperties.dataPoints.find(val => val.x == context.parsed.x).date)
+                                            let newParsedDate = eventDateParsed.getFullYear() + '-' + eventDateParsed.getMonth() + '-' + eventDateParsed.getDate();
+
+                                            //take the x value, find the date by x value
+                                            label.push(`Date: ${newParsedDate}`);
                                         }
 
                                         if(chartData.chartProperties.chartShortCode == 'hcfa') {
-                                            label += `Head Circumference: ${context.parsed.y} cm `;
+                                            label.push(`Head Circumference: ${context.parsed.y} cm `);
+                                            
+                                            let eventDateParsed = new Date(chartData.chartProperties.dataPoints.find(val => val.x == context.parsed.x).date)
+                                            let newParsedDate = eventDateParsed.getFullYear() + '-' + eventDateParsed.getMonth() + '-' + eventDateParsed.getDate();
+
+                                            //take the x value, find the date by x value
+                                            label.push(`Date: ${newParsedDate}`);
                                         }
                                     }
                                     return label;

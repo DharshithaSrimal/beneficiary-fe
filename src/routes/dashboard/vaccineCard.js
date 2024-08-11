@@ -19,7 +19,7 @@ export const VaccineCard = ({ basic, full, vacs }) => {
             let newDate = new Date(vac[0].date);
             newDate = newDate.getFullYear() + '-' + newDate.getMonth() + '-' + newDate.getDate();
 
-            console.log(newDate)
+            // console.log(newDate)
 
             return newDate;
         }
