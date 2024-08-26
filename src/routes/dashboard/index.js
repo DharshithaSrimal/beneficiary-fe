@@ -78,6 +78,7 @@ const Dashboard = () => {
     const [fullEvents, setFullEvents] = useState([]);
     const [phcEvents, setPhcEvents] = useState([]);
     const [growthEvents, setGrowthEvents] = useState([]);
+    const [vitaminAndDewormingEvents, setVitaminAndDewormingEvents] = useState([]);
     const [developmentEvents, setDevelopmentEvents] = useState([]);
     const [vacList, setVacList] = useState([]);
 
@@ -100,6 +101,7 @@ const Dashboard = () => {
         setFullEvents([]);
         setPhcEvents([]);
         setGrowthEvents([]);
+        setVitaminAndDewormingEvents([]);
         setDevelopmentEvents([]);
         if (children[childPos]) {
             handleOpenBackdrop();
@@ -203,6 +205,34 @@ const Dashboard = () => {
         }
     }
 
+    const fetchVitaminAndDewormingData = async () => {
+        if (childPos !== null) {
+            // console.log("FETCHING VITAMIN DATA")
+            fetch(await API_URL() + `api/getVitaminAndDeworming`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-token': getCookie()
+                },
+                body: JSON.stringify({
+                    epi: child.epi,
+                    entity_id: child.entity_instance
+                })
+            })
+                .then(res => res.json())
+                .then(out => {
+                    // console.log("PVAC", out.events);
+                    handleCloseBackdrop();
+                    // console.log("OUTPUT", out)
+                    if (out.events) {
+                        setVitaminAndDewormingEvents(out.events);
+                        // console.log("Full events", out.data.events)
+                    }
+                })
+                .catch(err => console.log("Error Catch", err))
+        }
+    }
+
     const fetchChildDevelopmentData = async () => {
         if (childPos !== null) {
             fetch(await API_URL() + `api/getDevelopmentMilestones`, {
@@ -274,10 +304,8 @@ const Dashboard = () => {
     useEffect(() => { if (child) { fetchVaccineCard(); } }, [child]);
     useEffect(() => { if (child) { fetchPhcData(); } }, [child]);
     useEffect(() => { if (child) { fetchChildGrowthData(); } }, [child]);
+    useEffect(() => { if (child) { fetchVitaminAndDewormingData(); } }, [child]);
     useEffect(() => { if (child) { fetchChildDevelopmentData(); } }, [child]);
-
-
-    // console.log("FULL EVENTS from Dashboard", fullEvents)
 
     // check whether data exists for the following
     // Growth Monitoring
@@ -308,12 +336,7 @@ const Dashboard = () => {
     if (fullEvents.find(o => o.dataElement === 'v6P3nKGeHLL')) {
         
         isDevelopmentMilestonesDataAvailable = true;
-    } 
-
-
-    
-
-    
+    }     
 
     const [value, setValue] = React.useState('1');
 
@@ -406,7 +429,7 @@ const Dashboard = () => {
         setAnchorEl(null);
     };
 
-    console.log("CHILD DATA", children[childPos]) 
+    // console.log("CHILD DATA", children[childPos]) 
 
     function childPicture(sex, ageInMonths) {
 
@@ -577,7 +600,7 @@ const Dashboard = () => {
                                 {
                                     children.map((child, index) => {
 
-                                        console.log(children);
+                                        // console.log(children);
                                     
                                         var ageInMonths = monthDiff(new Date(child.dob))
 
@@ -743,7 +766,7 @@ const Dashboard = () => {
                                             }
                                             {
                                                 fullEvents.length > 0 ?
-                                                    <TabPanel value="4" className='overflow full-height'>{<ADeworming/>}</TabPanel>
+                                                    <TabPanel value="4" className='overflow full-height'>{<ADeworming childData={child} allChildEvents={growthEvents} full={fullEvents} />}</TabPanel>
                                                 : null
                                             }
                                             {

@@ -33,7 +33,12 @@ var items = [
     "/banner2.png"
 ]
 
-const ADeworming = () => {
+const ADeworming = ({childData, allChildEvents, full}) => {
+
+    // console.log(JSON.stringify(full))
+
+    
+
     const [children, setChildren] = useState([]);
     const [childPos, setChildPos] = useState(null);
     const [child, setChild] = useState(null);
@@ -160,6 +165,44 @@ const ADeworming = () => {
         createData('Gingerbread', 356, 16.0, 49, 3.9),
       ];
 
+    var vitaminA9Months = "XgAmcGObp5V"
+    var vitaminA18Months = "LSMECP65Ty7"
+
+    var vitaminA2Years = "Wnc0Lo2FwfC"
+    var vitaminA2YearsDate = "yt1p2mH6xN6"
+    var vitaminA2_5Years = "yClDrDjrmDc"
+    var vitaminA2_5YearsDate = "mXDhvzMpbLS"
+
+    var vitaminA3Years = "bdpAzzq2UGa"
+    var vitaminA3YearsDate = "s9t5yLro27w"
+    var vitaminA3_5Years = "yxNkrSXU6Dv"
+    var vitaminA3_5YearsDate = "Ttfc7otRHDq"
+
+    var vitaminA4Years = "om3f4fqIfJT"
+    var vitaminA4YearsDate = "t9QSyfAsU6t"
+    var vitaminA4_5Years = "FLFETWw2Zag"
+    var vitaminA4_5YearsDate = "DID5CJ3hYjY"
+
+    var vitaminA5Years = "sohefiqFjb2"
+    var vitaminA5YearsDate = "rHCHEVBDY4W"
+    var vitaminA5_5Years = "pxa56TIFRfq"
+    var vitaminA5_5YearsDate = "RGMhi4fZW2a"
+
+    var deworming2Years = "Q8hLsT4fkva"
+    var deworming2YearsDate = "vQW23uYML6Y"
+
+    var deworming3Years = "SyCtTMC7FcY"
+    var deworming3YearsDate = "XwiuoGTV8rJ"
+
+    var deworming4Years = "YyYHNZxPfre"
+    var deworming4YearsDate = "rH0CL0w0Yq8"
+
+    var deworming5Years = "TmWK3iITDCF"
+    var deworming5YearsDate = "kbWZv2dPHoi"
+
+    console.log(full.find(o => o.dataElement === vitaminA3Years))
+
+
     return <div className='dashboard-container'>
         <div className='dashboard-wrapper'>
             <div className='content-wrapper'>
@@ -180,45 +223,161 @@ const ADeworming = () => {
                         </TableHead>
                         <TableBody>
                             <TableRow>
+                                <TableCell align='center'> 9 Months </TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === vitaminA9Months) && full.find(o => o.dataElement === vitaminA9Months).value == 'true' ? 
+                                            "Yes"
+                                            : "N/A"
+                                    }
+                                </TableCell>
+                                <TableCell align="center" className='grey-row'></TableCell>
+                            </TableRow>
+
+                            <TableRow>
+                                <TableCell align='center'> 18 Months </TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === vitaminA18Months) && full.find(o => o.dataElement === vitaminA18Months).value == 'true' ? 
+                                            "Yes"
+                                            : "N/A"
+                                    }
+                                </TableCell>
+                                <TableCell align="center" className='grey-row'></TableCell>
+                            </TableRow>
+
+                            <TableRow>
                                 <TableCell align='center'> 2 Years </TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === vitaminA2Years) && full.find(o => o.dataElement === vitaminA2Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === vitaminA2YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === deworming2Years) && full.find(o => o.dataElement === deworming2Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === deworming2YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
                             </TableRow>
 
                             <TableRow>
                                 <TableCell align='center'> 2 <sup>1/2</sup> Years </TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === vitaminA2_5Years) && full.find(o => o.dataElement === vitaminA2_5Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === vitaminA2_5YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
                                 <TableCell align="center" className='grey-row'></TableCell>
                             </TableRow>
 
                             <TableRow>
                                 <TableCell align='center'> 3 Years </TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === vitaminA3Years) && full.find(o => o.dataElement === vitaminA3Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === vitaminA3YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === deworming3Years) && full.find(o => o.dataElement === deworming3Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === deworming3YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
                             </TableRow>
 
                             <TableRow>
                                 <TableCell align='center'> 3 <sup>1/2</sup> Years </TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === vitaminA3_5Years) && full.find(o => o.dataElement === vitaminA3_5Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === vitaminA3_5YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
                                 <TableCell align="center"  className='grey-row'></TableCell>
                             </TableRow>
 
                             <TableRow>
                                 <TableCell align='center'> 4 Years </TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === vitaminA4Years) && full.find(o => o.dataElement === vitaminA4Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === vitaminA4YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === deworming4Years) && full.find(o => o.dataElement === deworming4Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === deworming4YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
                             </TableRow>
 
                             <TableRow>
                                 <TableCell align='center'> 4 <sup>1/2</sup> Years </TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === vitaminA4_5Years) && full.find(o => o.dataElement === vitaminA4_5Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === vitaminA4_5YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
                                 <TableCell align="center"  className='grey-row'></TableCell>
                             </TableRow>
 
                             <TableRow>
                                 <TableCell align='center'> 5 Years </TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
-                                <TableCell align="center" style={{  }}></TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === vitaminA5Years) && full.find(o => o.dataElement === vitaminA5Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === vitaminA5YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === deworming5Years) && full.find(o => o.dataElement === deworming5Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === deworming5YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
+                            </TableRow>
+
+                            <TableRow>
+                                <TableCell align='center'> 5 <sup>1/2</sup> Years </TableCell>
+                                <TableCell align="center" style={{  }}>
+                                    {
+
+                                        full.length > 0 && full.find(o => o.dataElement === vitaminA5_5Years) && full.find(o => o.dataElement === vitaminA5_5Years).value == 'true' ? 
+                                            full.find(o => o.dataElement === vitaminA5_5YearsDate).value
+                                            : "N/A"
+                                    }
+                                </TableCell>
+                                <TableCell align="center"  className='grey-row'></TableCell>
                             </TableRow>
                             
                         </TableBody>
